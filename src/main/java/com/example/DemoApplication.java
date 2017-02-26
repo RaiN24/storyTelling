@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +54,11 @@ public class DemoApplication {
 	            for(Row row:sheet){
 	            	if(row.getCell(0)==null||row.getCell(1)==null||row.getCell(2)==null||row.getCell(3)==null||row.getCell(4)==null||row.getCell(5)==null||row.getCell(6)==null)
 	            		continue;
-	            	result.add(new News(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),row.getCell(6).toString()));
+	            	SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+	            	row.getCell(6).setCellType(Cell.CELL_TYPE_NUMERIC);
+	            	double value = row.getCell(6).getNumericCellValue();  
+	                Date date = org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);  
+	            	result.add(new News(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),sdf.format(date)));
 	            }
 	        }
 	        catch (Exception e) {
