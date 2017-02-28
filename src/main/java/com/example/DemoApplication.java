@@ -43,6 +43,12 @@ public class DemoApplication {
 		ModelAndView mv=new ModelAndView("index");
 		return mv;
 	}
+	@RequestMapping("/search")
+	@ResponseBody
+	public ModelAndView search(){
+		ModelAndView mv=new ModelAndView("search_div");
+		return mv;
+	}
 	@RequestMapping(value="/getAllData")
 	public List<News> readExcel(){
 		List<News> result=new ArrayList<>();
