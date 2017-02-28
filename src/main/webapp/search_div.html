@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="search_div/css/jquery-labelauty.css">
+<script src="search_div/laydate/laydate.js"></script>
+<style>
+ul { list-style-type: none;}
+li { display: inline-block;}
+li { margin: 10px 0;}
+input.labelauty + label { font: 12px "Microsoft Yahei";}
+</style>
+</head>
+
+<body>
+<!--<div style="width:970px; margin:10px auto;">-->
+<div>
+    起始日期：<input class="laydate-icon" onclick="laydate()"><br /><br />
+	终止日期：<input class="laydate-icon" onclick="laydate()"><br /><br />
+
+<h3>最近时间区间选择</h3>
+<ul class="dowebok">
+	<li><input type="radio" name="radio" data-labelauty="7D"></li>
+	<li><input type="radio" name="radio" data-labelauty="14D"></li>
+	<li><input type="radio" name="radio" data-labelauty="30D"></li>
+	<li><input type="radio" name="radio" data-labelauty="3M"></li>
+	<li><input type="radio" name="radio" data-labelauty="6M"></li>
+	<li><input type="radio" name="radio" data-labelauty="1Y"></li>
+	<li><input type="radio" name="radio" data-labelauty="MAX"></li>
+	<!--<li><input type="radio" name="radio" disabled data-labelauty="不可用"></li>-->
+</ul>
+
+<hr>
+
+<h3>人物选择</h3>
+<ul class="dowebok">
+	<!--<li><input type="checkbox" name="checkbox" disabled checked data-labelauty="HTML"></li>-->
+	<li><input type="checkbox" name="checkbox" data-labelauty="希拉里"></li>
+	<li><input type="checkbox" name="checkbox" data-labelauty="特朗普"></li>
+</ul>
+</div>
+<script>
+;!function(){
+laydate({
+   elem: '#demo'
+})
+}();
+</script>
+<script src="search_div/js/jquery-1.8.3.min.js"></script>
+<script src="search_div/js/jquery-labelauty.js"></script>
+<script>
+$(function(){
+	$(':input').labelauty();
+});
+</script>
+
+
+</body>
+</html>
