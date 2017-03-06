@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-
+<html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="search_div/css/jquery-labelauty.css">
+	<script src="search_div/laydate/laydate.js"></script>
 	<title>StoryTelling123</title>
 </head>
 <script src="js/jquery-latest.min.js"></script>
 <script src="js/d3.min.js" charset="utf-8"></script>
 
-<body>
-
 <style>
+ul { list-style-type: none;}
+li { display: inline-block;}
+li { margin: 10px 0;}
+input.labelauty + label { font: 12px "Microsoft Yahei";}
+
 .axis path,
 .axis line{
     stroke: black;
@@ -63,6 +68,15 @@
 	border: 1px  solid gray;
 }	
 
+#search_div{
+	position: absolute;
+	left: 920px;
+	top: 10px;
+	width: 400px;
+	height:420px;
+	border: 1px solid gray;
+}
+
 
 .MyText{}
 
@@ -104,17 +118,63 @@ top:220px;
 }
 
 
+
 </style>
 
-
-
-
+<body>
 <div id="naive"></div>
 
 <div id="simple"></div>
 
 <div class="show"></div> 
 <div class="stick"></div>
+
+<div id="search_div">
+          起始日期：<input id="s" class="laydate-icon" onclick="laydate()"><br /><br />
+	终止日期：<input id="e" class="laydate-icon" onclick="laydate()"><br /><br />
+
+<h3>最近时间区间选择</h3>
+<ul class="dowebok">
+	<li><input type="radio" name="radio" data-labelauty="7D" onclick="spanChosen(7,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="14D" onclick="spanChosen(14,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="30D" onclick="spanChosen(30,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="3M" onclick="spanChosen(90,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="6M" onclick="spanChosen(180,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="1Y" onclick="spanChosen(365,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="MAX" onclick="spanChosen(1500,[2015,6,21],[2016,11,9])"></li>
+	<!--<li><input type="radio" name="radio" disabled data-labelauty="不可用"></li>-->
+</ul>
+
+<hr>
+
+<h3>人物选择</h3>
+<ul class="dowebok">
+	<!--<li><input type="checkbox" name="checkbox" disabled checked data-labelauty="HTML"></li>-->
+	<li><input type="checkbox" name="checkbox" data-labelauty="希拉里" ></li>
+	<li><input type="checkbox" name="checkbox" data-labelauty="特朗普" ></li>
+</ul>
+</div>
+
+<script>
+;!function(){
+laydate({
+   elem: '#e'
+
+})
+
+}();
+</script>
+<script src="search_div/js/jquery-1.8.3.min.js"></script>
+<script src="search_div/js/jquery-labelauty.js"></script>
+<script>
+$(function(){
+	$(':input').labelauty();
+});
+
+
+
+</script>
+
 
 <script>
 
@@ -135,9 +195,11 @@ var rects = [];
 var texts = [];
 var candidate = [];
 var csvData = [];
+var jsonData = [];
 var flag = [];
 var circles = [];
 var scaler;
+var range=7;
 
 circles.push([]);
 circles.push([]);
@@ -157,35 +219,6 @@ var svg2=d3.select("#simple")
 		.attr("width", 900)       
 		.attr("height", 370);		
 
-
-$(document).ready(function(){ 
-	$(".show").mousedown(function(e){ 
-		$(this).css("cursor","move");
-		var offset = $(this).offset();
-		var x = e.pageX - offset.left;
-		var y = 200;
-		$(document).bind("mousemove",function(ev){ 
-			$(".show").stop();
-			var _x = ev.pageX - x;
-			if(_x < 10)_x = 10;
-			if(_x > 875)_x = 875;
-			var _y = 200;
-			scaler = parseInt(_x/865*timeNode.length*60/72);
-			//console.log(scaler);
-			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
-			pict_1(svg1,timeNode,values,scaler,scaler+12);
-			pict_2(svg2,timeNode,labels2,csvData,-1,scaler,scaler+12);
-		}); 
-
-	}); 
-
-	$(document).mouseup(function(){ 
-		$(".show").css("cursor","default"); 
-		$(this).unbind("mousemove"); 
-	}) 
-}) 
-
-	
 function matchYear(s,t){
 	if(s[0]>t[0])return 1;
 	else if(s[0]==t[0])return 0;
@@ -338,18 +371,14 @@ function match2(s,t1,t2){
 
 
 
-function spanArrange(begin,end){                       
+function spanArrange(begin,end,range){                       
 	//console.log(begin);
-	//console.log(end);
-	//var cc=0;
-	
 	while(1){
-		//console.log(begin);
 		//cc++;
 		var tmp = [];
 		var tmp1 = begin.slice();
 		tmp.push(tmp1);
-		begin[2]+=7;
+		begin[2]+=range;
 		if(begin[0]==end[0]&&begin[1]==end[1]&&begin[2]>end[2])break;
 		if(begin[2]>month[begin[1]-1]){
 			begin[2] -= month[begin[1]-1];
@@ -376,8 +405,10 @@ function spanArrange(begin,end){
 function labelArrange1(){
 	for(var i=0;i<span.length;i++){
 		for(var j=0;j<timeNode.length;j++){
-			if(match1(span[i],timeNode[j][0],timeNode[j][1]))
+			if(match1(span[i],timeNode[j][0],timeNode[j][1])){
 				labels1[j].push(i);
+				break;
+			}
 		}
 	}
 }
@@ -385,8 +416,10 @@ function labelArrange1(){
 function labelArrange2(){
 	for(var i=0;i<dateOfEvents.length;i++){
 		for(var j=0;j<timeNode.length;j++){
-			if(match2(dateOfEvents[i],timeNode[j][0],timeNode[j][1]))
+			if(match2(dateOfEvents[i],timeNode[j][0],timeNode[j][1])){
 				labels2[j].push(i);
+				break;
+			}
 		}
 	}
 }
@@ -420,7 +453,7 @@ function plotArrange(data){
 }
 
 
-function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
+function f(svg,num,data,z,m,k,Xscale,chosen,start,end){                                 
 	var tmp = (num[k].reverse()).slice();
 	num[k].reverse();
 	
@@ -441,13 +474,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						if(i<=10){
 							if(chosen>=0){
 								if(k-start<=chosen)
-									return Xscale(k-start)+9;
+									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
 								else if(k-start>=chosen+1)
-									return Xscale(k-start)+2*parseInt(width/(end-start+1))+9;
+									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
 								
 							}
 							else
-								return Xscale(k-start)+9;
+								return parseInt(width/(end-start))*(k-start)+9;
 						}
 						
 					})
@@ -472,9 +505,9 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					.attr("width",function(d,i){
 						if(chosen>=0){
 							if(k-start==chosen)
-								return parseInt(width/(end-start+1))*3;
+								return parseInt(width/(end-start))*2;
 							else 
-								return parseInt((width-parseInt(width/(end-start+1))*3)/((end-start-1)));
+								return parseInt((width-(width/(end-start))*2)/(end-start-1));
 						}
 						else
 							return parseInt(width/(end-start));
@@ -495,8 +528,6 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					})
 					.on("click",function(d,i){
 						if(d==-1){
-							//console.log(k);
-							//console.log(flag[k]);
 							for(var p=0;p<=len-flag[k]*10;p++){
 								if(rects[k][0].length!=0){
 									rects[k][0][p].remove();
@@ -537,8 +568,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					})
 					.on("mouseout",function(d,i){
 						var l = texts[k].length;
-						//console.log(texts[q]);
-						
+					
 						if(d!=-1){
 							for(var p=0;p<len-10*flag[k];p++){
 								
@@ -548,8 +578,6 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						
 							}	
 							
-						
-							//console.log(texts[k]);
 							for(var v=1;v<l;v++){
 								var a=texts[k][v][0].length;
 								for(var p=0;p<a;p++)
@@ -580,13 +608,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						if(i<=10){
 							if(chosen>=0){
 								if(k-start<=chosen)
-									return Xscale(k-start)+9;
+									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
 								else if(k-start>=chosen+1)
-									return Xscale(k-start)+2*parseInt(width/(end-start+1))+9;
+									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
 								
 							}
 							else
-								return Xscale(k-start)+9;
+								return parseInt(width/(end-start))*(k-start)+9;
 						}
 						
 					})
@@ -606,15 +634,16 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						if(d==-1)
 							return "^";
 						else
+							//return "";
 							return data[tmpStr[i]]["date"];
 						
 					})
 					.attr("width",function(d,i){
 						if(chosen>=0){
 							if(k-start==chosen)
-								return parseInt(width/(end-start+1))*3;
+								return parseInt(width/(end-start))*2;
 							else 
-								return parseInt((width-parseInt(width/(end-start+1))*3)/((end-start-1)));
+								return parseInt((width-(width/(end-start))*2)/(end-start-1));
 						}
 						else
 							return parseInt(width/(end-start));
@@ -667,13 +696,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 							if(i<=10){
 							if(chosen>=0){
 								if(k-start<=chosen)
-									return Xscale(k-start)+9;
+									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
 								else if(k-start>=chosen+1)
-									return Xscale(k-start)+2*parseInt(width/(end-start+1))+9;
+									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
 								
 							}
 							else
-								return Xscale(k-start)+9;
+								return parseInt(width/(end-start))*(k-start)+9;
 						}
 						
 					})
@@ -735,9 +764,9 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					.attr("width",function(d,i){
 						if(chosen>=0){
 							if(k-start==chosen)
-								return parseInt(width/(end-start+1))*3;
+								return parseInt(width/(end-start))*2;
 							else 
-								return parseInt((width-parseInt(width/(end-start+1))*3)/((end-start-1)));
+								return parseInt((width-(width/(end-start))*2)/(end-start-1));
 						}
 						else
 							return parseInt(width/(end-start));
@@ -777,13 +806,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						if(i<=10){
 							if(chosen>=0){
 								if(k-start<=chosen)
-									return Xscale(k-start)+14;
+									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+14;
 								else if(k-start>=chosen+1)
-									return Xscale(k-start)+2*parseInt(width/(end-start+1))+14;
+									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+14;
 								
 							}
 							else
-								return Xscale(k-start)+14;
+								return parseInt(width/(end-start))*(k-start)+14;
 						}
 						
 					})
@@ -801,6 +830,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					})
 					.attr("fill",function(d,i){
 						if(d!=-1){
+							//console.log(data[tmpStr[i]]);
 							var cc = data[tmpStr[i]]["content"];
 							var c1=0,c2=0;
 							//console.log(cc);
@@ -816,8 +846,8 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 							
 							}
 						
-							if(c1!=0)return "red";
-							else if(c2!=0)return "steelblue";
+							if(c1>c2)return "red";
+							else if(c1<c2)return "steelblue";
 							else return "yellow";
 						
 						}
@@ -837,6 +867,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					});		
 	
 }
+
 
 
 
@@ -878,6 +909,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end){
 					for(var m=0;m<2;m++)
 						for(var n=0;n<end-start;n++)
 							circles[m][n].attr("fill",thisColor[m]);
+					
 					var x = 0;
 					for(x=0;x<2;x++)
 						if(d==v[x][i])break;
@@ -895,7 +927,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end){
 					}
 					for(var k=start;k<end;k++){
 						
-						f(svg2,labels2,csvData,-1,-1,k,Xscale,i,start,end);
+						f(svg2,labels2,jsonData,-1,-1,k,Xscale,i,start,end);
 				
 				
 				
@@ -907,10 +939,10 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end){
 				.attr("cx",function(d,i){
 					if(i==j){
 						if(Y(d)!=150){
-							if(k==0)tmp1.push(Xscale(i)+width/(end-start)-15);
-							else tmp2.push(Xscale(i)+width/(end-start)-15);
+							if(k==0)tmp1.push(Xscale(i)+27);
+							else tmp2.push(Xscale(i)+27);
 						}
-						return Xscale(i)+9;
+						return Xscale(i);
 					}
 					else return 0;
 				})
@@ -963,6 +995,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end){
 }
 
 
+
 function setXscale(start,end,w,flag){
 		var x_scale = [];
 		var curVal = 0;
@@ -998,7 +1031,7 @@ function pict_1(svg,timeNode,num,start,end){
 			max.push(d3.max(num[i]));
 		}
 		
-		//console.log(start);
+		//console.log(num);
 		
 		var Min=d3.min(min);
 		var Max=d3.max(max);
@@ -1013,12 +1046,16 @@ function pict_1(svg,timeNode,num,start,end){
 		var XscaleDraw = setXscale(start,end,width,0);
 			
 		var Yscale=[];
+		//console.log(start);
+		//console.log(end);
 		for(var i=start;i<end;i++){
 			var tmp=d3.scale.linear()
 				.domain([0,d3.max(num[i])])
 				.range([150,0]);
 			Yscale.push(tmp);
 		}
+		
+		//console.log(Yscale);
 		
 		
 		maxY=-1;
@@ -1076,7 +1113,7 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		var Min=d3.min(min);
 		var Max=d3.max(max);
 		//console.log(min);
-		//console.log(max);
+		//console.log(data);
 		
 		var Xscale = setXscale(start,end,width,-1);
 		var Xscale_draw = setXscale(start,end,width*1.4,0);
@@ -1103,18 +1140,67 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		//console.log(candidate);
 					
 		
-		//drawRect(svg,Xscale,Yscale[maxY],num,timeNode);	
-		
-			
-			
-			
+		//drawRect(svg,Xscale,Yscale[maxY],num,timeNode);			
+}
+
+function spanChosen(r,start,end){
+	var s = document.getElementById("s").value;
+	var e = document.getElementById("e").value;
+	var reg = new RegExp('"',"g");  
+	s = s.replace(reg, "");
+	e = e.replace(reg, "");
+	
+	s = s.split("-");
+	e = e.split("-");
+	
+	if(s[1][0]==0)s[1]=s[1][1];
+	if(s[2][0]==0)s[2]=s[2][1];
+	
+	if(e[1][0]==0)e[1]=e[1][1];
+	if(e[2][0]==0)e[2]=e[2][1];
+	
+	range = r;
+	timeNode = [];
+	spanArrange(start,end,range);
+	//console.log(timeNode);
+	//console.log(start);
+	//console.log(end);
+
+	var a,b;
+	for(a=0;a<timeNode.length;a++)
+		if(match2(s,timeNode[a][0],timeNode[a][1]))
+			break;
+	for(b=0;b<timeNode.length;b++)
+		if(match2(e,timeNode[b][0],timeNode[b][1]))
+			break;
+	
+	//console.log(a);
+	//console.log(b);
+	
+	timelinePict(a,b,r,jsonData,csvData);
+	
 }
 
 
+
+d3.csv("data/data2.csv",function(error,csvdata){
+	if(error)
+		console.log(error);
+	csvData = csvdata;
+	
+});
 $.getJSON("getAllData.json",function(data){
 	for(var i=0;i<data.length-1;i++)
 		data[i]=data[i+1];
 	
+	jsonData = data;
+
+	timelinePict(0,12,7,jsonData,csvData);
+});
+
+
+function timelinePict(head,tail,range,data,csvdata){
+	dateOfEvents=[];
 	for(var i=0;i<data.length;i++){
 		var tmp = data[i]["date"];
 		var reg = new RegExp('"',"g");  
@@ -1124,7 +1210,11 @@ $.getJSON("getAllData.json",function(data){
 		dateOfEvents.push(tmp1);
 	}
 	
-	//spanArrange(begin,end);
+	spanArrange(begin,end,range);
+	
+	labels2=[];values=[];rects=[];texts=[];candidate=[];flag=[];
+	
+	//console.log(timeNode);
 	
 	for(var j=0;j<timeNode.length;j++){              
 		labels2.push([]);
@@ -1137,26 +1227,15 @@ $.getJSON("getAllData.json",function(data){
 		flag.push(0);
 	}		
 	
-	//console.log(flag);
+	//console.log(values);
 	
 	labelArrange2();
 	//console.log(labels2);
-	
-	
-				
-	
-	pict_2(svg2,timeNode,labels2,data,-1,0,12);
-	
-	csvData = data;
-	
-});
-
-
-d3.csv("data/data2.csv",function(error,csvdata){
-	if(error)
-		console.log(error);
+			
+	pict_2(svg2,timeNode,labels2,data,-1,head,tail);
 		
-	
+	//console.log(timeNode);
+	span=[];labels1=[];values=[];
 	
 	for(var i=0;i<csvdata.length;i+=2){                               
 		var date = csvdata[i]["date"];
@@ -1179,7 +1258,7 @@ d3.csv("data/data2.csv",function(error,csvdata){
 	span.reverse();
 	
 	
-	spanArrange(begin,end);
+	//spanArrange(begin,end,range);
 	
 	for(var j=0;j<timeNode.length;j++){             
 		labels1.push([]);
@@ -1195,11 +1274,39 @@ d3.csv("data/data2.csv",function(error,csvdata){
 	
 	
 				
-	pict_1(svg1,timeNode,values,0,12);
+	pict_1(svg1,timeNode,values,head,tail);
 	
-	
-	
-});
+
+}
+
+$(document).ready(function(){ 
+	$(".show").mousedown(function(e){ 
+		$(this).css("cursor","move");
+		var offset = $(this).offset();
+		var x = e.pageX - offset.left;
+		var y = 200;
+		$(document).bind("mousemove",function(ev){ 
+			$(".show").stop();
+			var _x = ev.pageX - x;
+			if(_x < 10)_x = 10;
+			if(_x > 875)_x = 875;
+			var _y = 200;
+			scaler = parseInt(_x/865*timeNode.length*60/72);
+			//console.log(scaler);
+			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
+			timelinePict(scaler,scaler+12,7,jsonData,csvData);
+		}); 
+
+	}); 
+
+	$(document).mouseup(function(){ 
+		$(".show").css("cursor","default"); 
+		$(this).unbind("mousemove"); 
+	}) 
+}) 
+
+
+
 
 </script>
 </body>
