@@ -218,6 +218,7 @@ var circles = [];
 var scaler;
 var range=7;
 var tmpData=[];
+var axisDraw;
 
 circles.push([]);
 circles.push([]);
@@ -959,6 +960,29 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h){
 								}
 							}
 						}
+						
+						
+						
+						//var tickValue = [];
+						//for(var j=0;j<end-start;j++){
+							//if(j<i)tickValue.push(parseInt((width-2*width/(end-start))/(end-start-1)/2*(2*j+1)));
+							
+							//else if(i==j)tickValue.push(parseInt((width-2*width/(end-start))/(end-start+1)/2*(2*j))+width/(end-start));
+							
+						//else if(i==j-1)tickValue.push(parseInt((width-2*width/(end-start))/(end-start+1)/2*(2*j-1))+2*width/(end-start));
+							
+							//else tickValue.push(parseInt((width-2*width/(end-start))/(end-start+1)/2*(2*j-1))+2*width/(end-start));
+						//}
+						
+						
+				d3.selectAll(".axisX text")
+							.attr("x", function(d,j){
+								if(i>j)return parseInt(width*(0.003*j-0.1)/(2*(end-start)));
+								else return parseInt(width*(0.003*j+0.1)/(2*(end-start)));
+								
+							});
+						
+						
 						for(var k=start;k<end;k++){
 						
 							f(svg1,labels2,jsonData,-1,-1,k,Xscale,i,start,end);
@@ -1179,18 +1203,23 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		//console.log(data);
 		
 		var Xscale = setXscale(start,end,width,-1);
-		var Xscale_draw = setXscale(start,end,width*1.4,0);
+		var Xscale_draw = setXscale(start,end,width,0);
 			
+		var tickValue = [];
+		for(var i=0;i<end-start;i++)
+			tickValue.push(parseInt(width/(end-start)/2*(2*i+1)));
 		
+		//console.log(tickValue);
 		
 		var axisX=d3.svg.axis()
 			.scale(Xscale_draw)
+			.innerTickSize(tickValue)
 			.orient("bottom");
 		
-		svg.append("g")
-			.attr("class","axisX")
-			.attr("transform","translate(30,380)")
-			.call(axisX);
+		axisDraw = svg.append("g")
+						.attr("class","axisX")
+						.attr("transform","translate(30,380)")
+						.call(axisX);
 		
 		
 		
