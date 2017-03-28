@@ -2,12 +2,8 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="search_div/css/jquery-labelauty.css">
-	<script src="search_div/laydate/laydate.js"></script>
 	<title>StoryTelling123</title>
 </head>
-<script src="js/jquery-latest.min.js"></script>
-<script src="js/d3.min.js" charset="utf-8"></script>
 
 <style>
 ul { list-style-type: none;}
@@ -15,26 +11,10 @@ li { display: inline-block;}
 li { margin: 10px 0;}
 input.labelauty + label { font: 12px "Microsoft Yahei";}
 
-.axis path,
-.axis line {
-        fill: none;
-        stroke: black;
-        shape-rendering: crispEdges;
-    }
 
 .ci{}
 
-.axisX {
-        fill: none;
-        stroke: black;
-        shape-rendering: crispEdges;
-    }
 
-.axisY {
-        fill: none;
-        stroke: black;
-        shape-rendering: crispEdges;
-    }    
 
 .axisX text {
     font-family: sans-serif;
@@ -66,8 +46,8 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 	left:10px;
 	top:40px;
 	width: 900px;
-    height:450px;
-	border: 1px  solid gray;
+    height: 390px;
+	border: 1px  solid white;
 }	
 
 
@@ -77,7 +57,7 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 	top: 10px;
 	width: 900px;
     height: 30px;
-	border: 1px  solid gray;
+	border: 1px  solid white;
 }	
 
 #search_div{
@@ -86,9 +66,18 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 	top: 10px;
 	width: 400px;
 	height:420px;
-	border: 1px solid gray;
+	border: 1px solid white;
 }
 
+#content{
+	overflow-y: auto;
+	position: absolute;
+	left: 10px;
+	top: 430px;
+	width: 400px;
+    height: 270px;
+	border: 1px  solid white;
+}
 
 
 
@@ -104,12 +93,13 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 #div3 {
 	position: absolute;
 	left: 805px;
-    top: 10px;
-	width: 200px;
-    height: 210px;
-	border: 1px  solid gray;
+    top: 430px;
+	width: 100px;
+    height: 90px;
+	border: 1px  solid white;
 	
 }
+
 
 .show{ 
 width:40px; 
@@ -138,8 +128,17 @@ opacity:0.0;
 </style>
 
 <body>
+<link rel="stylesheet" href="search_div/css/jquery-labelauty.css">
+<script src="search_div/laydate/laydate.js"></script>
+<script src="js/jquery-latest.min.js"></script>
+<script src="js/d3.min.js" charset="utf-8"></script>
+<script src="js/angular.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="css/layout.css" charset="utf-8"></link>
+
+
 <div id="naive"></div>
 <div id="simple"></div>
+<div id="content"></div>
 
 
 <div class="show" id="show"></div> 
@@ -171,6 +170,8 @@ opacity:0.0;
 	<li><input type="checkbox" name="checkbox" data-labelauty="特朗普" ></li>
 </ul>
 </div>
+
+
 
 <script>
 ;!function(){
@@ -219,6 +220,8 @@ var scaler;
 var range=7;
 var tmpData=[];
 var axisDraw;
+var jsonWord = [];
+var keyWords;
 
 circles.push([]);
 circles.push([]);
@@ -562,6 +565,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 							}
 							flag[k]++;
 							f(svg,num,data,-1,-1,k,Xscale,chosen,start,end);
+						}
+						else{
+							var newsContent = document.getElementById("content");
+							//console.log(data[tmpStr[i]]["content"]);
+							newsContent.innerHTML = data[tmpStr[i]]["content"];
+							$("#content").css("font-size",12);
+							$("#content").css("color","rgb(20,68,106)");	
 						}
 					})
 					.on("mouseover",function(d,i){
@@ -976,6 +986,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h){
 						
 						
 				d3.selectAll(".axisX text")
+							.attr("color","white")
 							.attr("x", function(d,j){
 								if(i>j)return parseInt(width*(0.003*j-0.1)/(2*(end-start)));
 								else return parseInt(width*(0.003*j+0.1)/(2*(end-start)));
@@ -1040,6 +1051,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h){
 	
 	
 		svg.append("path")
+			.attr("class","line")
 			.attr("transform",function(){
 				if(h==150)
 					return "translate(30,30)";
@@ -1052,6 +1064,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h){
 			.attr("d",lineGenerator(dist1));
 			
 		svg.append("path")
+			.attr("class","line")
 			.attr("transform",function(){
 				if(h==150)
 					return "translate(30,30)";
@@ -1205,15 +1218,15 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		var Xscale = setXscale(start,end,width,-1);
 		var Xscale_draw = setXscale(start,end,width,0);
 			
-		var tickValue = [];
-		for(var i=0;i<end-start;i++)
-			tickValue.push(parseInt(width/(end-start)/2*(2*i+1)));
+		//var tickValue = [];
+		//for(var i=0;i<end-start;i++)
+			//tickValue.push(parseInt(width/(end-start)/2*(2*i+1)));
 		
 		//console.log(tickValue);
 		
 		var axisX=d3.svg.axis()
 			.scale(Xscale_draw)
-			.innerTickSize(tickValue)
+			//.innerTickSize(tickValue)
 			.orient("bottom");
 		
 		axisDraw = svg.append("g")
@@ -1400,8 +1413,32 @@ $(document).ready(function(){
 	}) 
 }) 
 
+d3.json("data/json_by_words.json",function(data){
+	jsonWord = data;
+});
 
-
+function getKeyWord(){
+	keyWords=document.getElementById("word").value;
+	var itemSelected = [];
+	for(var i=0;i<jsonWord[keyWords].length;i++){
+		var tmp = jsonWord[keyWords][i].substring(1,jsonWord[keyWords][i].length);
+		itemSelected.push(parseInt(tmp));
+		
+	}
+	console.log(itemSelected);
+	for(var i=0;i<itemSelected.length;i++){
+		var j=0;	
+		while(itemSelected[i]>=rects[j].length){
+			itemSelected[i]-=rects[j].length;
+			j++;
+		}
+		console.log(j);
+		rects[j][0][itemSelected[i]].attr("fill","yellow");
+		
+	}
+	
+	
+}
 
 </script>
 </body>
