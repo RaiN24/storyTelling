@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
+<script src="../src/d3.layout.cloud.js"></script>
+<script src="json_by_news.js"></script>
+<script src="json_by_words.js"></script>
+<script>
+var fill = d3.scale.category20();
+var svg=d3.select("body").append("svg")
+      .attr("width", 1000)
+      .attr("height", 800);
+draw_wordle(200,200,400,400,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
+function draw_wordle(x,y,w,h,newsNumber){
+         var news = json_by_news[newsNumber];
+         var words = [];
+         var maxTime = 0;
+         for (var i in news){
+            words.push(i);
+            if(news[i]>maxTime) maxTime = news[i];
+         }
+    
+         var layout = d3.layout.cloud()
+            .size([w, h])
+            .words(words.map(function(d) {
+              return {text: d, size: 10 + news[i] * 20 / maxTime, test: "haha"};
+            }))
+            .padding(5)
+            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .font("Impact")
+            .fontSize(function(d) { return d.size; })
+            .on("end", draw);
+
+        layout.start();
+    
+        function draw(words) {
+            svg.append("g")
+              .attr("transform", "translate(" + x + "," + y + ")")
+            .selectAll("text")
+              .data(words)
+            .enter().append("text")
+              .style("font-size", function(d) { return d.size + "px"; })
+              .style("font-family", "Impact")
+              .style("fill", function(d, i) { return fill(i); })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .text(function(d) { return d.text; })
+             .on("click",function(d,i){
+                var newsList = json_by_words[d.text];
+                // write the function to the timeline
+            });
+        }
+         
+ }   
+</script>

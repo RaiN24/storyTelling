@@ -44,9 +44,9 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 #naive{
 	position: absolute;
 	left:10px;
-	top:40px;
+	top:60px;
 	width: 900px;
-    height: 390px;
+    height: 380px;
 	border: 1px  solid white;
 }	
 
@@ -56,7 +56,7 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 	left: 10px;
 	top: 10px;
 	width: 900px;
-    height: 30px;
+    height: 50px;
 	border: 1px  solid white;
 }	
 
@@ -73,9 +73,18 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
 	overflow-y: auto;
 	position: absolute;
 	left: 10px;
-	top: 430px;
+	top: 440px;
 	width: 400px;
-    height: 270px;
+    height: 260px;
+	border: 1px  solid white;
+}
+
+#div_5{
+	position: absolute;
+	left: 410px;
+	top: 440px;
+	width: 500px;
+    height: 260px;
 	border: 1px  solid white;
 }
 
@@ -139,7 +148,7 @@ opacity:0.0;
 <div id="naive"></div>
 <div id="simple"></div>
 <div id="content"></div>
-
+<div id="div_5"></div>
 
 <div class="show" id="show"></div> 
 <div class="show" id="cover"></div>
@@ -183,23 +192,25 @@ laydate({
 }();
 </script>
 <script src="search_div/js/jquery-1.8.3.min.js"></script>
-<script src="search_div/js/jquery-labelauty.js"></script>
+<script src="search_div/js/jquery-labelauty.js"></script><script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
+<script src="../src/d3.layout.cloud.js"></script>
+<script src="../html/json_by_news.js"></script>
+<script src="../html/json_by_words.js"></script>
 <script>
 $(function(){
 	$(':input').labelauty();
 });
-
-
-
 </script>
 
+<div id="div_5"></div>
 
 <script>
 
 var dateOfEvents = [];
 var timeNode = [];              //Ӊҹ֣քɕǚ˽ߝ
 var month = [31,28,31,30,31,30,31,31,30,31,30,31];
-var width = 700;
+var width = 840;
 
 var begin = [2015,6,21];
 var end = [2016,11,9];
@@ -478,6 +489,56 @@ function plotArrange(data){
 	
 }
 
+var fill = d3.scale.category20();
+var svg_4=d3.select("#div_5").append("svg")
+      .attr("width", 500)
+      .attr("height", 260);
+//draw_wordle(100,100,400,250,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
+function draw_wordle(x,y,w,h,newsNumber){
+         var news = json_by_news[newsNumber];
+         var words = [];
+         var maxTime = 0;
+         for (var i in news){
+            words.push(i);
+            if(news[i]>maxTime) maxTime = news[i];
+         }
+    
+         var layout = d3.layout.cloud()
+            .size([w, h])
+            .words(words.map(function(d) {
+              return {text: d, size: 10 + news[i] * 20/ maxTime, test: "haha"};
+            }))
+            .padding(5)
+            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .font("Impact")
+            .fontSize(function(d) { return d.size; })
+            .on("end", draw);
+
+        layout.start();
+    
+        function draw(words) {
+            svg_4.append("g")
+              .attr("transform", "translate(" + x + "," + y + ")")
+            .selectAll("text")
+              .data(words)
+            .enter().append("text")
+              .style("font-size", function(d) { return d.size + "px"; })
+              .style("font-family", "Impact")
+              .style("fill", function(d, i) { return fill(i); })
+              .attr("text-anchor", "middle")
+              .attr("transform", function(d) {
+                return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+              })
+              .text(function(d) { return d.text; })
+             .on("click",function(d,i){
+                var newsList = json_by_words[d.text];
+                // write the function to the timeline
+            });
+        }
+         
+ }   
+
+
 
 function f(svg,num,data,z,m,k,Xscale,chosen,start,end){                                 
 	var tmp = (num[k].reverse()).slice();
@@ -496,7 +557,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					.enter()
 					.append("rect")
 					.attr("class","MyRect")
-					.attr("transform","translate(20,210)")
+					.attr("transform","translate(20,190)")
 					.attr("rx",5)
 					.attr("x",function(d,i){
 						if(i<=20){
@@ -571,7 +632,12 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 							//console.log(data[tmpStr[i]]["content"]);
 							newsContent.innerHTML = data[tmpStr[i]]["content"];
 							$("#content").css("font-size",12);
-							$("#content").css("color","rgb(20,68,106)");	
+							$("#content").css("color","rgb(20,68,106)");
+							var tmp = 1347 - tmpStr[i];
+							tmp = 'n' + tmp;
+							//console.log(tmp);
+							svg_4.selectAll("*").remove();
+							draw_wordle(150,120,400,250,tmp); 
 						}
 					})
 					.on("mouseover",function(d,i){
@@ -639,7 +705,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					.enter()
 					.append("text")
 					.attr("class","t")
-					.attr("transform","translate(20,210)")
+					.attr("transform","translate(20,190)")
 					.attr("x",function(d,i){
 						if(i<=20){
 							if(chosen>=0){
@@ -728,7 +794,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 						.enter()
 						.append("text")
 						.attr("class","t")
-						.attr("transform","translate(20,210)")
+						.attr("transform","translate(20,190)")
 						.attr("x",function(d,i){
 							if(i<=20){
 							if(chosen>=0){
@@ -838,7 +904,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end){
 					.data(tmpStr)
 					.enter()
 					.append("circle")
-					.attr("transform","translate(20,210)")
+					.attr("transform","translate(20,190)")
 					.attr("class","ci")
 					.attr("cx",function(d,i){
 						if(i<=20){
@@ -1231,7 +1297,7 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		
 		axisDraw = svg.append("g")
 						.attr("class","axisX")
-						.attr("transform","translate(30,380)")
+						.attr("transform","translate(30,360)")
 						.call(axisX);
 		
 		
@@ -1440,6 +1506,10 @@ function getKeyWord(){
 	
 }
 
+
+
 </script>
+
+
 </body>
 
