@@ -1,0 +1,164 @@
+body{
+	font-family: Georgia;
+	background-color: grey;
+}
+*{
+	margin:0px;
+	padding:0px;
+}		
+
+
+.axisX path,.axisX line{  
+	fill: none;  
+	stroke: white;  
+	shape-rendering: crispEdges;  
+}  
+
+.axisY path,.axisY line{  
+	fill: none;  
+	stroke: white;  
+	shape-rendering: crispEdges;  
+}  
+
+.axisX text {  
+	color:  #fff;
+	font-family: Consolas, courier;
+	font-size: 9px;  
+}
+
+.axisY text {  
+	fill: none;
+	font-family: Consolas, courier;
+	font-size: 9px;  
+}
+.axisY tick{
+	fill:none;
+}
+
+.line {
+  stroke: #fff;
+  fill-opacity: .3;
+  shape-rendering: crispEdges;
+}
+#timeline,#timelinechoose_1,#timelinechoose_2,#timelineleft,#timelineleft2,#timelinechoose2_1,#timelinechoose2_2{
+	position: absolute;
+	top:0%;height:90px;
+	background-color: #434343;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	float:left;
+}
+
+#timelinechoose_1,#timelinechoose_2,#timelinechoose2_1,#timelinechoose2_2{
+  font-size: 10px;
+  color: white;
+}
+
+#fileview{
+	position: absolute;
+	width:100%;
+	left:0%;
+	height:110px;
+	background-color: #434343;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	float:left;
+}
+
+#matrix,#matrix_input{
+	position: absolute;
+	width:15%;
+	left:0%;
+	background-color: #434343;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	float:left;
+}
+#matrix_input{
+  padding:5px;
+  font-size: 10px;
+  color: white;
+}
+
+#sdport{  
+    border:1px solid #7A6F6F;  
+    border:1px solid #7A6F6F \9;/*IE*/  
+    width:100px;  
+    height:15px;/*非IE高度*/  
+    height:20px \9;/*IE高度*/  
+    padding-left:5px; /*all*/  
+    line-height:20px \9;/*IE*/  
+    -moz-border-radius:3px;/*Firefox*/  
+    -webkit-border-radius:3px;/*Safari和Chrome*/  
+    border-radius:3px;/*IE9+*/  
+    background-color:white;  
+    outline:none;  
+	
+	 color: black;
+}  
+
+#radar,#radar_input{
+	position: absolute;
+	width:40%;
+	left:15%;
+	background-color: #434343;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	float:left;
+}
+#radar_input{
+  padding:5px;
+  font-size: 10px;
+  color: white;
+}
+#message{
+	position: absolute;
+	height:150px;
+	width:45%;
+	left:55%;
+	background-color: #434343;
+	overflow-x:auto;
+	overflow-y:auto;
+	float:left;
+}
+#message p{
+  padding-left:5px;padding-top:5px;
+  height:11px;
+  font-size: 10px;
+  color: white;
+}
+#traceip{
+	position: absolute;
+	height:150px;
+	width:45%;
+	left:55%;
+	background-color: #434343;
+	overflow-x:auto;
+	overflow-y:auto;
+	float:left;
+}
+
+
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
+::-webkit-scrollbar  
+{  
+    width: 6px;  
+    height: 6px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    border-radius: 10px;  
+    background-color: #F5F5F5;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    background-color: #555;  
+}  
