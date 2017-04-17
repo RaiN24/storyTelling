@@ -554,7 +554,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
               return {text: d, size: 10 + news[i] * 20/ maxTime, test: "haha"};
             }))
             .padding(5)
-            .rotate(function() { return ~~(Math.random() * 2) * 90; })
+            .rotate(function() { return -45 + Math.random()*90; })
             .font("Impact")
             .fontSize(function(d) { return d.size; })
             .on("end", draw);
