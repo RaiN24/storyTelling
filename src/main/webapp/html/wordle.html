@@ -1,17 +1,43 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
+<style>
+#div_5{
+	position: absolute;
+	left: 290px;
+	top: 540px;
+	width: 320px;
+    height: 160px;
+	border: 1px  solid white;
+
+}
+</style>
+
 <body>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
 <script src="../src/d3.layout.cloud.js"></script>
 <script src="json_by_news.js"></script>
 <script src="json_by_words.js"></script>
+<link rel="stylesheet" href="layout.css" charset="utf-8"></link>
+
+<input type="text" id="fuck"></input>
+<button onclick="submit()"></button>
+<div id="div_5"></div>
+
 <script>
 var fill = d3.scale.category20();
-var svg=d3.select("body").append("svg")
-      .attr("width", 1000)
-      .attr("height", 800);
-draw_wordle(200,200,400,400,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
+var svg=d3.select("#div_5").append("svg")
+      .attr("width", 300)
+      .attr("height", 150);
+draw_wordle(150,75,300,150,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
+
+function submit(){
+		var tmp = document.getElementById("fuck").value;
+		svg.selectAll("text").remove();
+		draw_wordle(150,75,300,150,tmp);
+}
+
 function draw_wordle(x,y,w,h,newsNumber){
          var news = json_by_news[newsNumber];
          var words = [];
@@ -30,12 +56,12 @@ function draw_wordle(x,y,w,h,newsNumber){
             .rotate(function() { return ~~(Math.random() * 2) * 90; })
             .font("Impact")
             .fontSize(function(d) { return d.size; })
-            .on("end", draw);
+            .on("end", draw );
 
         layout.start();
     
         function draw(words) {
-            svg.append("g")
+           p =  svg.append("g")
               .attr("transform", "translate(" + x + "," + y + ")")
             .selectAll("text")
               .data(words)
@@ -50,6 +76,7 @@ function draw_wordle(x,y,w,h,newsNumber){
               .text(function(d) { return d.text; })
              .on("click",function(d,i){
                 var newsList = json_by_words[d.text];
+				console.log("*");
                 // write the function to the timeline
             });
         }
