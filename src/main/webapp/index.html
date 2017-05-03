@@ -60,6 +60,10 @@
 <script>
 ;!function(){
 laydate({
+   elem: '#s'
+
+})
+laydate({
    elem: '#e'
 
 })
@@ -88,7 +92,7 @@ var timeNode = [];              //Ӊҹ֣քɕǚ˽ߝ
 var month = [31,28,31,30,31,30,31,31,30,31,30,31];
 var width = 840;
 
-var begin = [2015,6,21];
+var begin = [2015,7,1];
 var end = [2016,11,9];
 var labels1 = [];                         //ÿٶӉҹ֣Ѽ(ք˽ߝքҠۅ
 var labels2 = []; 
@@ -110,6 +114,8 @@ var axisDraw;
 var jsonWord = [];
 var keyWords;
 var wordleText;
+var drawColor = [];                  // decide which rectangular to be highlighted
+
 
 circles.push([]);
 circles.push([]);
@@ -129,7 +135,7 @@ var tooltip = d3.select("body")
 var svg1=d3.select("#naive")     
 		.append("svg")          
 		.attr("width", $(window).width()*0.78)       
-		.attr("height", 540);		
+		.attr("height", $(window).height()*0.51);		
 
 /*var svg2=d3.select("#simple")     
 		.append("svg")          
@@ -138,12 +144,12 @@ var svg1=d3.select("#naive")
 var svg3=d3.select("#simple")     
 			.append("svg")          
 			.attr("width", $(window).width()*0.78)       
-			.attr("height", 50);
+			.attr("height", $(window).height()*0.09);
 
 
 var svg_4=d3.select("#div_5").append("svg")
-      .attr("width", 300)
-      .attr("height", 150);
+      .attr("width", $(window).width()*0.3)
+      .attr("height", $(window).height()*0.385);
 //draw_wordle(100,100,400,250,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
 
 
@@ -151,6 +157,9 @@ d3.csv("data/data2.csv",function(error,csvdata){
 	if(error)
 		console.log(error);
 	csvData = csvdata;
+	
+	//console.log(csvData);
+	
 	
 });
 $.getJSON("getAllData.json",function(data){

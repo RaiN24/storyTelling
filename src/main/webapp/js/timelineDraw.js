@@ -55,7 +55,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						}
 					})
 					.attr("fill",function(d,i){
-						if(highlight!=i)return "white";
+						if(drawColor[k][i]!=1)return "white";
 						else return "yellow";
 					})
 					.attr("stroke","black")
@@ -121,7 +121,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							tmp = 'n' + tmp;
 							console.log(tmp);
 							svg_4.selectAll("text").remove();
-							draw_wordle(150,75,300,150,tmp,start,end,Xscale); 
+							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,start,end,Xscale); 
 						}
 					})
 					.on("mouseover",function(d,i){
@@ -917,7 +917,7 @@ function timelinePict(head,tail,range,data,csvdata){
 	}
 	span.reverse();
 	
-	
+	//console.log(span);
 	//spanArrange(begin,end,range);
 	
 	for(var j=0;j<timeNode.length;j++){             
@@ -930,6 +930,9 @@ function timelinePict(head,tail,range,data,csvdata){
 	
 	plotArrange(csvdata);
 	
+	console.log(timeNode);
+	console.log(labels1);
+	console.log(csvdata);
 	//console.log(values);
 	
 				
@@ -961,13 +964,20 @@ function timelinePict(head,tail,range,data,csvdata){
 		texts.push([]);
 		candidate.push([]);
 		flag.push(0);
+		
 	}		
 	
 	//console.log(values);
 	
 	labelArrange2();
+	
+	for(var i=0;i<timeNode.length;i++){
+		drawColor.push([]);
+		for(var j=0;j<labels2.length;j++)
+			drawColor[i].push(0);
+	}
 	//console.log(labels2);
 			
 	pict_2(svg1,timeNode,labels2,data,-1,head,tail);
 
-	}
+}

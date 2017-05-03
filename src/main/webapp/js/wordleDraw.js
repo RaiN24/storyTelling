@@ -1,4 +1,7 @@
 var word_number_max = 50;
+
+
+
 function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
          var news = json_by_news[newsNumber];
          var words = [];
@@ -75,24 +78,21 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 								break;
 						}
 						
-						
-						//console.log(j);
-						//console.log(tmpIndex);
-						//console.log("\n");
-						if(j>=start&&j<=end){
+						drawColor[j][tmpIndex] = 1;
+						//if(j>=start&&j<=end){
 							//console.log(rects[j][0][tmpIndex]);
-							var len = rects[j][0].length;
-							for(var p=0;p<len;p++){
-								if(rects[j][0].length!=0){
-									rects[j][0][p].remove();
-									texts[j][0][p].remove();
-								}
-							}
-							f(svg1,labels2,jsonData,-1,-1,j,Xscale,-1,start,end,tmpIndex);
-						}
+							//var len = rects[j][0].length;
+							//for(var p=0;p<len;p++){
+							//	if(rects[j][0].length!=0){
+							//		rects[j][0][p].remove();
+							//		texts[j][0][p].remove();
+							//	}
+						//	}
+						//	f(svg1,labels2,jsonData,-1,-1,j,Xscale,-1,start,end,tmpIndex);
+						//}
 					}
-					//rects[6][1].attr("fill","yellow");
-            		// write the function to the timeline
+					pict_2(svg1,timeNode,labels2,data,-1,head,tail);
+					
         		});
             
             

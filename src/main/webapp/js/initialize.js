@@ -11,8 +11,8 @@ function matchMonth1(s, t){
 	var index1,index2;
 	for(var i=0;i<12;i++){
 		if(m[i]==s[1])
-			index1 = i;
-		
+			index1 = i+1;
+			
 	}
 	//console.log(index1);
 	if(index1>t[1])return 1;
@@ -34,7 +34,7 @@ function matchDay(s,t){
 	else return -1;
 }
 
-function match1(s,t1,t2){                                            //?????¨·¡¦???????????¦¶?             
+function match1(s,t1,t2){                                            //?????ï¿½ï¿½ï¿½ï¿½???????????ï¿½ï¿½?             
 	if(matchYear(s,t1)==0&&matchYear(s,t2)==0){
 		if(matchMonth1(s,t1)==0&&matchMonth1(s,t2)==0){
 			if(matchDay(s,t1)==1&&matchDay(s,t2)==-1)
@@ -186,6 +186,13 @@ function spanArrange(begin,end,range){
 function labelArrange1(){
 	for(var i=0;i<span.length;i++){
 		for(var j=0;j<timeNode.length;j++){
+		
+			if(i==31)
+				console.log(span[i]);
+			
+			//if(j==24)console.log(timeNode[j]);
+			
+			
 			if(match1(span[i],timeNode[j][0],timeNode[j][1])){
 				labels1[j].push(i);
 				break;
