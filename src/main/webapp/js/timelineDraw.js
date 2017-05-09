@@ -25,14 +25,17 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("x",function(d,i){
 						if(i<=21){
 							if(chosen>=0){
-								if(k-start<=chosen)
-									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
-								else if(k-start>=chosen+1)
-									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
+								if(k-start==chosen)
+									return Xscale(k-start)-30;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 								
+								else
+									return Xscale(k-start)+25;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
 							}
 							else
-								return parseInt(width/(end-start))*(k-start)+9;
+								//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
+								return Xscale(k-start)+10;
 						}
 						
 					})
@@ -62,12 +65,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("width",function(d,i){
 						if(chosen>=0){
 							if(k-start==chosen)
-								return parseInt(width/(end-start))*2;
+								return parseInt($(window).width()*0.78/(end-start+1))*1.5;
 							else 
-								return parseInt((width-(width/(end-start))*2)/(end-start-1));
+								return parseInt($(window).width()*0.78/(end-start+1))*0.5;
 						}
 						else
-							return parseInt(width/(end-start));
+							return parseInt($(window).width()*0.78/(end-start+1));
+							//return Xscale(k-start)+10;
 					})
 					.attr("height",function(d,i){
 						if(m==-1)	
@@ -119,7 +123,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							$("#content").css("color","rgb(20,68,106)");	
 							var tmp = 1344 - tmpStr[i];
 							tmp = 'n' + tmp;
-							console.log(tmp);
+							//console.log(tmp);
 							svg_4.selectAll("text").remove();
 							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,start,end,Xscale); 
 						}
@@ -203,15 +207,19 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("x",function(d,i){
 						if(i<=21){
 							if(chosen>=0){
-								if(k-start<=chosen)
-									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
-								else if(k-start>=chosen+1)
-									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
+								if(k-start==chosen)
+									return Xscale(k-start)-30;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 								
+								else
+									return Xscale(k-start)+25;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
 							}
 							else
-								return parseInt(width/(end-start))*(k-start)+9;
+								//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
+								return Xscale(k-start)+10;
 						}
+						
 						
 					})
 					.attr("y",function(d,i){
@@ -294,16 +302,20 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						.attr("transform","translate("+$(window).width()*0.01+","+$(window).height()*0.21+")")
 						.attr("x",function(d,i){
 							if(i<=20){
-							if(chosen>=0){
-								if(k-start<=chosen)
-									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+9;
-								else if(k-start>=chosen+1)
-									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+9;
-								
+								if(chosen>=0){
+									if(k-start==chosen)
+										return Xscale(k-start)-30;
+										//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
+									
+									else
+										return Xscale(k-start)+25;
+										//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
+								}
+								else
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
+									return Xscale(k-start)+10;
 							}
-							else
-								return parseInt(width/(end-start))*(k-start)+9;
-						}
+							
 						
 					})
 						.attr("y",function(d,i){
@@ -409,14 +421,14 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("cx",function(d,i){
 						if(i<=21){
 							if(chosen>=0){
-								if(k-start<=chosen)
-									return (k-start)*parseInt((width-(width/(end-start))*2)/(end-start-1))+14;
-								else if(k-start>=chosen+1)
-									return (k-start-1)*parseInt((width-(width/(end-start))*2)/(end-start-1))+parseInt(width/(end-start))*2+14;
+								if(k-start==chosen)
+									return parseInt($(window).width()*0.78/(end-start))*(k-start)*0.97;
+								else
+									return parseInt($(window).width()*0.78/(end-start))*(k-start)*1.05;
 								
 							}
 							else
-								return parseInt(width/(end-start))*(k-start)+14;
+								return parseInt($(window).width()*0.78/(end-start))*(k-start)*1.05;
 						}
 						
 					})
@@ -526,6 +538,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h,isTimeline){
 							var x = 0;
 							for(x=0;x<2;x++)
 								if(d==v[x][i])break;
+							
 							
 							circles[x][i].attr("fill","yellow");
 							for(var q=start;q<end;q++){
@@ -888,13 +901,26 @@ function spanChosen(r,start,end){
 	//console.log(a);
 	//console.log(b);
 	
-	timelinePict(a,b,r,jsonData,csvData);
+	
+	
+	
+	//$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	if(r==7)$(".show").animate({width:($(window).width()*0.02)+"px",left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	else if(r==14)$(".show").animate({width:($(window).width()*0.04)+"px",left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	else if(r==30)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*30/21)+"px"},10);
+	else if(r==90)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*90/21)+"px"},10);
+	else if(r==180)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*180/21)+"px"},10);
+	else if(r==365)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*365/21)+"px"},10);
+	
+	timelinePict(a,b,r,jsonData,csvData,1);
 	
 }
 
-function timelinePict(head,tail,range,data,csvdata){
+function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	svg1.selectAll('*').remove();
 	span=[];labels1=[];values=[];
+	//timeNode.length=0;
+	//if(timeNode.length>0)timeNode = [];
 	spanArrange(begin,end,range);
 	for(var i=0;i<csvdata.length;i+=2){                               
 		var date = csvdata[i]["date"];
@@ -930,14 +956,18 @@ function timelinePict(head,tail,range,data,csvdata){
 	
 	plotArrange(csvdata);
 	
-	console.log(timeNode);
-	console.log(labels1);
-	console.log(csvdata);
-	//console.log(values);
-	
+	/*if(!isTimeline){
+		console.log(timeNode);
+		console.log(labels1);
+		console.log(csvdata);
+		console.log(values);
+	}*/
 				
-	pict_1(svg1,timeNode,values,head,tail,150,1);
+	pict_1(svg1,timeNode,values,head,tail,150,isTimeline);
 	
+	//if(!isTimeline)timeNode = [];
+	
+	if(isTimeline){
 	
 	dateOfEvents=[];
 	for(var i=0;i<data.length;i++){
@@ -977,7 +1007,7 @@ function timelinePict(head,tail,range,data,csvdata){
 			drawColor[i].push(0);
 	}
 	//console.log(labels2);
-			
-	pict_2(svg1,timeNode,labels2,data,-1,head,tail);
-
+		
+		pict_2(svg1,timeNode,labels2,data,-1,head,tail);
+	}
 }

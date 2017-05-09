@@ -154,6 +154,7 @@ function match2(s,t1,t2){
 
 function spanArrange(begin,end,range){                       
 	//console.log(begin);
+	//if(timeNode.length>0)timeNode = [];
 	while(1){
 		//cc++;
 		var tmp = [];
@@ -187,8 +188,8 @@ function labelArrange1(){
 	for(var i=0;i<span.length;i++){
 		for(var j=0;j<timeNode.length;j++){
 		
-			if(i==31)
-				console.log(span[i]);
+			//if(i==31)
+				//console.log(span[i]);
 			
 			//if(j==24)console.log(timeNode[j]);
 			
@@ -221,6 +222,7 @@ function plotArrange(data){
 		if(labels1[i].length==1){
 			values[i].push(parseFloat(data[span[labels1[i][0]][3]]["value"]));
 			values[i].push(parseFloat(data[span[labels1[i][0]][4]]["value"]));
+			//console.log(span[labels1[i][0]]);
 		}
 		
 		else if(labels1[i].length>1){

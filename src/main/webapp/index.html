@@ -170,8 +170,16 @@ $.getJSON("getAllData.json",function(data){
 	
 	//console.log(jsonData);
 	
-	timelinePict(0,12,7,jsonData,csvData);
+	//timelinePict(svg3,0,12,1,jsonData,csvData,0);
+	//timeNode = [];
+	timelinePict(0,12,7,jsonData,csvData,1);
+	
+	//timeNode = [];
+	//spanArrange(begin,end,1);
 	pict_1(svg3,timeNode,values,0,values.length,150,0);
+	
+	//timeNode = [];
+	//spanArrange(begin,end,7);
 	
 });
 
@@ -182,19 +190,19 @@ $(document).ready(function(){
 	$(".show").mousedown(function(e){ 
 		$(this).css("cursor","move");
 		var offset = $(this).offset();
-		var x = $(window).width() * 0.02;
+		var x = $(window).width() * 0.06;
 		//var y = document.body.clientHeight * 0.55;
 		$(document).bind("mousemove",function(ev){ 
 			$(".show").stop();
 			var _x = ev.pageX - x;
-			if(_x < $(window).width()*0.04)_x = $(window).width()*0.04;
+			if(_x < $(window).width()*0.1)_x = $(window).width()*0.06;
 			if(_x > $(window).width()*0.70)_x = $(window).width()*0.70;
 			var _y = $(window).height() * 0.51;
 			scaler = parseInt(_x/ ($(window).width()*0.72)*timeNode.length*60/72);
-			//onsole.log(scaler);
+			//console.log(scaler);
 			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
 			
-			timelinePict(scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)),7,jsonData,csvData);
+			timelinePict(scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)),7,jsonData,csvData,1);
 		}); 
 
 	}); 

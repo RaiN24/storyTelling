@@ -2,7 +2,7 @@ var word_number_max = 50;
 
 
 
-function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
+function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){	
          var news = json_by_news[newsNumber];
          var words = [];
          var maxTime = 0;
@@ -63,8 +63,12 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
               })
               .text(function(d) {return d.text; })
               .on("click",function(d,i){
+            	  for(var i=0;i<drawColor.length;i++)
+          			for(var j=0;j<drawColor[i].length;j++)
+          				drawColor[i][j] = 0;
+            	  
           		  var newsList = json_by_words[d.text];
-          			pict_2(svg1,timeNode,labels2,jsonData,-1,start,end,0);
+          			//pict_2(svg1,timeNode,labels2,jsonData,-1,start,end,0);
 					//console.log(rects);
 					for(var i=0;i<newsList.length;i++){
 						var index = parseInt(newsList[i].substring(1,4))-101;
@@ -91,7 +95,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 						//	f(svg1,labels2,jsonData,-1,-1,j,Xscale,-1,start,end,tmpIndex);
 						//}
 					}
-					pict_2(svg1,timeNode,labels2,data,-1,head,tail);
+					pict_2(svg1,timeNode,labels2,jsonData,-1,scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)));
 					
         		});
             
