@@ -24,7 +24,9 @@ import org.apache.poi.xssf.eventusermodel.XSSFReader;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.xb.xsdschema.impl.PublicImpl;
 import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorkbookDocument;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,17 +36,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.domain.News;
+import com.example.domain.User;
+import com.example.service.UserService;
+
 @RestController
 @SpringBootApplication
 public class DemoApplication {
+	@Autowired
+	private UserService userService;
 	@RequestMapping("/")
-	@ResponseBody
 	public ModelAndView map(){
 		ModelAndView mv=new ModelAndView("index");
 		return mv;
 	}
 	@RequestMapping("/search")
-	@ResponseBody
 	public ModelAndView search(){
 		ModelAndView mv=new ModelAndView("search_div");
 		return mv;
