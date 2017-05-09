@@ -95,6 +95,9 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 						//	f(svg1,labels2,jsonData,-1,-1,j,Xscale,-1,start,end,tmpIndex);
 						//}
 					}
+					svg1.selectAll('rect').remove();
+					svg1.selectAll('text').remove();
+					svg1.selectAll('axis').remove();
 					pict_2(svg1,timeNode,labels2,jsonData,-1,scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)));
 					
         		});

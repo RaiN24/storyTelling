@@ -26,35 +26,38 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						if(i<=21){
 							if(chosen>=0){
 								if(k-start==chosen)
-									return Xscale(k-start)-30;
+									return (Xscale(k-start)+Xscale(k-start+1))/2-30;
 									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 								
 								else
-									return Xscale(k-start)+25;
+									return (Xscale(k-start)+Xscale(k-start+1))/2+25;
 									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
 							}
-							else
-								//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
-								return Xscale(k-start)+10;
+							else{
+								if(k<end-1)
+									return (Xscale(k-start)+Xscale(k-start+1))/2+10;
+								else 
+									return Xscale(k-start)+(Xscale(k-start)-Xscale(k-start-1))+10;
+							}
 						}
 						
 					})
 					.attr("y",function(d,i){
 						if(m==-1)
-							return 161-(i*10+2);
+							return $(window).height()*0.226-(i*10+2);
 						else{
 							if(d!=-1&&d!=-2){
 								if(i<z)
-									return 161-(i*10+2);
+									return $(window).height()*0.226-(i*10+2);
 								else if(i>z)
-									return 161-(i*10+2)-40;
+									return $(window).height()*0.226-(i*10+2)-40;
 								else	
-									return 161-(i*10+2)-40;
+									return $(window).height()*0.226-(i*10+2)-40;
 							}
 						
-							else if(d==-2)return 161-(tmpStr.length-i)*10;
+							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-i)*10;
 							
-							else return 161 + 12;
+							else return $(window).height()*0.226 + 12;
 						}
 					})
 					.attr("fill",function(d,i){
@@ -208,30 +211,33 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						if(i<=21){
 							if(chosen>=0){
 								if(k-start==chosen)
-									return Xscale(k-start)-30;
+									return (Xscale(k-start)+Xscale(k-start+1))/2-30;
 									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 								
 								else
-									return Xscale(k-start)+25;
+									return (Xscale(k-start)+Xscale(k-start+1))/2+25;
 									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
 							}
-							else
-								//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
-								return Xscale(k-start)+10;
+							else{
+									if(k<end-1)
+										return (Xscale(k-start)+Xscale(k-start+1))/2+10;
+									else 
+										return Xscale(k-start)+(Xscale(k-start)-Xscale(k-start-1))+10;
+							}
 						}
 						
 						
 					})
 					.attr("y",function(d,i){
 						if(m==-1)
-							return 161-(i*10+2)+10;
+							return $(window).height()*0.226-(i*10+2)+10;
 						else{
 							if(i<z)
-								return 161-(i*10+2)+10;
+								return $(window).height()*0.226-(i*10+2)+10;
 							else if(i>z)
-								return 161-(i*10+2)-40+10;
+								return $(window).height()*0.226-(i*10+2)-40+10;
 							else	
-								return 161-(i*10+2)-40+10;
+								return $(window).height()*0.226-(i*10+2)-40+10;
 						}
 					})
 					.text(function(d,i){
@@ -304,16 +310,19 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							if(i<=20){
 								if(chosen>=0){
 									if(k-start==chosen)
-										return Xscale(k-start)-30;
+										return (Xscale(k-start)+Xscale(k-start+1))/2-30;
 										//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 									
 									else
-										return Xscale(k-start)+25;
+										return (Xscale(k-start)+Xscale(k-start+1))/2+25;
 										//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
 								}
-								else
-									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.06;
-									return Xscale(k-start)+10;
+								else{
+									if(k<end-1)
+										return (Xscale(k-start)+Xscale(k-start+1))/2+10;
+									else 
+										return Xscale(k-start)+(Xscale(k-start)-Xscale(k-start-1))+10;
+								}
 							}
 							
 						
@@ -322,26 +331,26 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							if(k-start==chosen){
 								if(z==i){
 									if(m==-1)
-										return 161-(i*10+2)+10;
+										return $(window).height()*0.226-(i*10+2)+10;
 									else{
 										if(i<z)
-											return 161-(i*10+2)+10;
+											return $(window).height()*0.226-(i*10+2)+10;
 										else if(i>z)
-											return 161-(i*10+2)-40+10;
+											return $(window).height()*0.226-(i*10+2)-40+10;
 										else	
-											return 161-(i*10+2)-40+10+12*w;
+											return $(window).height()*0.226-(i*10+2)-40+10+12*w;
 									}
 								}
 								else{	
 									if(m==-1)
-										return 161-(i*10+2)+10;
+										return $(window).height()*0.226-(i*10+2)+10;
 									else{
 										if(i<z)
-											return 161-(i*10+2)+10;
+											return $(window).height()*0.226-(i*10+2)+10;
 										else if(i>z)
-											return 161-(i*10+2)-40+10;
+											return $(window).height()*0.226-(i*10+2)-40+10;
 										else	
-											return 161-(i*10+2)-40+10+5*w;
+											return $(window).height()*0.226-(i*10+2)-40+10+5*w;
 									}
 								}
 							}
@@ -435,14 +444,14 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("cy",function(d,i){
 						if(m!=-1){
 							if(i<z)
-								return 161-(i*10+2)+20;
+								return $(window).height()*0.226-(i*10+2)+20;
 							else if(i>z)
-								return 161-(i*10+2)-20+20;
+								return $(window).height()*0.226-(i*10+2)-20+20;
 							else	
-								return 161-(i*10+2)-20+20;
+								return $(window).height()*0.226-(i*10+2)-20+20;
 						}
 						else 
-							return 161;
+							return $(window).height()*0.226;
 					})
 					.attr("fill",function(d,i){
 						if(d!=-1&&d!=-2){
