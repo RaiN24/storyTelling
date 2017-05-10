@@ -1,4 +1,4 @@
-package com.example;
+package com.example.domain;
 
 public class News {
 	private String source;
@@ -8,7 +8,7 @@ public class News {
 	private String pageTitle;
 	private String introduction;
 	private String date;
-	News(String source,String title,String content,String keyWord,String papgeTitle,String introduction,String date){
+	public News(String source,String title,String content,String keyWord,String papgeTitle,String introduction,String date){
 		this.source=source;
 		this.title=title;
 		this.content=content;
