@@ -25,7 +25,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("x",function(d,i){
 						if(i<=21){
 							if(chosen>=0){
-								if(k-start==chosen)
+								if(k-start==chosen) 
 									return (Xscale(k-start)+Xscale(k-start+1))/2-30;
 									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
 								
