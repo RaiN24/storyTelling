@@ -61,8 +61,9 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						}
 					})
 					.attr("fill",function(d,i){
-						if(drawColor[k][i]!=1)return "white";
-						else return "yellow";
+						if(drawColor[k][i]==1)return "yellow";
+						else if(rectSelected[k][i]==1)return "purple";
+						else return "white";
 					})
 					.attr("stroke","black")
 					.attr("width",function(d,i){
@@ -119,6 +120,9 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							}
 						}
 						else{
+							rectSelected[k][i] = 1;
+							//console.log(rectSelected);
+							
 							var newsContent = document.getElementById("content");
 							//console.log(data[tmpStr[i]]["content"]);
 							newsContent.innerHTML = data[tmpStr[i]]["content"];
@@ -914,12 +918,12 @@ function spanChosen(r,start,end){
 	
 	
 	//$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
-	if(r==7)$(".show").animate({width:($(window).width()*0.02)+"px",left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
-	else if(r==14)$(".show").animate({width:($(window).width()*0.04)+"px",left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
-	else if(r==30)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*30/21)+"px"},10);
-	else if(r==90)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*90/21)+"px"},10);
-	else if(r==180)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*180/21)+"px"},10);
-	else if(r==365)$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.04*365/21)+"px"},10);
+	if(r==7)$(".show").animate({width:($(window).width()*0.1*(b-a+1)/11)+"px",left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	else if(r==14)$(".show").animate({width:($(window).width()*0.2*(b-a+1)/11)+"px",left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	else if(r==30)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*30/21*(b-a+1)/11)+"px"},10);
+	else if(r==90)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*90/21*(b-a+1)/11)+"px"},10);
+	else if(r==180)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*180/21*(b-a+1)/11)+"px"},10);
+	else if(r==365)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*365/21*(b-a+1)/11)+"px"},10);
 	
 	timelinePict(a,b,r,jsonData,csvData,1);
 	
@@ -1012,10 +1016,13 @@ function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	
 	for(var i=0;i<timeNode.length;i++){
 		drawColor.push([]);
-		for(var j=0;j<labels2.length;j++)
+		rectSelected.push([]);
+		for(var j=0;j<labels2.length;j++){
 			drawColor[i].push(0);
+			rectSelected[i].push(0);
+		}
 	}
-	//console.log(labels2);
+	//console.log(rectSelected);
 		
 		pict_2(svg1,timeNode,labels2,data,-1,head,tail);
 	}

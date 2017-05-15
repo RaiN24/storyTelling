@@ -43,13 +43,12 @@
 
 <h3>最近时间区间选择</h3>
 <ul class="dowebok">
-	<li><input type="radio" name="radio" data-labelauty="7D" onclick="spanChosen(7,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="14D" onclick="spanChosen(14,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="30D" onclick="spanChosen(30,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="3M" onclick="spanChosen(90,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="6M" onclick="spanChosen(180,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="1Y" onclick="spanChosen(365,[2015,6,21],[2016,11,9])"></li>
-	<li><input type="radio" name="radio" data-labelauty="MAX" onclick="spanChosen(1500,[2015,6,21],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="7D" checked="true" onclick="spanChosen(7,[2015,7,1],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="14D" onclick="spanChosen(14,[2015,7,1],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="30D" onclick="spanChosen(30,[2015,7,1],[2016,11,9])"></li><br/>
+	<li><input type="radio" name="radio" data-labelauty="3M" onclick="spanChosen(90,[2015,7,1],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="6M" onclick="spanChosen(180,[2015,7,1],[2016,11,9])"></li>
+	<li><input type="radio" name="radio" data-labelauty="1Y" onclick="spanChosen(365,[2015,7,1],[2016,11,9])"></li>
 	<!--<li><input type="radio" name="radio" disabled data-labelauty="不可用"></li>-->
 </ul>
 
@@ -115,6 +114,7 @@ var jsonWord = [];
 var keyWords;
 var wordleText;
 var drawColor = [];                  // decide which rectangular to be highlighted
+var rectSelected = [];
 
 
 circles.push([]);
@@ -125,7 +125,8 @@ var fill = d3.scale.category20();
 var container = document.querySelector('#content');
 Ps.initialize(container);
 
-
+$("#s").val("2015-07-01");
+$("#e").val("2015-09-16");
 
 var tooltip = d3.select("body")
 		.append("div")
@@ -137,10 +138,10 @@ var svg1=d3.select("#naive")
 		.attr("width", $(window).width()*0.78)       
 		.attr("height", $(window).height()*0.51);		
 
-/*var svg2=d3.select("#simple")     
+var svg2=d3.select("#search_div")     
 		.append("svg")          
-		.attr("width", 900)       
-		.attr("height", 30);*/	
+		.attr("width", $(window).width()*0.17)       
+		.attr("height", $(window).height()*0.3);	
 var svg3=d3.select("#simple")     
 			.append("svg")          
 			.attr("width", $(window).width()*0.78)       
@@ -150,7 +151,32 @@ var svg3=d3.select("#simple")
 var svg_4=d3.select("#div_5").append("svg")
       .attr("width", $(window).width()*0.3)
       .attr("height", $(window).height()*0.385);
-//draw_wordle(100,100,400,250,"n101"); //draw_wordle is the function when user click the news on the timeline, it will draw the wordle.
+
+
+svg2.append("circle")
+	.attr("cx",$(window).width()*0.03)
+	.attr("cy",$(window).height()*0.09)
+	.attr("r",5)
+	.attr("fill","blue");
+	
+svg2.append("text")
+	.attr("x",$(window).width()*0.07)
+	.attr("y",$(window).height()*0.095)
+	.text("共和党")
+	.attr("fill","white");
+	
+svg2.append("circle")
+.attr("cx",$(window).width()*0.03)
+.attr("cy",$(window).height()*0.15)
+.attr("r",5)
+.attr("fill","red");	
+
+svg2.append("text")
+.attr("x",$(window).width()*0.07)
+.attr("y",$(window).height()*0.155)
+.text("民主党")
+.attr("fill","white");
+	
 
 
 d3.csv("data/data2.csv",function(error,csvdata){
@@ -195,14 +221,14 @@ $(document).ready(function(){
 		$(document).bind("mousemove",function(ev){ 
 			$(".show").stop();
 			var _x = ev.pageX - x;
-			if(_x < $(window).width()*0.1)_x = $(window).width()*0.06;
+			if(_x < $(window).width()*0.06)_x = $(window).width()*0.06;
 			if(_x > $(window).width()*0.70)_x = $(window).width()*0.70;
 			var _y = $(window).height() * 0.51;
-			scaler = parseInt(_x/ ($(window).width()*0.72)*timeNode.length*60/72);
+			scaler = parseInt((_x-$(window).width()*0.06)/ ($(window).width()*0.72)*timeNode.length*60/72);
 			//console.log(scaler);
 			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
 			
-			timelinePict(scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)),7,jsonData,csvData,1);
+			timelinePict(scaler,scaler+$(".show").width()/($(window).width()*0.78)*timeNode.length,7,jsonData,csvData,1);
 		}); 
 
 	}); 

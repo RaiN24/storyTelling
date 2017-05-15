@@ -51,6 +51,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
            wordleImage =  svg_4.append("g")
               .attr("transform", "translate(" + x + "," + y + ")")
             .selectAll("text")
+            .attr("class","wordleText")
               .data(words)
             .enter().append("text")
               .style("font-size", function(d) { return d.size + "px"; })
@@ -98,6 +99,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 					svg1.selectAll('rect').remove();
 					svg1.selectAll('text').remove();
 					svg1.selectAll('axis').remove();
+					svg1.selectAll('tick').remove();
 					pict_2(svg1,timeNode,labels2,jsonData,-1,scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)));
 					
         		});
