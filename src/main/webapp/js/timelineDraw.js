@@ -926,7 +926,7 @@ function spanChosen(r,start,end){
 	//console.log(timeNode);
 	//console.log(s);
 	//console.log(e);
-
+ 
 	var a,b;
 	for(a=0;a<timeNode.length;a++)
 		if(match2(s,timeNode[a][0],timeNode[a][1]))
