@@ -224,7 +224,7 @@ $(document).ready(function(){
 			if(_x < $(window).width()*0.06)_x = $(window).width()*0.06;
 			if(_x > $(window).width()*0.70)_x = $(window).width()*0.70;
 			var _y = $(window).height() * 0.51;
-			scaler = parseInt((_x-$(window).width()*0.06)/ ($(window).width()*0.72)*timeNode.length*60/72);
+			scaler = parseInt((_x-$(window).width()*0.06)/ ($(window).width()*0.72)*timeNode.length*0.98);
 			//console.log(scaler);
 			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
 			
@@ -243,6 +243,7 @@ d3.json("data/json_by_words.json",function(data){
 });
 
 
+//console.log(json_by_news);
 
 
 </script>

@@ -44,20 +44,20 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.attr("y",function(d,i){
 						if(m==-1)
-							return $(window).height()*0.226-(i*10+2);
+							return $(window).height()*0.226-i*$(window).height()*0.015;
 						else{
 							if(d!=-1&&d!=-2){
 								if(i<z)
-									return $(window).height()*0.226-(i*10+2);
+									return $(window).height()*0.226-i*$(window).height()*0.015;
 								else if(i>z)
-									return $(window).height()*0.226-(i*10+2)-40;
+									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
 								else	
-									return $(window).height()*0.226-(i*10+2)-40;
+									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
 							}
 						
-							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-i)*10;
+							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-i)*$(window).height()*0.015;
 							
-							else return $(window).height()*0.226 + 12;
+							else return $(window).height()*0.226 + $(window).height()*0.015;
 						}
 					})
 					.attr("fill",function(d,i){
@@ -79,13 +79,13 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.attr("height",function(d,i){
 						if(m==-1)	
-							return 10;
+							return $(window).height()*0.015;
 						else{
 							if(d!=-1&&d!=-2){
 								if(i==z)
-									return 50;
+									return $(window).height()*0.075;
 								else 
-									return 10;
+									return $(window).height()*0.015;
 						
 							}
 							else return 0;
@@ -94,16 +94,17 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.on("click",function(d,i){
 						if(d==-1){
 							if(tmpLength!=len){
-								for(var p=0;p<=len-flag[k]*20+1;p++){
-									if(rects[k][0].length!=0){
-										//console.log(texts[k][0][p]["text"]);
-										rects[k][0][p].remove();
-										texts[k][0][p].remove();
-										candidate[k][0][p].remove();
+									for(var p=0;p<=len-flag[k]*20+1;p++){
+										if(rects[b][0].length!=0){
+											//console.log(texts[k][0][p]["text"]);
+											rects[k][0][p].remove();
+											texts[k][0][p].remove();
+											candidate[k][0][p].remove();
+										}
 									}
-								}
-								flag[k]++;
-								f(svg,num,data,-1,-1,k,Xscale,chosen,start,end);
+									flag[k]++;
+									f(svg,num,data,-1,-1,k,Xscale,chosen,start,end);
+								
 							}
 						}
 						else if(d==-2){
@@ -120,7 +121,10 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							}
 						}
 						else{
-							rectSelected[k][i] = 1;
+							
+							if(rectSelected[k][i]==0){
+								rectSelected[k][i] = 1;
+							
 							//console.log(rectSelected);
 							
 							var newsContent = document.getElementById("content");
@@ -128,11 +132,17 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							newsContent.innerHTML = data[tmpStr[i]]["content"];
 							$("#content").css("font-size",12);
 							$("#content").css("color","rgb(20,68,106)");	
-							var tmp = 1344 - tmpStr[i];
+							var tmp = tmpStr[i] ;
 							tmp = 'n' + tmp;
 							//console.log(tmp);
 							svg_4.selectAll("text").remove();
-							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,start,end,Xscale); 
+							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,start,end,Xscale);
+							}
+							else {
+								rectSelected[k][i] = 0;
+								svg_4.selectAll("text").remove();
+								$("#content").remove();
+							}
 						}
 					})
 					.on("mouseover",function(d,i){
@@ -173,21 +183,22 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						//console.log("*");
 					
 						if(d!=-1&&d!=-2){
-							for(var p=0;p<len-20*flag[k];p++){
+							
+								for(var p=0;p<len-20*flag[k];p++){
 								
-								rects[k][0][p].remove();
-								candidate[k][0][p].remove();
-								texts[k][0][p].remove();
+									rects[k][0][p].remove();
+									candidate[k][0][p].remove();
+									texts[k][0][p].remove();
 						
-							}	
+								}	
 							
-							for(var v=1;v<l;v++){
-								var a=texts[k][v][0].length;
-								for(var p=0;p<a;p++)
-									texts[k][v][0][p].remove();
-							}
+								for(var v=1;v<l;v++){
+									var a=texts[k][v][0].length;
+									for(var p=0;p<a;p++)
+										texts[k][v][0][p].remove();
+								}
 							
-							if(tmp.length!=len&&tmp.length>=20){
+								if(tmp.length!=len&&tmp.length>=20){
 									rects[k][0][len-20*flag[k]].remove();
 									texts[k][0][len-20*flag[k]].remove();
 									candidate[k][0][len-20*flag[k]].remove();
@@ -195,9 +206,10 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 									texts[k][0][len-20*flag[k]+1].remove();
 									candidate[k][0][len-20*flag[k]+1].remove();
 									
-							}
+								}
 						
-							f(svg,num,data,i,-1,k,Xscale,chosen,start,end,highlight);
+								f(svg,num,data,i,-1,k,Xscale,chosen,start,end,highlight);
+							
 						}
 						
 						
@@ -234,14 +246,14 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.attr("y",function(d,i){
 						if(m==-1)
-							return $(window).height()*0.226-(i*10+2)+10;
+							return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.012;
 						else{
 							if(i<z)
-								return $(window).height()*0.226-(i*10+2)+10;
+								return $(window).height()*0.226-i*$(window).height()*0.015;
 							else if(i>z)
-								return $(window).height()*0.226-(i*10+2)-40+10;
+								return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
 							else	
-								return $(window).height()*0.226-(i*10+2)-40+10;
+								return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
 						}
 					})
 					.text(function(d,i){
@@ -267,12 +279,12 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.attr("height",function(d,i){
 						if(m==-1)	
-							return 10;
+							return $(window).height()*0.015;
 						else{
 							if(i==z)
-								return 50;
+								return $(window).height()*0.075;
 							else 
-								return 10;
+								return $(window).height()*0.015;
 						
 						}				
 					})
@@ -335,40 +347,40 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							if(k-start==chosen){
 								if(z==i){
 									if(m==-1)
-										return $(window).height()*0.226-(i*10+2)+10;
+										return $(window).height()*0.226-i*$(window).height()*0.015;
 									else{
 										if(i<z)
-											return $(window).height()*0.226-(i*10+2)+10;
+											return $(window).height()*0.226-i*$(window).height()*0.015;
 										else if(i>z)
-											return $(window).height()*0.226-(i*10+2)-40+10;
+											return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
 										else	
-											return $(window).height()*0.226-(i*10+2)-40+10+12*w;
+											return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06+$(window).height()*0.017*w;
 									}
 								}
 								else{	
 									if(m==-1)
-										return $(window).height()*0.226-(i*10+2)+10;
+										return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.015;
 									else{
 										if(i<z)
-											return $(window).height()*0.226-(i*10+2)+10;
+											return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.015;
 										else if(i>z)
-											return $(window).height()*0.226-(i*10+2)-40+10;
+											return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
 										else	
-											return $(window).height()*0.226-(i*10+2)-40+10+5*w;
+											return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045+$(window).height()*0.0075*w;
 									}
 								}
 							}
 						
 							else{
 								if(m==-1)
-									return 161-(i*10+2)+10;
+									return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.015;
 								else{
 									if(i<z)
-										return 161-(i*10+2)+10;
+										return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.015;
 									else if(i>z)
-										return 161-(i*10+2)-40+10;
+										return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
 									else	
-										return 161-(i*10+2)-40+10+5*w;
+										return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045+$(window).height()*0.0075*w;
 								}
 							}
 						})
@@ -401,12 +413,12 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.attr("height",function(d,i){
 						if(m==-1)	
-							return 10;
+							return $(window).height()*0.015;
 						else{
 							if(i==z)
-								return 50;
+								return $(window).height()*0.075;
 							else 
-								return 10;
+								return $(window).height()*0.015;
 						
 						}				
 					})
@@ -432,30 +444,42 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					.attr("transform","translate("+$(window).width()*0.01+","+$(window).height()*0.21+")")
 					.attr("class","ci")
 					.attr("cx",function(d,i){
-						if(i<=21){
-							if(chosen>=0){
-								if(k-start==chosen)
-									return parseInt($(window).width()*0.78/(end-start))*(k-start)*0.97;
-								else
-									return parseInt($(window).width()*0.78/(end-start))*(k-start)*1.05;
-								
+						if(m==-1)
+							return $(window).height()*0.226-i*$(window).height()*0.015;
+						else{
+							if(d!=-1&&d!=-2){
+								if(i<z)
+									return $(window).height()*0.226-i*$(window).height()*0.015;
+								else if(i>z)
+									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
+								else	
+									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
 							}
-							else
-								return parseInt($(window).width()*0.78/(end-start))*(k-start)*1.05;
+						
+							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-i)*$(window).height()*0.015;
+							
+							else return $(window).height()*0.226 + $(window).height()*0.015;
 						}
 						
 					})
 					.attr("cy",function(d,i){
-						if(m!=-1){
-							if(i<z)
-								return $(window).height()*0.226-(i*10+2)+20;
-							else if(i>z)
-								return $(window).height()*0.226-(i*10+2)-20+20;
-							else	
-								return $(window).height()*0.226-(i*10+2)-20+20;
+						if(i<=21){
+							if(chosen>=0){
+								if(k-start==chosen)
+									return (Xscale(k-start)+Xscale(k-start+1))/2-30;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.3;
+								
+								else
+									return (Xscale(k-start)+Xscale(k-start+1))/2+25;
+									//return parseInt($(window).width()*0.78/(end-start+1))*(k-start)*1.5;
+							}
+							else{
+									if(k<end-1)
+										return (Xscale(k-start)+Xscale(k-start+1))/2+10;
+									else 
+										return Xscale(k-start)+(Xscale(k-start)-Xscale(k-start-1))+10;
+							}
 						}
-						else 
-							return $(window).height()*0.226;
 					})
 					.attr("fill",function(d,i){
 						if(d!=-1&&d!=-2){
@@ -900,8 +924,8 @@ function spanChosen(r,start,end){
 	timeNode = [];
 	spanArrange(start,end,range);
 	//console.log(timeNode);
-	//console.log(start);
-	//console.log(end);
+	//console.log(s);
+	//console.log(e);
 
 	var a,b;
 	for(a=0;a<timeNode.length;a++)
@@ -910,11 +934,11 @@ function spanChosen(r,start,end){
 	for(b=0;b<timeNode.length;b++)
 		if(match2(e,timeNode[b][0],timeNode[b][1]))
 			break;
-	
+	if(a==71)a=0;
 	//console.log(a);
 	//console.log(b);
 	
-	
+	timelinePict(a,b,r,jsonData,csvData,1);
 	
 	
 	//$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
@@ -925,7 +949,7 @@ function spanChosen(r,start,end){
 	else if(r==180)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*180/21*(b-a+1)/11)+"px"},10);
 	else if(r==365)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*365/21*(b-a+1)/11)+"px"},10);
 	
-	timelinePict(a,b,r,jsonData,csvData,1);
+	
 	
 }
 
@@ -1022,7 +1046,8 @@ function timelinePict(head,tail,range,data,csvdata,isTimeline){
 			rectSelected[i].push(0);
 		}
 	}
-	//console.log(rectSelected);
+
+		//console.log(labels2);
 		
 		pict_2(svg1,timeNode,labels2,data,-1,head,tail);
 	}
