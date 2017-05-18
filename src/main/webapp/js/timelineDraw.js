@@ -116,15 +116,18 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 										candidate[k][0][p].remove();
 									}
 								}
-								flag[k]--;
+						 		flag[k]--;
 								f(svg,num,data,-1,-1,k,Xscale,chosen,start,end);
 							}
 						}
 						else{
+							wordleSelected = -1;
 							
+							if(rectSelectedFlag&&rectSelected[k][i]==0)
+								return;
 							if(rectSelected[k][i]==0){
 								rectSelected[k][i] = 1;
-							
+								rectSelectedFlag = 1;
 							//console.log(rectSelected);
 							
 							var newsContent = document.getElementById("content");
@@ -140,9 +143,32 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							}
 							else {
 								rectSelected[k][i] = 0;
+								rectSelectedFlag = 0;
 								svg_4.selectAll("text").remove();
-								$("#content").remove();
+								$("#content").html("");
 							}
+							
+							for(var p=0;p<len-20*flag[k];p++){
+								if(rects[k][0].length!=0){
+									rects[k][0][p].remove();
+									texts[k][0][p].remove();
+									candidate[k][0][p].remove();
+								}
+							//candidate[q][0][p].remove();
+						
+							}
+							if(tmp.length!=len&&tmp.length>=20){
+									//console.log(rects[k][0][len-start]);
+									rects[k][0][len-20*flag[k]].remove();
+									texts[k][0][len-20*flag[k]].remove();
+									rects[k][0][len-20*flag[k]+1].remove();
+									texts[k][0][len-20*flag[k]+1].remove();
+									//candidate[k][0][len-10*flag[k]].remove();
+							}
+								
+						
+					
+							f(svg,num,data,i,1,k,Xscale,chosen,start,end,highlight);
 						}
 					})
 					.on("mouseover",function(d,i){
@@ -697,8 +723,8 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h,isTimeline){
 					return "translate(30,2)";
 			})
 			.attr('stroke-width', '1')
-			.attr('stroke', '#333')
-			.attr('fill', 'none')
+			.attr('stroke',"blue")
+			.attr("fill","none")
 			.attr("d",lineGenerator(dist1));
 			
 		svg.append("path")
@@ -710,8 +736,8 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h,isTimeline){
 					return "translate(30,2)";
 			})
 			.attr('stroke-width', '1')
-			.attr('stroke', '#333')
-			.attr('fill', 'none')
+			.attr('stroke',"red")
+			.attr("fill","none")
 			.attr("d",lineGenerator(dist2));
 	
 
@@ -955,6 +981,31 @@ function spanChosen(r,start,end){
 
 function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	svg1.selectAll('*').remove();
+	
+	svg1.append("circle")
+		.attr("cx",$(window).width()*0.68)
+		.attr("cy",$(window).height()*0.01)
+		.attr("r",5)
+		.attr("fill","blue");
+	
+	svg1.append("text")
+		.attr("x",$(window).width()*0.71)
+		.attr("y",$(window).height()*0.015)
+		.text("共和党")
+		.attr("fill","white");
+	
+	svg1.append("circle")
+		.attr("cx",$(window).width()*0.68)
+		.attr("cy",$(window).height()*0.03)
+		.attr("r",5)
+		.attr("fill","red");	
+
+	svg1.append("text")
+		.attr("x",$(window).width()*0.71)
+		.attr("y",$(window).height()*0.035)
+		.text("民主党")
+		.attr("fill","white");
+	
 	span=[];labels1=[];values=[];
 	//timeNode.length=0;
 	//if(timeNode.length>0)timeNode = [];

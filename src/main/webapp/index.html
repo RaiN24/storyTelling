@@ -115,7 +115,8 @@ var keyWords;
 var wordleText;
 var drawColor = [];                  // decide which rectangular to be highlighted
 var rectSelected = [];
-
+var rectSelectedFlag = 0;
+var wordleSelected = -1;
 
 circles.push([]);
 circles.push([]);
@@ -134,14 +135,11 @@ var tooltip = d3.select("body")
     	.attr("opacity",0.0);
 
 var svg1=d3.select("#naive")     
-		.append("svg")          
+		.append("svg")    
 		.attr("width", $(window).width()*0.78)       
 		.attr("height", $(window).height()*0.51);		
 
-var svg2=d3.select("#search_div")     
-		.append("svg")          
-		.attr("width", $(window).width()*0.17)       
-		.attr("height", $(window).height()*0.3);	
+
 var svg3=d3.select("#simple")     
 			.append("svg")          
 			.attr("width", $(window).width()*0.78)       
@@ -153,29 +151,7 @@ var svg_4=d3.select("#div_5").append("svg")
       .attr("height", $(window).height()*0.385);
 
 
-svg2.append("circle")
-	.attr("cx",$(window).width()*0.03)
-	.attr("cy",$(window).height()*0.09)
-	.attr("r",5)
-	.attr("fill","blue");
-	
-svg2.append("text")
-	.attr("x",$(window).width()*0.07)
-	.attr("y",$(window).height()*0.095)
-	.text("共和党")
-	.attr("fill","white");
-	
-svg2.append("circle")
-.attr("cx",$(window).width()*0.03)
-.attr("cy",$(window).height()*0.15)
-.attr("r",5)
-.attr("fill","red");	
 
-svg2.append("text")
-.attr("x",$(window).width()*0.07)
-.attr("y",$(window).height()*0.155)
-.text("民主党")
-.attr("fill","white");
 	
 
 

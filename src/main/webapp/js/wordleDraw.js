@@ -52,6 +52,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
               .attr("transform", "translate(" + x + "," + y + ")")
             .selectAll("text")
             .attr("class","wordleText")
+         
               .data(words)
             .enter().append("text")
               .style("font-size", function(d) { return d.size + "px"; })
@@ -64,6 +65,21 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
               })
               .text(function(d) {return d.text; })
               .on("click",function(d,i){
+            	  
+            	// $(this).mouseup(function(){
+            		// $(this).css("fill","yellow");
+            	 //});
+            	  if(wordleSelected==-1){
+            		  $(this).css("text-shadow","5px 5px 5px #FF0000");
+            		  wordleSelected = i;
+            	  }
+            	  else if(wordleSelected==i){
+            		  $(this).css("text-shadow","none");
+            		  wordleSelected = -1;
+            	  }
+            	  
+            	  else return;
+            	  
             	  for(var i=0;i<drawColor.length;i++)
           			for(var j=0;j<drawColor[i].length;j++)
           				drawColor[i][j] = 0;
