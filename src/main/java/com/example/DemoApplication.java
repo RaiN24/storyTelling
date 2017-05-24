@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,8 +53,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.dao.MessageDao;
+import com.example.dao.TextDao;
+import com.example.domain.Message;
 import com.example.domain.MyDate;
 import com.example.domain.News;
+import com.example.domain.Text;
 import com.example.domain.User;
 import com.example.service.UserService;
 import com.fasterxml.jackson.core.JsonParser;
@@ -66,6 +71,10 @@ public class DemoApplication {
 	static MyDate late;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessageDao messageDao;
+	@Autowired
+	private TextDao textDao;
 	@RequestMapping("/")
 	public ModelAndView map(){
 		ModelAndView mv=new ModelAndView("index");
@@ -75,6 +84,34 @@ public class DemoApplication {
 	public ModelAndView search(){
 		ModelAndView mv=new ModelAndView("search_div");
 		return mv;
+	}
+	@RequestMapping("/china")
+	public void china() throws FileNotFoundException{
+		File root = new File("C:/Users/rain/Desktop/demo"); //创建文件对象
+		File files[]=root.listFiles();
+		Map<String, String> map=new HashMap<>();
+		for(File file:files){
+			Scanner x=new Scanner(file);
+			x.nextLine();
+			while(x.hasNextLine()){
+				String m=x.nextLine();
+				m+=x.nextLine();
+				int first=m.indexOf("\"");
+				int last=m.lastIndexOf("\"");
+				String md5=m.substring(0, first-1);
+				String content=m.substring(first+1,last);
+				String left=m.substring(last+2);
+				String s[]=left.split(",");
+				messageDao.insertMessage(new Message(md5, s[0], new Timestamp(Long.parseLong(s[1])), new Timestamp(Long.parseLong(s[2])), Double.parseDouble(s[3]), Double.parseDouble(s[4])));
+				map.put(s[0], s[1]);
+			}
+		}
+		for(Map.Entry<String, String> entry:map.entrySet()){
+			Text text=new Text();
+			text.setMd5(entry.getKey());
+			text.setContent(entry.getValue());
+			textDao.insertText(text);
+		}
 	}
 	@RequestMapping("/csv_data")
 	public List<Map<MyDate, Double>> getCSV() throws FileNotFoundException{
@@ -139,8 +176,8 @@ public class DemoApplication {
 	        	int weight=map.getValue().getAsInt();
 	        	double beforeX=mapX.get(myDate);
 	        	double afterX=mapX.get(weekLater);
-	        	double beforeT=mapX.get(myDate);
-	        	double afterT=mapX.get(weekLater);
+	        	double beforeT=mapT.get(myDate);
+	        	double afterT=mapT.get(weekLater);
 	        	if(countWord.containsKey(key)){
 	        		countWord.put(key, countWord.get(key)+1);
 	        		resultX.put(key, resultX.get(key)+weight*(afterX-beforeX));
@@ -170,6 +207,8 @@ public class DemoApplication {
         st.sorted(Comparator.comparing(e -> e.getValue())).forEach(e -> sortedResultT.put(e.getKey(), e.getValue()));
         result.add(sortedResultX);
         result.add(sortedResultT);
+//        System.out.println(sortedResultX);
+//        System.out.println(sortedResultT);
 		return result;
 	}
 	@RequestMapping(value="/getRows")

@@ -17,6 +17,6 @@ spring:
     # DATASOURCE  
     datasource:  
         driverClass: com.mysql.jdbc.Driver  
-        url: jdbc:mysql://121.42.177.132:3306/test
+        url: jdbc:mysql://127.0.0.1:3306/china
         username: root 
         password: 
