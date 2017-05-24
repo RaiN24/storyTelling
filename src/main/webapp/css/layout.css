@@ -136,26 +136,13 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
     height: 31.5%;
 }
 
-text:link
-{
-	text-shadow:  5px 5px 5px #FF0000;
-}
 
-
-text:visited
-{
-	background-color:yellow;
-}
 
 text:hover{
 	cursor: pointer;
-	text-shadow:  5px 5px 5px #FF0000;
+	text-shadow:  5px 5px 5px #FFFFFF;
 }
 
-text:active
-{
-	background-color:yellow;
-}
 
 
 .t{
@@ -177,4 +164,6 @@ left: 6%;
 top: 51%; 
 opacity:0.4;
 }
+
+.wordleText{}
 

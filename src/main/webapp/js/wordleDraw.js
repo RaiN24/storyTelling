@@ -51,7 +51,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
            wordleImage =  svg_4.append("g")
               .attr("transform", "translate(" + x + "," + y + ")")
             .selectAll("text")
-            .attr("class","wordleText")
+            .style("class","wordleText")
          
               .data(words)
             .enter().append("text")
@@ -70,15 +70,17 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
             		// $(this).css("fill","yellow");
             	 //});
             	  if(wordleSelected==-1){
-            		  $(this).css("text-shadow","5px 5px 5px #FF0000");
+            		  $(this).css("text-shadow","5px 5px 5px #FFFFFF");
             		  wordleSelected = i;
             	  }
-            	  else if(wordleSelected==i){
-            		  $(this).css("text-shadow","none");
-            		  wordleSelected = -1;
+            	  else if(wordleSelected!=i){
+            		  $("#div_5").find("text").css("text-shadow","none");
+            		  $(this).css("text-shadow","5px 5px 5px #FFFFFF");
+            		  
+            		  wordleSelected = i;
             	  }
-            	  
             	  else return;
+            	  
             	  
             	  for(var i=0;i<drawColor.length;i++)
           			for(var j=0;j<drawColor[i].length;j++)

@@ -15,6 +15,26 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 		}
 		//console.log(tmpStr);
 			
+		for(var p=0;p<len-20*flag[k];p++){
+			if(rects[k].length==0)break;
+			if(rects[k][0].length!=0){
+				rects[k][0][p].remove();
+				texts[k][0][p].remove();
+				candidate[k][0][p].remove();
+			}
+		//candidate[q][0][p].remove();
+	
+		}
+		if(tmp.length!=len&&tmp.length>=20){
+				//console.log(rects[k][0][len-start]);
+				rects[k][0][len-20*flag[k]].remove();
+				texts[k][0][len-20*flag[k]].remove();
+				rects[k][0][len-20*flag[k]+1].remove();
+				texts[k][0][len-20*flag[k]+1].remove();
+				//candidate[k][0][len-10*flag[k]].remove();
+		}
+		
+		
 		rects[k] = svg.selectAll("MyRect")
 					.data(tmpStr)
 					.enter()
@@ -123,11 +143,21 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						else{
 							wordleSelected = -1;
 							
-							if(rectSelectedFlag&&rectSelected[k][i]==0)
-								return;
+							
 							if(rectSelected[k][i]==0){
+								for(var t=0;t<rectSelected.length;t++)
+									for(var s=0;s<rectSelected[t].length;s++)
+										if(rectSelected[t][s]){
+											rectSelected[t][s] = 0;
+											svg_4.selectAll("text").remove();
+											$("#content").html("");
+											
+											if(t!=k)f(svg,num,data,-1,-1,t,Xscale,chosen,start,end);
+											else f(svg,num,data,1,i,t,Xscale,chosen,start,end)
+											
+										}
 								rectSelected[k][i] = 1;
-								rectSelectedFlag = 1;
+							
 							//console.log(rectSelected);
 							
 							var newsContent = document.getElementById("content");
@@ -141,12 +171,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							svg_4.selectAll("text").remove();
 							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,start,end,Xscale);
 							}
-							else {
-								rectSelected[k][i] = 0;
-								rectSelectedFlag = 0;
-								svg_4.selectAll("text").remove();
-								$("#content").html("");
-							}
+							
 							
 							for(var p=0;p<len-20*flag[k];p++){
 								if(rects[k][0].length!=0){
@@ -960,7 +985,7 @@ function spanChosen(r,start,end){
 	for(b=0;b<timeNode.length;b++)
 		if(match2(e,timeNode[b][0],timeNode[b][1]))
 			break;
-	if(a==71)a=0;
+	if(a > b)a=0;
 	//console.log(a);
 	//console.log(b);
 	
