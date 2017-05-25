@@ -1024,7 +1024,7 @@ function spanChosen(r,start,end){
 	
 	var tmpCmp = [];
 	tmpCmp[0] = s[0];
-	tmpCmp[1] = s[1] + 1;
+	tmpCmp[1] = s[1] + 1; 
 	tmpCmp[2] = s[2];
 	
 
