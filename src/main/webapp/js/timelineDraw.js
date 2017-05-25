@@ -81,8 +81,8 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						}
 					})
 					.attr("fill",function(d,i){
-						if(drawColor[k][i]==1)return "yellow";
-						else if(rectSelected[k][i]==1)return "purple";
+						if(rectSelected[k][i]==1)return "purple";
+						else if(drawColor[k][i]==1)return "yellow";
 						else return "white";
 					})
 					.attr("stroke","black")
@@ -905,6 +905,31 @@ function pict_1(svg,timeNode,num,start,end,h,isTimeline){
 
 function pict_2(svg,timeNode,num,data,chosen,start,end){
 		//svg.selectAll('*').remove();
+	svg1.append("circle")
+		.attr("cx",$(window).width()*0.68)
+		.attr("cy",$(window).height()*0.02)
+		.attr("r",5)
+		.attr("fill","blue");
+
+	svg1.append("text")
+		.attr("x",$(window).width()*0.71)
+		.attr("y",$(window).height()*0.025)
+		.text("希拉里")
+		.attr("fill","white");
+
+	svg1.append("circle")
+		.attr("cx",$(window).width()*0.68)
+		.attr("cy",$(window).height()*0.04)
+		.attr("r",5)
+		.attr("fill","red");	
+
+	svg1.append("text")
+		.attr("x",$(window).width()*0.71)
+		.attr("y",$(window).height()*0.045)
+		.text("特朗普")
+		.attr("fill","white");
+
+	
 		var min=[];
 		var max=[];
 		var t,maxY;
@@ -971,6 +996,12 @@ function spanChosen(r,start,end){
 	if(e[1][0]==0)e[1]=e[1][1];
 	if(e[2][0]==0)e[2]=e[2][1];
 	
+	for(var c=0;c<3;c++){
+		s[c] = parseInt(s[c]);
+		e[c] = parseInt(e[c]);
+	}
+	
+	
 	range = r;
 	timeNode = [];
 	spanArrange(start,end,range);
@@ -986,19 +1017,39 @@ function spanChosen(r,start,end){
 		if(match2(e,timeNode[b][0],timeNode[b][1]))
 			break;
 	if(a > b)a=0;
-	//console.log(a);
-	//console.log(b);
+	
+	//console.log(timeNode[b]);
+	console.log(a);
+	console.log(b);
+	
+	var tmpCmp = [];
+	tmpCmp[0] = s[0];
+	tmpCmp[1] = s[1] + 1;
+	tmpCmp[2] = s[2];
+	
+
+	
+	if(r>=30&&!match2(tmpCmp,s,e)){alert("时间跨度过小，请重新选择起止时间");return;}
+	tmpCmp[1]+=2;
+	if(tmpCmp[1]>12){tmpCmp[1]-=12;tmpCmp[0]++;}
+	if(r>=90&&!match2(tmpCmp,s,e)){alert("时间跨度过小，请重新选择起止时间");return;}
+	tmpCmp[1]+=3;
+	if(tmpCmp[1]>12){tmpCmp[1]-=12;tmpCmp[0]++;}
+	if(r>=180&&!match2(tmpCmp,s,e)){alert("时间跨度过小，请重新选择起止时间");return;}
+	tmpCmp[1] = s[1];
+	tmpCmp[0] = s[0] + 1;
+	if(r==365&&!match2(tmpCmp,s,e)){alert("时间跨度过小，请重新选择起止时间");return;}
 	
 	timelinePict(a,b,r,jsonData,csvData,1);
 	
 	
-	//$(".show").animate({left:(a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	
 	if(r==7)$(".show").animate({width:($(window).width()*0.1*(b-a+1)/11)+"px",left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px"},10);
-	else if(r==14)$(".show").animate({width:($(window).width()*0.2*(b-a+1)/11)+"px",left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px"},10);
-	else if(r==30)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*30/21*(b-a+1)/11)+"px"},10);
-	else if(r==90)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*90/21*(b-a+1)/11)+"px"},10);
-	else if(r==180)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*180/21*(b-a+1)/11)+"px"},10);
-	else if(r==365)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.2*365/21*(b-a+1)/11)+"px"},10);
+	else if(r==14)$(".show").animate({width:($(window).width()*0.1*(b-a+1)/11)+"px",left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px"},10);
+	else if(r==30)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.1*(b-a+1)/11)+"px"},10);
+	else if(r==90)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.1*(b-a+1)/11)+"px"},10);
+	else if(r==180)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.1*(b-a+1)/11)+"px"},10);
+	else if(r==365)$(".show").animate({left:($(window).width()*0.09+a/timeNode.length*$(window).width()*0.78)+"px",width:($(window).width()*0.1*(b-a+1)/11)+"px"},10);
 	
 	
 	
@@ -1007,29 +1058,6 @@ function spanChosen(r,start,end){
 function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	svg1.selectAll('*').remove();
 	
-	svg1.append("circle")
-		.attr("cx",$(window).width()*0.68)
-		.attr("cy",$(window).height()*0.01)
-		.attr("r",5)
-		.attr("fill","blue");
-	
-	svg1.append("text")
-		.attr("x",$(window).width()*0.71)
-		.attr("y",$(window).height()*0.015)
-		.text("共和党")
-		.attr("fill","white");
-	
-	svg1.append("circle")
-		.attr("cx",$(window).width()*0.68)
-		.attr("cy",$(window).height()*0.03)
-		.attr("r",5)
-		.attr("fill","red");	
-
-	svg1.append("text")
-		.attr("x",$(window).width()*0.71)
-		.attr("y",$(window).height()*0.035)
-		.text("民主党")
-		.attr("fill","white");
 	
 	span=[];labels1=[];values=[];
 	//timeNode.length=0;

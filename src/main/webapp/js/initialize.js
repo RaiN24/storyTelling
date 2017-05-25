@@ -119,6 +119,8 @@ function match2(s,t1,t2){
 				return true;
 			else return false;
 		}
+		if(matchMonth2(s,t1)==1&&matchMonth2(s,t2)==-1)
+			return true;
 	}
 	if(matchYear(s,t1)==1&&matchYear(s,t2)==0){
 		if(matchMonth2(s,t2)==0){
