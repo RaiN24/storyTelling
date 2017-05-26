@@ -47,7 +47,10 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
     }
 }    
         function draw(words) {
-        	//console.log("*");
+        	
+           for(var i=0;i<words.length;i++)
+        	   textToHighlight.push([]);
+        	   
            wordleImage =  svg_4.append("g")
               .attr("transform", "translate(" + x + "," + y + ")")
             .selectAll("text")
@@ -55,10 +58,17 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
          
               .data(words)
             .enter().append("text")
-              .style("font-size", function(d) { return d.size + "px"; })
+              .style("font-size", function(d,i) {
+            	  textToHighlight[i].push(d.text);
+            	  return d.size + "px"; 
+              })
               .style("font-family", "Impact")
               
-              .style("fill", function(d, i) { return fill(i); })
+              .style("fill", function(d, i) {
+            	  var fillColor = fill(i);
+            	  textToHighlight[i].push(fillColor); 
+            	  return fillColor; 
+              })
               .attr("text-anchor", "middle")
               .attr("transform", function(d) {
                 return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
@@ -102,17 +112,9 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 						}
 						
 						drawColor[j][tmpIndex] = 1;
-						//if(j>=start&&j<=end){
-							//console.log(rects[j][0][tmpIndex]);
-							//var len = rects[j][0].length;
-							//for(var p=0;p<len;p++){
-							//	if(rects[j][0].length!=0){
-							//		rects[j][0][p].remove();
-							//		texts[j][0][p].remove();
-							//	}
-						//	}
-						//	f(svg1,labels2,jsonData,-1,-1,j,Xscale,-1,start,end,tmpIndex);
-						//}
+
+						
+						
 					}
 					svg1.selectAll('rect').remove();
 					svg1.selectAll('text').remove();
@@ -121,8 +123,47 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 					pict_2(svg1,timeNode,labels2,jsonData,-1,scaler,scaler+parseInt(timeNode.length* $(window).width()*0.08/ ($(window).width()*0.72)));
 					
         		});
-            
-            
+            	
+           		
+           		
+            	
+            		var KeyWordIndex;
+            		var newsContent = $('#content').html();
+            		
+            		var tmpTextColor = [];
+            		for(var i=0;i<newsContent.length;i++)
+            			tmpTextColor.push(-1);
+            		
+            		
+            		for(var i=0;i<textToHighlight.length;i++){
+            			KeyWordIndex = newsContent.indexOf(textToHighlight[i][0],0);
+            			//console.log(KeyWordIndex);
+            			if(KeyWordIndex!=-1){
+            				
+            			
+            				for(var j=KeyWordIndex;j<=KeyWordIndex+textToHighlight[i][0].length;j++){
+            					tmpTextColor[j] = i;
+            				}
+            				var target = textToHighlight[i][0];
+            				
+            				newsContent = newsContent.slice(0,KeyWordIndex) + '<span class=class' + i +'>' + target + '</span>' + newsContent.slice(KeyWordIndex+textToHighlight[i][0].length,-1); 
+            				
+            				
+            				
+            				
+            			}
+            			
+            		
+            		}
+            		document.getElementById("content").innerHTML = newsContent;
+            		
+            		for(var i=0;i<textToHighlight.length;i++){
+            			KeyWordIndex = newsContent.indexOf(textToHighlight[i][0],0);
+            			
+            			if(KeyWordIndex!=-1)
+            				$('.class'+i).css('color',textToHighlight[i][1]);
+            		}
+            		
          
 		}
     

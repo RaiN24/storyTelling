@@ -163,6 +163,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							var newsContent = document.getElementById("content");
 							//console.log(data[tmpStr[i]]["content"]);
 							newsContent.innerHTML = data[tmpStr[i]]["content"];
+							//globalContent = data[tmpStr[i]]["content"];
 							$("#content").css("font-size",12);
 							$("#content").css("color","rgb(20,68,106)");	
 							var tmp = tmpStr[i] ;
