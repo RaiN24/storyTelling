@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=2.0">
+    <title>DataTables example - Zero configuration</title>
+    <link rel="stylesheet" type="text/css" href="jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="shCore.css">
+    <link rel="stylesheet" type="text/css" href="demo.css">
+    <style type="text/css" class="init">
+
+
+    </style>
+    <script type="text/javascript" language="javascript" src="http://code.jquery.com/jquery-1.12.4.js">
+
+
+    </script>
+    <script type="text/javascript" language="javascript" src="jquery.dataTables.js">
+
+
+    </script>
+    <script type="text/javascript" language="javascript" src="shCore.js">
+
+
+    </script>
+    <script type="text/javascript" language="javascript" src="demo.js">
+
+
+    </script>
+    <script src="data.js">
+
+
+    </script>
+    <script type="text/javascript" language="javascript" class="init">
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+
+    </script>
+</head>
+
+<body class="dt-example">
+    <div class="container">
+        <section>
+            <div class="demo-html"></div>
+            <table id="example" class="display" cellspacing="0" width="100%" charset="utf-8">
+                <thead>
+                    <tr>
+                        <th>Reason</th>
+                        <th>Clinton</th>
+                        <th>Trump</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Reason</th>
+                        <th>Clinton</th>
+                        <th>Trump</th>
+                    </tr>
+                </tfoot>
+                <tbody id="mytbody">
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <script charset="utf-8">
+        var dataList = {};
+        for (var i in mydata[0]) {
+            dataList[i] = [];
+            dataList[i].push(mydata[0][i].toFixed(2));
+            if (i in mydata[1]) {
+                dataList[i].push(mydata[1][i].toFixed(2));
+            } else {
+                dataList[i].push(0);
+            }
+        }
+        for (var i in mydata[1]) {
+            if (i in dataList) {
+                continue;
+            } else {
+                dataList[i] = [];
+                dataList[i].push(0);
+                dataList[i].push(mydata[1][i].toFixed(2));
+            }
+        }
+        
+        for (var i in dataList){
+            appendRow(i,dataList[i][0],dataList[i][1]);
+        }
+
+
+        function appendRow(reason, num1, num2) {
+            row = document.createElement("tr");
+            td1 = document.createElement("td");
+            td2 = document.createElement("td");
+            td3 = document.createElement("td");
+            td1.appendChild(document.createTextNode(reason));
+            td2.appendChild(document.createTextNode(num1));
+            td3.appendChild(document.createTextNode(num2));
+            row.appendChild(td1);
+            row.appendChild(td2);
+            row.appendChild(td3);
+            document.getElementById("mytbody").append(row);
+        }
+
+    </script>
+</body>
+
+</html>
