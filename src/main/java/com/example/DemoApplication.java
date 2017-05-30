@@ -47,7 +47,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -87,7 +91,7 @@ public class DemoApplication {
 	}
 	@RequestMapping("/china")
 	public void china() throws FileNotFoundException{
-		File root = new File("C:/Users/rain/Desktop/demo"); //创建文件对象
+		File root = new File("C:/Users/rain/Desktop/data"); //创建文件对象
 		File files[]=root.listFiles();
 		Map<String, String> map=new HashMap<>();
 		for(File file:files){
@@ -98,19 +102,24 @@ public class DemoApplication {
 				m+=x.nextLine();
 				int first=m.indexOf("\"");
 				int last=m.lastIndexOf("\"");
+				if(first<=0||first>=last){
+					System.out.println(m);
+					continue;
+				}
 				String md5=m.substring(0, first-1);
 				String content=m.substring(first+1,last);
 				String left=m.substring(last+2);
 				String s[]=left.split(",");
 				messageDao.insertMessage(new Message(md5, s[0], new Timestamp(Long.parseLong(s[1])), new Timestamp(Long.parseLong(s[2])), Double.parseDouble(s[3]), Double.parseDouble(s[4])));
-				map.put(s[0], s[1]);
+				if(!map.containsKey(md5)){
+					map.put(md5, content);
+					Text text=new Text();
+					text.setMd5(md5);
+					text.setContent(content);
+					textDao.insertText(text);
+				}
 			}
-		}
-		for(Map.Entry<String, String> entry:map.entrySet()){
-			Text text=new Text();
-			text.setMd5(entry.getKey());
-			text.setContent(entry.getValue());
-			textDao.insertText(text);
+			System.out.println(map.size());
 		}
 	}
 	@RequestMapping("/csv_data")
@@ -128,7 +137,7 @@ public class DemoApplication {
 			String tt[]=te.split(",");
 			MyDate date=new MyDate(xx[6].substring(1, xx[6].length()-1));
 			mapX.put(date,Double.parseDouble(xx[3]));
-			mapT.put(date,Double.parseDouble(tt[3]));
+			mapT.put(date,Double.parseDouble(tt[3])); 
 		}
 		result.add(mapX);
 		result.add(mapT);
@@ -225,14 +234,16 @@ public class DemoApplication {
 		return sheet;
 	}
 	@RequestMapping(value="/getAllData")
-	public List<News> readExcel(){
-		List<News> result=new ArrayList<>();
+	public Map<Integer,News> readExcel(){
+		Map<Integer,News> result=new HashMap<>();
         Sheet sheet;
 		 try {
 	            File excelFile = new File("data1.xlsx"); //创建文件对象
 	            Workbook wb=new XSSFWorkbook(new FileInputStream(excelFile));
 	            sheet =wb.getSheetAt(0);
+	            int index=-1;
 	            for(Row row:sheet){
+	            	index++;
 	            	if(row.getCell(0)==null||row.getCell(1)==null||row.getCell(2)==null||row.getCell(3)==null||row.getCell(4)==null||row.getCell(5)==null||row.getCell(6)==null)
 	            		continue;
 	            	row.getCell(6).setCellType(Cell.CELL_TYPE_NUMERIC);
@@ -241,7 +252,7 @@ public class DemoApplication {
 //	                System.out.println(date.getDate());
 //	                date.setDate(date.getDate()+7);
 //	                System.out.println(date.getDate());
-	            	result.add(new News(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),sdf.format(date)));
+	            	result.put(index, new News(row.getCell(0).toString(),row.getCell(1).toString(),row.getCell(2).toString(),row.getCell(3).toString(),row.getCell(4).toString(),row.getCell(5).toString(),sdf.format(date)));
 	            }
 	        }
 	        catch (Exception e) {
