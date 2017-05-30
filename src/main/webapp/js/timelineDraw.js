@@ -5,8 +5,10 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 	//if(highlight!=-1)console.log(tmp);
 		var tmpStr = [];
 		var len = tmp.length>flag[k]*20+20?flag[k]*20+20:tmp.length;
-		for(var b=flag[k]*20;b<len;b++)
-			tmpStr.push(tmp[b]);
+		
+		for(b=flag[k]*20;b<len;b++)
+			if(tmp[b] in data)
+				tmpStr.push(tmp[b]);
 		
 		if(tmp.length>=20){
 			//if(tmp.length!=len)
@@ -1112,7 +1114,12 @@ function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	if(isTimeline){
 	
 	dateOfEvents=[];
-	for(var i=0;i<data.length;i++){
+	
+	//console.log(Object.keys(data).length);
+	
+	for(var i in data){
+		//console.log(data[i]);if(i==0||data[i]==="undefined")continue;
+		if(i==0)continue;
 		var tmp = data[i]["date"]; 
 		var reg = new RegExp('"',"g");  
 		tmp = tmp.replace(reg, "");  

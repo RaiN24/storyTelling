@@ -103,7 +103,7 @@ var rects = [];
 var texts = [];
 var candidate = [];
 var csvData = [];
-var jsonData = [];
+var jsonData;
 var flag = [];
 var circles = [];
 var scaler = 0;
@@ -175,14 +175,14 @@ d3.csv("data/data2.csv",function(error,csvdata){
 
 //var tmpjsonData = new Map();
 
-$.getJSON("getAllData.json",function(data){
-	for(var i=0;i<data.length-1;i++)
-		data[i]=data[i+1];
-
-	jsonData = data;
-	//tmpjsonData = data;
-	//console.log(tmpjsonData);
+$.getJSON("/getAllData",function(data){
 	
+	jsonData = data;
+	//jsonData = data;
+	//console.log(typeof data);
+	//for(var i in data)
+		//console.log(i);
+	//console.log(jsonData);
 	//timelinePict(svg3,0,12,1,jsonData,csvData,0);
 	//timeNode = [];
 	timelinePict(0,12,7,jsonData,csvData,1);
