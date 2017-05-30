@@ -124,7 +124,7 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
 					
         		});
             	
-           		
+           		 
            		
             	
             		var KeyWordIndex;

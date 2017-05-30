@@ -1113,7 +1113,7 @@ function timelinePict(head,tail,range,data,csvdata,isTimeline){
 	
 	dateOfEvents=[];
 	for(var i=0;i<data.length;i++){
-		var tmp = data[i]["date"];
+		var tmp = data[i]["date"]; 
 		var reg = new RegExp('"',"g");  
 		tmp = tmp.replace(reg, "");  
 
