@@ -6,9 +6,12 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 		var tmpStr = [];
 		var len = tmp.length>flag[k]*20+20?flag[k]*20+20:tmp.length;
 		
-		for(b=flag[k]*20;b<len;b++)
+		for(b=flag[k]*20;b<len;b++){
 			if(tmp[b] in data)
 				tmpStr.push(tmp[b]);
+			else
+				tmpStr.push(-3);
+		}
 		
 		if(tmp.length>=20){
 			//if(tmp.length!=len)
@@ -65,19 +68,22 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						
 					})
 					.attr("y",function(d,i){
+						var iTmp = i;
+						for(var j=0;j<i;j++)
+							if(tmpStr[j]==-3)iTmp--;
 						if(m==-1)
-							return $(window).height()*0.226-i*$(window).height()*0.015;
+							return $(window).height()*0.226-iTmp*$(window).height()*0.015;
 						else{
 							if(d!=-1&&d!=-2){
 								if(i<z)
-									return $(window).height()*0.226-i*$(window).height()*0.015;
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015;
 								else if(i>z)
-									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015-$(window).height()*0.06;
 								else	
-									return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.06;
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015-$(window).height()*0.06;
 							}
 						
-							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-i)*$(window).height()*0.015;
+							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-iTmp)*$(window).height()*0.015;
 							
 							else return $(window).height()*0.226 + $(window).height()*0.015;
 						}
@@ -100,6 +106,9 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							//return Xscale(k-start)+10;
 					})
 					.attr("height",function(d,i){
+						if(d==-3)
+							return 0;
+						
 						if(m==-1)	
 							return $(window).height()*0.015;
 						else{
@@ -201,7 +210,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 					})
 					.on("mouseover",function(d,i){
 						//console.log("*");
-						if(d!=-1&&d!=-2){
+						if(d!=-1&&d!=-2&&d!=-3){
 							//console.log(rects[k]);
 							for(var p=0;p<len-20*flag[k];p++){
 								if(rects[k][0].length!=0){
@@ -299,15 +308,24 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						
 					})
 					.attr("y",function(d,i){
+						var iTmp = i;
+						for(var j=0;j<i;j++)
+							if(tmpStr[j]==-3)iTmp--;
 						if(m==-1)
-							return $(window).height()*0.226-i*$(window).height()*0.015+$(window).height()*0.012;
+							return $(window).height()*0.226-iTmp*$(window).height()*0.015;
 						else{
-							if(i<z)
-								return $(window).height()*0.226-i*$(window).height()*0.015;
-							else if(i>z)
-								return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
-							else	
-								return $(window).height()*0.226-i*$(window).height()*0.015-$(window).height()*0.045;
+							if(d!=-1&&d!=-2){
+								if(i<z)
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015;
+								else if(i>z)
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015-$(window).height()*0.06;
+								else	
+									return $(window).height()*0.226-iTmp*$(window).height()*0.015-$(window).height()*0.06;
+							}
+						
+							else if(d==-2)return $(window).height()*0.226-(tmpStr.length-iTmp)*$(window).height()*0.015;
+							
+							else return $(window).height()*0.226 + $(window).height()*0.015;
 						}
 					})
 					.text(function(d,i){
@@ -315,6 +333,8 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 							return ">>>>>>>>";
 						else if(d==-2)
 							return "<<<<<<<<";
+						else if(d==-3)
+							return "";
 						else{
 							//if(highlight!=-1)console.log(tmpStr[i]);
 							return data[tmpStr[i]]["date"];
@@ -445,6 +465,8 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						else if(d==-2){
 							return "<<<<<<<<";
 						}
+						else if(d==-3)
+							return "";
 						else if(z==i){
 							//console.log(new_v[w]);
 							//if(k-start==chosen)
@@ -536,7 +558,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 						}
 					})
 					.attr("fill",function(d,i){
-						if(d!=-1&&d!=-2){
+						if(d!=-1&&d!=-2&&d!=-3){
 							//console.log(data[tmpStr[i]]);
 							var cc = data[tmpStr[i]]["content"];
 							var c1=0,c2=0;
