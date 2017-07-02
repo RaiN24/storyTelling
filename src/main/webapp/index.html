@@ -28,20 +28,32 @@
 <script src="js/angular.min.js" charset="utf-8"></script>
 
 
- 
-<div id="naive"></div>
-<div id="simple"></div>
-<div id="content"></div>
-<div id="div_5"></div>
+<div id="top-div"> 
+	<div id="naive" class="block-div"></div>
+	
+	<div id="simple" class="block-div"></div>
+	
+	
+</div>
+
+
+
+<div id="bottom-div">
+<div id="content" class="block-div"></div>
+
+<div id="div_5" class="block-div"></div>
+</div>
+
 
 <div class="show"></div> 
 
 
+<!--  
 <div id="search_div">
           起始日期：<input id="s" class="laydate-icon" onclick="laydate()"><br /><br />
 	终止日期：<input id="e" class="laydate-icon" onclick="laydate()"><br /><br />
 
-<h3>最近时间区间选择</h3>
+
 <ul class="dowebok">
 	<li><input type="radio" name="radio" data-labelauty="7D" checked="true" onclick="spanChosen(7,[2015,7,1],[2016,11,9])"></li>
 	<li><input type="radio" name="radio" data-labelauty="14D" onclick="spanChosen(14,[2015,7,1],[2016,11,9])"></li>
@@ -53,11 +65,11 @@
 </ul>
 
 </div>
-
+-->
 
 
 <script>
-;!function(){
+/*;!function(){
 laydate({
    elem: '#s'
 
@@ -67,7 +79,8 @@ laydate({
 
 })
 
-}();
+}();*/
+
 </script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="search_div/js/jquery-1.8.3.min.js"></script>
@@ -77,9 +90,9 @@ laydate({
 <script src="json_by_news.js"></script>
 <script src="json_by_words.js"></script>
 <script>
-$(function(){
+/*$(function(){
 	$(':input').labelauty();
-});
+});*/
 </script>
 
 
@@ -139,13 +152,13 @@ var tooltip = d3.select("body")
 
 var svg1=d3.select("#naive")     
 		.append("svg")    
-		.attr("width", $(window).width()*0.78)       
+		.attr("width", $(window).width()*0.98)       
 		.attr("height", $(window).height()*0.51);		
 
 
 var svg3=d3.select("#simple")     
 			.append("svg")          
-			.attr("width", $(window).width()*0.78)       
+			.attr("width", $(window).width()*0.98)       
 			.attr("height", $(window).height()*0.09);
 
 
@@ -161,6 +174,7 @@ var svg_5=d3.select("#content").append("svg")
 
 //svg_5.append('rect');
 	
+
 
 
 d3.csv("data/data2.csv",function(error,csvdata){
@@ -203,19 +217,21 @@ $(document).ready(function(){
 	$(".show").mousedown(function(e){ 
 		$(this).css("cursor","move");
 		var offset = $(this).offset();
-		var x = $(window).width() * 0.06;
-		//var y = document.body.clientHeight * 0.55;
+		var x = $(window).width() * 0.015;
+		var y = $("#simple").offset().top;
+		var h = $("#simple").height();
+		$(".show").animate({left:x+"px",top:y+"px",height:h},10); 
+		
 		$(document).bind("mousemove",function(ev){ 
 			$(".show").stop();
 			var _x = ev.pageX - x;
-			if(_x < $(window).width()*0.06)_x = $(window).width()*0.06;
-			if(_x > $(window).width()*0.70)_x = $(window).width()*0.70;
-			var _y = $(window).height() * 0.51;
-			scaler = parseInt((_x-$(window).width()*0.06)/ ($(window).width()*0.72)*timeNode.length*0.98);
-			//console.log(scaler);
+			if(_x < $(window).width()*0.015)_x = $(window).width()*0.015;
+			if(_x > $(window).width()*0.9)_x = $(window).width()*0.9;
+			var _y = $("#simple").offset().top;
+			scaler = parseInt((_x-$(window).width()*0.015)/($(window).width())*timeNode.length*0.98);
 			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
 			
-			timelinePict(scaler,scaler+$(".show").width()/($(window).width()*0.78)*timeNode.length,7,jsonData,csvData,1);
+			timelinePict(scaler,scaler+$(".show").width()/($(window).width())*timeNode.length,7,jsonData,csvData,1);
 		}); 
 
 	}); 

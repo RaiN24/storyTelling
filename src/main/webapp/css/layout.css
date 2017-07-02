@@ -1,11 +1,16 @@
 body{
 	font-family: Georgia;
-	background-color: grey;
+	color: #ddd;
+	background-color: rgba(56, 56, 56, 0.96);
 }
-*{
-	margin:0px;
-	padding:0px;
-}		
+
+.block-div {
+	height: 100%;
+	background-color: #222;
+	border-radius: 7px;
+	border-bottom: 1px solid #000000;
+    box-shadow: #222222 1px 2px 5px;
+}
 
 
 .axisX path,.axisX line{  
@@ -80,60 +85,50 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
  }
  
 #naive{
-	position: absolute;
-	left: 0%;
-	top: 0%;
-	width: 80%;
+	width: 99%;
     height: 51%;
-	border: 1px  solid white;
+	padding: 2px;
 }	
 
 
 #simple{
-	position: absolute;
-	left: 2%;
-	top: 51%;
-	width: 78%;
+	width: 99%;
     height: 9%;
-	border: 1px  solid white;
+	padding: 2px;
 }	
 
-#search_div{
-	position: absolute;
-	left: 81%;
-	top: 0%;
-	width: 18%;
-	height: 60%;
-	border: 1px solid white;
-}
+
 
 #content{
 	overflow-y: auto;
-	position: absolute;
-	left: 0%;
-	top: 60.5%;
-	width: 20%;
-    height: 38.5%;
-	border: 1px  solid white;
+	float: left;
+	width: 39%;
+    height: 40%;
 	scrollbar-face-color: #99ccff;
+	padding: 2px;
 	
 }
 
 #div_5{
-	position: absolute;
-	left: 20%;
-	top: 60.5%;
-	width: 30%;
-    height: 38.5%;
-	border: 1px  solid white;
+	float: right;
+	width: 59%;
+    height: 40%;
+    padding: 2px;
+	
 
 }
-#div_6{
-	position: absolute;
-	left: 60%;
-	top: 5.5%;
-	width: 20%;
-    height: 31.5%;
+
+#top-div {
+	float: top;
+	width: 100%;
+	height: 60%;
+	padding: 2px;
+}
+#bottom-div {
+	float: bottom;
+	width: 50%;
+	height: 40%;
+	padding: 2px;
 }
 
 
@@ -154,15 +149,23 @@ text:hover{
 
 
 .show{ 
-background:#0000CD;
+position: absolute;
+background:#495A80;
 width: 10%; 
 height: 9%; 
-text-align:center; 
-position:absolute; 
+top: 51%;
 z-index:1; 
-left: 6%; 
-top: 51%; 
+left: 1.5%; 
 opacity:0.4;
+}
+
+#search_div{
+	position: absolute;
+	left: 81%;
+	top: 0%;
+	width: 18%;
+	height: 60%;
+	padding: 2px;
 }
 
 .wordleText{}

@@ -600,7 +600,7 @@ function f(svg,num,data,z,m,k,Xscale,chosen,start,end,highlight){
 
 
 function drawRect(svg,Xscale,Y,num,timeNode,start,end,h,isTimeline){
-	var thisColor = ["steelBlue","red"];	
+	var thisColor = ["steelBlue","rgb(254,76,64)"];	
 	
 	var v = [];
 	for(var i=0;i<2;i++){
@@ -786,7 +786,7 @@ function drawRect(svg,Xscale,Y,num,timeNode,start,end,h,isTimeline){
 					return "translate(30,2)";
 			})
 			.attr('stroke-width', '1')
-			.attr('stroke',"red")
+			.attr('stroke',"rgb(254,76,64)")
 			.attr("fill","none")
 			.attr("d",lineGenerator(dist2));
 	
@@ -849,9 +849,9 @@ function pict_1(svg,timeNode,num,start,end,h,isTimeline){
 		
 		var Xscale;
 		if(isTimeline)
-			Xscale = setXscale(start,end,$(window).width()*0.78,-1);
+			Xscale = setXscale(start,end,$("#naive").width(),-1);
 		else
-			Xscale = setXscale(start,end,$(window).width()*0.78,-1);
+			Xscale = setXscale(start,end,$("#naive").width(),-1);
 		//var XscaleDraw = setXscale(start,end,width,0);
 			
 		var Yscale=[];
@@ -931,25 +931,25 @@ function pict_1(svg,timeNode,num,start,end,h,isTimeline){
 function pict_2(svg,timeNode,num,data,chosen,start,end){
 		//svg.selectAll('*').remove();
 	svg1.append("circle")
-		.attr("cx",$(window).width()*0.68)
+		.attr("cx",$(window).width()*0.88)
 		.attr("cy",$(window).height()*0.02)
 		.attr("r",5)
 		.attr("fill","blue");
 
 	svg1.append("text")
-		.attr("x",$(window).width()*0.71)
+		.attr("x",$(window).width()*0.91)
 		.attr("y",$(window).height()*0.025)
 		.text("希拉里")
 		.attr("fill","white");
 
 	svg1.append("circle")
-		.attr("cx",$(window).width()*0.68)
+		.attr("cx",$(window).width()*0.88)
 		.attr("cy",$(window).height()*0.04)
 		.attr("r",5)
 		.attr("fill","red");	
 
 	svg1.append("text")
-		.attr("x",$(window).width()*0.71)
+		.attr("x",$(window).width()*0.91)
 		.attr("y",$(window).height()*0.045)
 		.text("特朗普")
 		.attr("fill","white");
@@ -970,8 +970,8 @@ function pict_2(svg,timeNode,num,data,chosen,start,end){
 		//console.log(min);
 		//console.log(data);
 		
-		var Xscale = setXscale(start,end,$(window).width()*0.78,-1);
-		var Xscale_draw = setXscale(start,end,$(window).width()*0.78,0);
+		var Xscale = setXscale(start,end,$("#naive").width(),-1);
+		var Xscale_draw = setXscale(start,end,$("#naive").width(),0);
 			
 		//var tickValue = [];
 		//for(var i=0;i<end-start;i++)
