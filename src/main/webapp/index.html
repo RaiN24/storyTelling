@@ -8,31 +8,50 @@
 
 <body>
 
+
+
+
 <link rel="stylesheet" href="css/layout.css" charset="utf-8"></link>
-<script src="js/initialize.js"></script>
-<script src="js/timelineDraw.js"></script>
-<script src="js/wordleDraw.js"></script>
-
-
-
 <link href="perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
-<script src=".../js/jquery.min.js"></script>
+<script src=".../js/jquery.js"></script>
 <script src="perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
 <script src="perfect-scrollbar/js/perfect-scrollbar.js"></script>
 
-       
+   
+   
+<script src="jslib/jquery.min.js"></script>
+<script src="jslib/d3.js"></script>
+<script src="jslib/underscore-min.js"></script>
+<script src="jslib/bootstrap.min.js"></script>
+<script src="jslib/buttons.js"></script>    
 
 <link rel="stylesheet" href="search_div/css/jquery-labelauty.css">
 <script src="search_div/laydate/laydate.js"></script>
 <script src="js/jquery-latest.min.js"></script>
-<script src="js/d3.min.js" charset="utf-8"></script>
+
 <script src="js/angular.min.js" charset="utf-8"></script>
 
 
 <div id="top-div"> 
-	<div id="naive" class="block-div"></div>
+	<div id="naive" class="block-div">
+		<input type="text" id="rangechanging"></input>
+		<button onclick="rangeChanged()">submit</button>
+	</div>
 	
-	<div id="simple" class="block-div"></div>
+	
+	<div id="timeline_bottom" class="block-div">
+		
+		
+		<div id="timeline_line">
+		
+			<div id="lower_line"></div>
+			<div id="upper_line"></div>	
+		
+		</div>
+		
+		
+	</div>
+	
 	
 	
 </div>
@@ -46,7 +65,7 @@
 
 </div>
 
-<div class="show"></div> 
+
 
 <div id="tooltip">
 		<div id="tooltip-Container">
@@ -57,12 +76,15 @@
 			<div id="tooltip-place"></div>
 			<div class="tooltip-tail"></div>
 		</div>
-	</div> 
+</div> 
+	
+	
 
-<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
 <script src="search_div/js/jquery-1.8.3.min.js"></script>
 <script src="search_div/js/jquery-labelauty.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"></script>
+
 <script src="d3.layout.cloud.js"></script>
 <script src="json_by_news.js"></script>
 <script src="json_by_words.js"></script>
@@ -72,28 +94,38 @@
 	<link href='https://fonts.googleapis.com/css?family=Raleway:100,300' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 
-	<!-- D3 -->
-	<script src="https://d3js.org/d3.v3.min.js"></script>
 	
-	<script src="js/initialize.js"></script>
+	
+
 	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	
 	
 
+
 	<link rel="stylesheet" href="css/tooltip.css"/>
 	<link rel="stylesheet" href="css/d3.slider.css"/> 
 	<link rel="stylesheet" href="css/style.css"/>
 
+	<script src="js/initialize.js"></script>
+	
+	<script src="js/wordleDraw.js"></script>
+	
+	
+	
+
+	
+	<script src="js/timeline.js"></script>
 	<script src="js/showTooltip.js"></script>
 	<script src="js/new_timelineDraw.js"></script>
 	<script src="js/helperFunctions.js"></script>
 	
-
+	
+	
 <script>
 
-var dateOfEvents = [];
+/*var dateOfEvents = [];
 var timeNode = [];              //Ӊҹ֣քɕǚ˽ߝ
 var month = [31,28,31,30,31,30,31,31,30,31,30,31];
 var width = 840;
@@ -103,7 +135,7 @@ var end = [2016,11,9];
 var labels1 = [];                         //ÿٶӉҹ֣Ѽ(ք˽ߝքҠۅ
 var labels2 = []; 
 var values = [];                         //ÿٶӉҹ֣֧ԖÊքƽ߹ֵ
-var span = [];
+var span = [];*/
 
 
 var rects = [];
@@ -120,6 +152,7 @@ var axisDraw;
 var jsonWord = [];
 var keyWords;
 var wordleText;
+
 var drawColor = [];                  // decide which rectangular to be highlighted
 var rectSelected = [];
 var rectSelectedFlag = 0;
@@ -131,7 +164,7 @@ var globalContent = [];
 circles.push([]);
 circles.push([]);
 
-var fill = d3.scale.category20();
+var fill = d3.scaleOrdinal(d3.schemeCategory20);
 
 var container = document.querySelector('#content');
 Ps.initialize(container);
@@ -139,21 +172,21 @@ Ps.initialize(container);
 $("#s").val("2015-07-01");
 $("#e").val("2015-09-16");
 
-var tooltip = d3.select("body")
+/*var tooltip = d3.select("body")
 		.append("div")
     	.attr("class","tooltip") //ԃԚcssʨ׃`ҹʽ
-    	.attr("opacity",0.0);
+    	.attr("opacity",0.0);*/
 
 /*var svg1=d3.select("#naive")     
 		.append("svg")    
 		.attr("width", $(window).width()*0.98)       
-		.attr("height", $(window).height()*0.51);*/		
+		.attr("height", $(window).height()*0.51);*/
 
 
-var svg3=d3.select("#simple")     
+/*var svg3=d3.select("#simple")     
 			.append("svg")          
 			.attr("width", $(window).width()*0.98)       
-			.attr("height", $(window).height()*0.09);
+			.attr("height", $(window).height()*0.09);*/
 
 
 var svg_4=d3.select("#div_5").append("svg")
@@ -171,7 +204,7 @@ var svg_5=d3.select("#content").append("svg")
 
 
 
-d3.csv("data/data2.csv",function(error,csvdata){
+/*d3.csv("data/data2.csv",function(error,csvdata){
 	if(error)
 		console.log(error);
 	csvData = csvdata;
@@ -179,7 +212,7 @@ d3.csv("data/data2.csv",function(error,csvdata){
 	//console.log(csvData);
 	
 	
-});
+});*/
 
 //var tmpjsonData = new Map();
 
@@ -198,8 +231,8 @@ $.getJSON("/getAllData",function(data){
 	
 	//timeNode = [];
 	//spanArrange(begin,end,1);
-	pict_1(svg3,timeNode,values,0,values.length,150,0);
-	
+	//pict_1(svg3,timeNode,values,0,values.length,150,0);
+	//updateDots();
 	//timeNode = [];
 	//spanArrange(begin,end,7);
 	
@@ -208,7 +241,7 @@ $.getJSON("/getAllData",function(data){
 
 
 
-$(document).ready(function(){ 
+/*$(document).ready(function(){ 
 	var x = $(window).width() * 0.015;
 	var y = $("#simple").offset().top;
 	var h = $("#simple").height();
@@ -239,7 +272,7 @@ $(document).ready(function(){
 		$(".show").css("cursor","default"); 
 		$(this).unbind("mousemove"); 
 	}) 
-}) 
+}) */
 d3.json("data/json_by_words.json",function(data){
 	jsonWord = data;
 });
@@ -249,6 +282,8 @@ d3.json("data/json_by_words.json",function(data){
 
 
 </script>
+
+
 
 
 </body>

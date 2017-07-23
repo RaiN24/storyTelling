@@ -229,6 +229,8 @@ d3.csv("data/xx1.2.csv", function(error, data) {
 		  .style("text-anchor", "end")
 		  .text("Number of songs")
 	
+    draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,0,labels2.length,x);
+		  
 	//Create the legend
 	//createLegend();
 
@@ -250,7 +252,22 @@ d3.csv("data/xx1.2.csv", function(error, data) {
 					.style("fill", function(d) { return color(0); })
 					.on("mouseover", showTooltip)
 					.on("mouseout", hideTooltip)
-					.transition().duration(500)
+					.on("click",function(d,i){
+							var newsContent = document.getElementById("content");
+							//console.log(data[tmpStr[i]]["content"]);
+							newsContent.innerHTML = Data[d]["content"];
+							//globalContent = data[tmpStr[i]]["content"];
+							var h = $("#div_5").height();
+							$("#content").animate({height:h},10); 
+							$("#content").css("font-size",12);
+							$("#content").css("color","rgb(20,68,106)");	
+							var tmp = d ;
+							tmp = 'n' + tmp;
+							//console.log(tmp);
+							svg_4.selectAll("text").remove();
+							draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,0,labels2.length,x);
+							
+					})
 					//.attr("y", function(d) { return y(0); })
 					//.style("opacity",0)
 					.transition().duration(10).delay(function(d,i) { return i/2; })
@@ -276,6 +293,6 @@ d3.csv("data/xx1.2.csv", function(error, data) {
 	
 	//Call first time
 	
-		updateDots();
+		
 	
 });

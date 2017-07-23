@@ -12,6 +12,9 @@ function draw_wordle(x,y,w,h,newsNumber,start,end,Xscale){
          }
          words.sort(by("time"));
          
+         //console.log(x);
+         //var test = d3.layout.cloud();
+         
          var delta = words.length - word_number_max;
          for (var i = 0; i < delta; i++) words.pop();
          
