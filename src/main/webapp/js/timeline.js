@@ -64,7 +64,7 @@ var autoplaytimer;
 
 
 {
-/*var upperLineId="upper_line";
+var upperLineId="upper_line";
 var upper_width=$("#"+upperLineId).css("width");
 upper_width=parseFloat(upper_width.split("p")[0]);
 var upper_height=$("#"+upperLineId).css("height");
@@ -82,7 +82,7 @@ var focusline = upper_svg.append("g")
 			.attr("height", focus_height);
 var focus_area;var focus_area_stroke;
 var focus_xAxis;var focus_yAxis;
-var focus_timerect;	*/
+var focus_timerect;	
 }
 {
 var lowerLineId="lower_line";
@@ -92,7 +92,11 @@ var lower_height=$("#"+lowerLineId).css("height");
 lower_height=parseFloat(lower_height.split("p")[0]);
 var lower_margin={"top":5,"left":25,"right":5,"bottom":20};
 var context_width=lower_width;//-lower_margin.left-lower_margin.right
-var context_height=lower_height;//-lower_margin.top-lower_margin.bottom;
+var context_height=lower_height*0.85;//-lower_margin.top-lower_margin.bottom;
+
+
+
+//console.log(context_height);
 
 var lower_svg=d3.select("#"+lowerLineId).append("svg")
 			.attr("width", lower_width)
@@ -104,6 +108,7 @@ var lower_svg=d3.select("#"+lowerLineId).append("svg")
 
 var context = lower_svg.append("g")
 			.attr("transform", "translate(" + lower_margin.left + "," + lower_margin.top + ")")
+			//.attr("transform", "translate(" + 0 + "," + 0 + ")")
 			.attr("width", context_width)
 			.attr("height", context_height);
 var context_area;
@@ -112,15 +117,15 @@ var context_brushhandle;
 	
 }
 {
-	var //focus_x = d3.scaleTime().range([0, focus_width]),
+	var focus_x = d3.scaleTime().range([0, focus_width]),
 	context_x = d3.scaleTime().range([0, context_width]),
-	//focus_y = d3.scaleLinear().range([focus_height, 0]),
+	focus_y = d3.scaleLinear().range([focus_height, 0]),
 	context_y = d3.scaleLinear().range([context_height, 0]);
 						
 var lowerformat = d3.timeFormat("%Y/%m/%e");
 
 //var lowerformat = d3.timeFormat("%Y/%m/%e);
-//var upperormat = d3.timeFormat("%H:%M:%S");
+var upperormat = d3.timeFormat("%Y:%m:%e");
 var lowerparseTime = d3.timeParse("%Y/%m/%e");	
 }
 {
@@ -166,7 +171,8 @@ d3.csv("data/data2.csv", function(error, csvdata) {
 	drawLowerTimeLine(lower_data,"#E87E51");
 	drawLowerTimeLine(lower_data1,"#D9B3E6");
 
-	//drawUpperTimeLine(lower_data);
+	drawUpperTimeLine(lower_data,lower_data1,["#E87E51","#D9B3E6"]);
+	
 	
 })
 
@@ -186,7 +192,7 @@ function drawLowerTimeLine(datap,thisColor){
 	
 	context_area = d3.area().curve(d3.curveBasis)
 				.x(function(d) {return context_x(lowerparseTime(d3.keys(d)[0]));})
-				.y0(context_height)
+				.y0(context_height*0.8)
 				.y1(function(d) {return context_y(d3.values(d)[0]);});
 	context_xAxis = d3.axisBottom(context_x).tickSize(-context_height);
 						//.ticks(d3.timeMinute.every(lower_timeminsplite));
@@ -213,19 +219,19 @@ function drawLowerTimeLine(datap,thisColor){
 		});
 	var xaxis=context.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(0," + (context_height) + ")")
+		.attr("transform", "translate(0," + (context_height*0.8) + ")")
 		.call(context_xAxis);
 	
 	
-	xaxis.selectAll(".tick text").attr("transform", "translate(0," + 56 + ")");
+	xaxis.selectAll(".tick text").attr("transform", "translate(0," + 5 + ")");
 	context.append("g")
 		.attr("class", "axis")
-		.attr("transform", "translate(0," + (context_height) + ")")
+		.attr("transform", "translate(0," + (context_height*0.8) + ")")
 		.call(context_yAxis);
 	//context.selectAll("g").remove();	
 	
-	/*var brush = d3.brushX()
-		.extent([[0, 0], [context_width, context_height]])
+	var brush = d3.brushX()
+		.extent([[0, 0], [context_width, context_height*0.8]])
 		.on("end", brushend)
 		.on("start brush", brushed);		
 	var gbrush=context.append("g")
@@ -250,11 +256,11 @@ function drawLowerTimeLine(datap,thisColor){
         	+ "A1.5,1.5 0 0 " + e + " " + (4.5 * x) + "," + (y + 1.5)
         	+ "V" + (2 * y - 1.5)
         	+ "A1.5,1.5 0 0 " + e + " " + (.5 * x) + "," + (2 * y);
-	}*/
+	}
 
 }
 
-/*function brushend(){
+function brushend(){
 	focusToStart();
 }	
 function brushed(){
@@ -269,10 +275,13 @@ function brushed(){
 		//timedata = [context_x.invert(select_x), context_x.invert(select_x1)];
 		focus_x.domain([context_x.invert(select_x), context_x.invert(select_x1)]);
 		lowertimebrushed=focus_x.domain();
-		focusline.select(".timeline_path").attr("d", focus_area);
+		focusline.select(".timeline_path").attr("d", function(){/*console.log("*");*/return focus_area;});
 		focusline.select(".timeline_path_stroke").attr("d", focus_area_stroke);
 		focusline.select(".axis").call(focus_xAxis);
 		focusline.selectAll(".axis .tick text").attr("transform", "translate(0," + 5 + ")");
+		
+		updateDots(select_x,select_x1);
+		
 	} else {
 		lowertimebrushed=context_x.domain();
 		context_brushhandle.attr("display", "none");
@@ -283,13 +292,15 @@ function brushed(){
 		focusline.select(".timeline_path_stroke").attr("d", focus_area_stroke);
 		focusline.select(".axis").call(focus_xAxis);
 		focusline.selectAll(".axis .tick text").attr("transform", "translate(0," + 5 + ")");
-
+		
+		updateDots(select_x1,select_x);
+		
 	}
-	document.getElementById("timeline_play").innerHTML='<i class="fa fa-play"></i>&nbsp;&nbsp;开始动画'
+	//document.getElementById("timeline_play").innerHTML='<i class="fa fa-play"></i>&nbsp;&nbsp;开始动画'
 	autoplaytimer=window.clearInterval(autoplaytimer);
 }				
 			
-function drawUpperTimeLine(datap){
+function drawUpperTimeLine(datap,datap1,thisColor){
 	
 	focusline.selectAll("g").remove();	
 	
@@ -315,18 +326,30 @@ function drawUpperTimeLine(datap){
 		.attr("class", "timeline_path")
 		.datum(datap)
 		.attr("clip-path", "url(#tl_clip)")
-		.attr("d", focus_area);
+		.attr("d", focus_area)
+		.attr("fill",thisColor[0])
+		.attr("opacity",0.44);
+	
 	patharea.append("path")
+		.attr("class", "timeline_path")
+		.datum(datap1)
+		.attr("clip-path", "url(#tl_clip)")
+		.attr("d", focus_area)
+		.attr("fill",thisColor[1])
+		.attr("opacity",0.44);
+	
+	/*patharea.append("path")
 		.attr("class", "timeline_path_stroke")
 		.datum(datap)
 		.attr("clip-path", "url(#tl_clip)")
-		.attr("d", focus_area_stroke);
+		.attr("d", focus_area_stroke);*/
+		
 	//axis
 	var axisarea=focusline.append("g");
 	var xaxis=axisarea.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(0," + (focus_height) + ")")
-		.call(focus_xAxis);
+		.call(focus_xAxis); 
 	xaxis.selectAll(".tick text").attr("transform", "translate(0," + 5 + ")");
 	axisarea.append("g")
 		.attr("class", "axis")
@@ -408,7 +431,7 @@ function drawUpperRectRangeLoc(timeendlocx,timespanwidth){
 		timeendlocx=focus_width;
 	}
 	uppertimewindow=[focus_x.invert(timeendlocx-timespanwidth),focus_x.invert(timeendlocx)];
-	document.getElementById("timeline_tip").innerHTML="时刻指示器:&nbsp;"+upperormat(focus_x.invert(timeendlocx));
+	//document.getElementById("timeline_tip").innerHTML="时刻指示器:&nbsp;"+upperormat(focus_x.invert(timeendlocx));
 	
 	focus_timerect.selectAll("g").remove();
 	focus_timerect.append("g").append("rect")
@@ -437,7 +460,7 @@ function drawUpperRectRangeLoc(timeendlocx,timespanwidth){
 		return str;
 			
      }
-}*/
+}
 
 
 

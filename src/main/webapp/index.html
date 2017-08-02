@@ -13,6 +13,8 @@
 
 <link rel="stylesheet" href="css/layout.css" charset="utf-8"></link>
 <link href="perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+<link href="css/buttons.css" rel="stylesheet">
+
 <script src=".../js/jquery.js"></script>
 <script src="perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
 <script src="perfect-scrollbar/js/perfect-scrollbar.js"></script>
@@ -35,7 +37,7 @@
 <div id="top-div"> 
 	<div id="naive" class="block-div">
 		<input type="text" id="rangechanging"></input>
-		<button onclick="rangeChanged()">submit</button>
+		<button class="button button-box button-tiny" id="timeline_play" onclick="rangeChanged()"><i class="fa fa-play"></i>&nbsp;&nbsp;更改单位时间跨度</button>
 	</div>
 	
 	
@@ -45,7 +47,7 @@
 		<div id="timeline_line">
 		
 			<div id="lower_line"></div>
-			<div id="upper_line"></div>	
+			<div id="upper_line"></div>
 		
 		</div>
 		
