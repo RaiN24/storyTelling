@@ -232,8 +232,14 @@ function drawLowerTimeLine(datap,thisColor){
 	
 	var brush = d3.brushX()
 		.extent([[0, 0], [context_width, context_height*0.8]])
-		.on("end", brushend)
-		.on("start brush", brushed);		
+		//.on("end", brushend)
+		.on("end", function(){
+			
+				//rangeChanged(select_x,select_x1);
+				//console.log("*");
+				brushed();
+			
+		});		
 	var gbrush=context.append("g")
 		.attr("class", "brush")
 		.call(brush);
@@ -280,7 +286,8 @@ function brushed(){
 		focusline.select(".axis").call(focus_xAxis);
 		focusline.selectAll(".axis .tick text").attr("transform", "translate(0," + 5 + ")");
 		
-		updateDots(select_x,select_x1);
+		//rangeChanged(0,300);
+		rangeChanged(1,select_x,select_x1);
 		
 	} else {
 		lowertimebrushed=context_x.domain();
@@ -293,7 +300,7 @@ function brushed(){
 		focusline.select(".axis").call(focus_xAxis);
 		focusline.selectAll(".axis .tick text").attr("transform", "translate(0," + 5 + ")");
 		
-		updateDots(select_x1,select_x);
+		//rangeChanged(select_x1,select_x);
 		
 	}
 	//document.getElementById("timeline_play").innerHTML='<i class="fa fa-play"></i>&nbsp;&nbsp;开始动画'

@@ -40,7 +40,7 @@ var margin = {top: 200, right: 20, bottom: 50, left: 40},
     //width = w - margin.left - margin.right - padding,
     //height = h - margin.top - margin.bottom - padding;
 	width = $(window).width()*0.99;
-	height = $(window).height()*0.51;
+	height = $(window).height()*0.42;
 	//console.log(height);
 	
 	var dateOfEvents = [];
@@ -193,7 +193,7 @@ updateDots = function (selected_start,selected_end) {
 						//console.log(tmp);
 						svg_4.selectAll("text").remove();
 						draw_wordle($(window).width()*0.15,$(window).height()*0.1925,$(window).width()*0.3,$(window).height()*0.385,tmp,0,labels2.length,x);
-						updateDots();
+						updateDots(selected_start,selected_end);
 				})
 				//.attr("y", function(d) { return y(0); })
 				//.style("opacity",0)
@@ -311,7 +311,7 @@ d3.csv("data/xx1.2.csv", function(error, data) {
 			drawColor[i].push(0);
 	}
 	
-	console.log(rectSelected);
+	//console.log(rectSelected);
 	
 	x.domain([0,labels2.length]).nice();//.nice();
 	y.domain([0,100]).nice();
@@ -362,8 +362,13 @@ d3.csv("data/xx1.2.csv", function(error, data) {
 		
 });	
 
-var rangeChanged = function(){
-	range = parseInt(document.getElementById("rangechanging").value);
+var rangeChanged = function(flag,selected_start,selected_end){
+	if(flag==0)
+		range = parseInt(document.getElementById("rangechanging").value);
+	else
+		range = 7;
+	
+	
 	
 	timeNode.splice(0,timeNode.length);
 	labels1.splice(0,labels1.length);
@@ -436,7 +441,7 @@ var rangeChanged = function(){
 	
 	labelArrange2();
 	
-	console.log(labels2);
+	//console.log(labels2);
 	for(var i=0;i<labels2.length;i++){
 		for(var j=0;j<labels2[i].length;j++)
 			rectSelected[i].push(0);
@@ -481,7 +486,10 @@ var rangeChanged = function(){
 		  .style("text-anchor", "end")
 		  .text("Number of songs");
 		  
-		  
-	updateDots(0,$(window).width());
+	if(flag===1)	  
+		updateDots(selected_start,selected_end);
+	
+	else 
+		updateDots(0,$(window).width());
 	
 }

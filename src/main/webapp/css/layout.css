@@ -83,19 +83,19 @@ input.labelauty + label { font: 12px "Microsoft Yahei";}
  
 #naive{
 	width: 99%;
-    height: 51%;
+    height: 42%;
 	padding: 2px;
 }	
 
 
 #timeline_bottom{
-	position: absolute;
+	
 	width: 99%;
     height: 18%;
 	padding: 2px;
 }	
 
-#timeline_line{position: absolute;height: 120px;width:100%;}
+#timeline_line{height: 120px;width:100%;}
 
 #upper_level,#lower_level{display: flex;height:49%;align-items: center; }
 
