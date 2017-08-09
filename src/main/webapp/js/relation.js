@@ -92,7 +92,7 @@ function draw_relation(newsNumber, eventNumber) {
 
     //var svg = d3.select("svg_6");
     var svg = d3.select("#relation").append("svg")
-        .attr("width", $(window).width() * 0.3)
+        .attr("width", $(window).width() * 0.15)
         .attr("height", $(window).height() * 0.385);
     var width = +svg.attr("width"),
         height = +svg.attr("height");
