@@ -152,6 +152,13 @@ input.labelauty + label {
     padding: 2px;
 }
 
+#relation {
+    float: left;
+    width: 30%;
+    height: 40%;
+    padding: 2px;
+}
+
 #top-div {
     float: top;
     width: 100%;

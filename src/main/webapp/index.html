@@ -59,24 +59,26 @@
 
     </div>
 
-	
-	<div id="bottom-div">
-	
-    	<div id="bottom-left-div">
 
-        	<div id="content" class="block-div"></div>
+    <div id="bottom-div">
 
-        	<div id="div_5" class="block-div"></div>       
+        <div id="bottom-left-div">
 
-    	</div>
-    
-    	<div id="bottom-right-div">
+            <div id="content" class="block-div"></div>
 
-			<div id="relation" class="block-div"></div>
-	
-		</div>
+            <div id="div_5" class="block-div"></div>
 
-	</div>
+        </div>
+
+        <div id="bottom-right-div">
+
+            <div id="relation" class="block-div"></div>
+
+            <div id="reason" class="block-div"></div>
+
+        </div>
+
+    </div>
 
     <div id="tooltip">
         <div id="tooltip-Container">
@@ -134,20 +136,6 @@
 
 
     <script>
-        /*
-		var dateOfEvents = [];
-		var timeNode = [];              //Ӊҹ֣քɕǚ˽ߝ
-        var month = [31,28,31,30,31,30,31,31,30,31,30,31];
-        var width = 840;
-        var begin = [2015,7,1];
-        var end = [2016,11,9];
-        var labels1 = [];                         //ÿٶӉҹ֣Ѽ(ք˽ߝքҠۅ
-        var labels2 = []; 
-        var values = [];                         //ÿٶӉҹ֣֧ԖÊքƽ߹ֵ
-        var span = [];
-		*/
-
-
         var rects = [];
         var texts = [];
         var candidate = [];
@@ -232,25 +220,25 @@
 
         //$.getJSON("/getAllData", function(data) {
 
-           // jsonData = data;
-            //jsonData = data;
-            //console.log(typeof data);
-            //for(var i in data)
-            //console.log(i);
-            //console.log(jsonData);
-            //timelinePict(svg3,0,12,1,jsonData,csvData,0);
-            //timeNode = [];
-            //timelinePict(0,12,7,jsonData,csvData,1);
-            //updateDots();
+        // jsonData = data;
+        //jsonData = data;
+        //console.log(typeof data);
+        //for(var i in data)
+        //console.log(i);
+        //console.log(jsonData);
+        //timelinePict(svg3,0,12,1,jsonData,csvData,0);
+        //timeNode = [];
+        //timelinePict(0,12,7,jsonData,csvData,1);
+        //updateDots();
 
-            //timeNode = [];
-            //spanArrange(begin,end,1);
-            //pict_1(svg3,timeNode,values,0,values.length,150,0);
-            //updateDots();
-            //timeNode = [];
-            //spanArrange(begin,end,7);
+        //timeNode = [];
+        //spanArrange(begin,end,1);
+        //pict_1(svg3,timeNode,values,0,values.length,150,0);
+        //updateDots();
+        //timeNode = [];
+        //spanArrange(begin,end,7);
 
-       // });
+        // });
 
 
 
@@ -295,12 +283,25 @@
         //console.log(json_by_news);
 
     </script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
+    <link href='css/reason_style.css' rel='stylesheet' type='text/css'>
+    <script src="data/T_reason_out.js"></script>
+    <script src=js/reason.js></script>
+    <script>
+        drawReason();
+
+    </script>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
     <script src="js/relation.js"></script>
     <script src="data/relation_data.js"></script>
-    <script> draw_relation(2,30); </script>
+    <script>
+        draw_relation(2, 30);
+
+    </script>
+
 
 
 
