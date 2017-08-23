@@ -28,7 +28,7 @@ function distQuant(data, id) {
     }
 
     var width = $(window).width() * 0.15,
-        height = $(window).height() * 0.385,
+        height = $(window).height() * 0.25,
         margin = 20;
     var colors = ["#7D74FE", "#7DFF26", "#F84F1B", "#28D8D5", "#FB95B6", "#9D9931", "#F12ABF", "#27EA88", "#549AD5", "#FEA526", "#7B8D8B", "#BB755F", "#432E16",
                 "#D75CFB", "#44E337", "#51EBE3", "#ED3D24", "#4069AE", "#E1CC72", "#E33E88", "#D8A3B3", "#428B50", "#66F3A3", "#E28A2A", "#B2594D", "#609297", "#E8F03F", "#3D2241",
@@ -90,7 +90,8 @@ function distQuant(data, id) {
                 return Math.round(r * 100) / 100;
             } else { // for quantile graph, use label 20, 40, 60, and 80.
                 //return (i * 20) + ' %';
-                var Ymd = d3.time.format("%Y-%m-%d");
+                //var Ymd = d3.time.format("%Y-%m-%d");
+				var Ymd = d3.time.format("%m-%d");
                 var i_date = new Date('2015, 06, 01, 00:00:00');
                 i_date.setDate(i_date.getDate() + s_date);
                 i_date.setDate(i_date.getDate() + (e_date - s_date) / 5 * i);
@@ -297,7 +298,7 @@ function distQuant(data, id) {
         transitionOut("quant");
     }
     // add title.
-    d3.select("#" + id).append("h3").text(data.title);
+    //d3.select("#" + id).append("h3").text(data.title);
 
     // add svg and set attributes for distribution.
     //d3.select("#" + id).append("svg").attr("width", width + 2 * margin).attr("height", height + 2 * margin)

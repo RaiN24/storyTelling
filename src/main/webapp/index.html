@@ -33,12 +33,33 @@
     <script src="js/jquery-latest.min.js"></script>
 
     <script src="js/angular.min.js" charset="utf-8"></script>
+    <script src="js/selection.js"></script>
+
+    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 
     <div id="top-div">
         <div id="naive" class="block-div">
+
+            <textarea id="delete-words" type="text" value="" class="mySelectTxt" rows="1" cols="40"></textarea>
+
+            <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
+            <a href="#" class="button button-primary button-tiny" id = "reason-select" value = "Trump-Up">Trump-Up <i class="fa fa-caret-down"></i></a>
+ 
+                <ul class="button-dropdown-list is-below">
+                    <li><a href="#" onclick="reason_select_fun(0)">Trump-Up</a></li>
+                    <li><a href="#" onclick="reason_select_fun(1)">Trump-Down</a></li>
+                    <li><a href="#" onclick="reason_select_fun(2)">Clinton-Up</a></li>
+                    <li><a href="#" onclick="reason_select_fun(3)">Clinton-Down</a></li>
+                </ul>
+            </span>
+
+            <a class="button button-primary button-tiny" onclick="go_fun()">Go</a>
+
+
             <input type="text" id="rangechanging"></input>
             <button class="button button-box button-tiny" id="timeline_play" onclick="rangeChanged(0)"><i class="fa fa-play"></i>&nbsp;&nbsp;更改单位时间跨度</button>
+
         </div>
 
 
@@ -68,15 +89,12 @@
 
             <div id="div_5" class="block-div"></div>
 
-        </div>
-
-        <div id="bottom-right-div">
-
             <div id="relation" class="block-div"></div>
 
             <div id="reason" class="block-div"></div>
 
         </div>
+
 
     </div>
 
@@ -283,15 +301,6 @@
         //console.log(json_by_news);
 
     </script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
-    <link href='css/reason_style.css' rel='stylesheet' type='text/css'>
-    <script src="data/T_reason_out.js"></script>
-    <script src=js/reason.js></script>
-    <script>
-        drawReason();
-
-    </script>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
@@ -302,8 +311,15 @@
 
     </script>
 
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
+    <link href='css/reason_style.css' rel='stylesheet' type='text/css'>
+    <script src="data/T_reason_out.js"></script>
+    <script src=js/reason.js></script>
+    <script>
+        drawReason();
 
-
+    </script>
 
 
 </body>
