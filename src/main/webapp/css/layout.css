@@ -140,7 +140,7 @@ input.labelauty + label {
 
 #div_5 {
     float: left;
-    width: 30%;
+    width: 27%;
     height: 40%;
     padding: 0px;
 }
@@ -166,11 +166,11 @@ input.labelauty + label {
     padding: 2px;
 }
 
-#bottom-div{
-	float: bottom;
-	width: 100%;
-	height: 40%;
-	padding: 2px;
+#bottom-div {
+    float: bottom;
+    width: 100%;
+    height: 40%;
+    padding: 2px;
 }
 
 #bottom-left-div {
@@ -180,13 +180,13 @@ input.labelauty + label {
     padding: 0px;
 }
 
-#bottom-right-div{
-	position: absolute;
-	left: 51%;
-	top: 67.5%;
-	width:50%;
-	height:99%;
-	padding: 2px;
+#bottom-right-div {
+    position: absolute;
+    left: 51%;
+    top: 67.5%;
+    width: 50%;
+    height: 99%;
+    padding: 2px;
 }
 
 
@@ -312,47 +312,47 @@ text:hover {
 }
 
 .mySelectTxt {
-        color: #333;
-        line-height: normal;
-        font-family: "Microsoft YaHei", Tahoma, Verdana, SimSun;
-        font-style: normal;
-        font-variant: normal;
-        font-size-adjust: none;
-        font-stretch: normal;
-        font-weight: normal;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        padding-top: 4px;
-        padding-right: 4px;
-        padding-bottom: 4px;
-        padding-left: 4px;
-        font-size: 15px;
-        outline-width: medium;
-        outline-style: none;
-        outline-color: invert;
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        text-shadow: 0px 1px 2px #fff;
-        background-attachment: scroll;
-        background-repeat: repeat-x;
-        background-size: auto;
-        background-origin: padding-box;
-        background-clip: border-box;
-        background-color: rgb(255, 255, 255);
-        margin-right: 8px;
-        border-top-color: #ccc;
-        border-right-color: #ccc;
-        border-bottom-color: #ccc;
-        border-left-color: #ccc;
-        border-top-width: 1px;
-        border-right-width: 1px;
-        border-bottom-width: 1px;
-        border-left-width: 1px;
-        border-top-style: solid;
-        border-right-style: solid;
-        border-bottom-style: solid;
-        border-left-style: solid;
-    }
+    color: #333;
+    line-height: normal;
+    font-family: "Microsoft YaHei", Tahoma, Verdana, SimSun;
+    font-style: normal;
+    font-variant: normal;
+    font-size-adjust: none;
+    font-stretch: normal;
+    font-weight: normal;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    padding-left: 4px;
+    font-size: 15px;
+    outline-width: medium;
+    outline-style: none;
+    outline-color: invert;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    text-shadow: 0px 1px 2px #fff;
+    background-attachment: scroll;
+    background-repeat: repeat-x;
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+    background-color: rgb(255, 255, 255);
+    margin-right: 8px;
+    border-top-color: #ccc;
+    border-right-color: #ccc;
+    border-bottom-color: #ccc;
+    border-left-color: #ccc;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+}

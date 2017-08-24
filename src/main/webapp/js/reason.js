@@ -358,7 +358,13 @@ function drawReason() {
             else word_dic[j] = mydata[i][j];
         }
     }
+
+    var select_list = $("#delete-words").val().split(" ");
+    var select_set = {};
+    for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
+
     for (j in word_dic) {
+        if (j in select_set) word_dic[j] = 0;
         if (isNaN(word_dic[j])) word_dic[j] = 0;
     }
 
