@@ -1,4 +1,7 @@
-function draw_relation(newsNumber, eventNumber) {
+function draw_relation() {
+    svg_6.selectAll("*").remove();
+    var newsNumber = document.getElementById("timeline_bottom").getAttribute("selectD");
+    var eventNumber = 30;
     var other_event_scale = 0.4;
     var base_length = 20;
     var extra_length = 40;
@@ -91,11 +94,8 @@ function draw_relation(newsNumber, eventNumber) {
     //string(1);
 
     //var svg = d3.select("svg_6");
-    var svg = d3.select("#relation").append("svg")
-        .attr("width", $(window).width() * 0.15)
-        .attr("height", $(window).height() * 0.385);
-    var width = +svg.attr("width"),
-        height = +svg.attr("height");
+    var width = +svg_6.attr("width"),
+        height = +svg_6.attr("height");
 
     var color = d3.scaleOrdinal(d3.schemeCategory20);
 
@@ -115,7 +115,7 @@ function draw_relation(newsNumber, eventNumber) {
 
 
 
-    var link = svg.append("g")
+    var link = svg_6.append("g")
         .attr("class", "links")
         .selectAll("line")
         .data(links)
@@ -126,7 +126,7 @@ function draw_relation(newsNumber, eventNumber) {
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6);
 
-    var node = svg.append("g")
+    var node = svg_6.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(nodes)
@@ -144,7 +144,8 @@ function draw_relation(newsNumber, eventNumber) {
 
     node.append("title")
         .text(function (d) {
-            return d.id;
+            var tmp = parseInt(d.id.substring(1));
+            return Data[tmp]["title"]
         });
 
     simulation

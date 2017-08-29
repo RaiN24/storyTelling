@@ -25,10 +25,6 @@ path {
     font-size: 12px;
 }
 
-body {
-    width: 1150px;
-    margin: 10px auto;
-}
 
 svg {
     display: inline;
@@ -37,11 +33,11 @@ svg {
 
 .legend {
     display: inline-block;
-    margin: 5px;
-    margin-top: 0px;
+    margin: 0px;
+    margin-top: 10px;
     margin-left: 0;
     max-height: 200px;
-    min-width: 60px;
+    min-width: 50px;
     overflow: auto;
 }
 
@@ -74,9 +70,9 @@ svg {
 
 .distquantdiv {
     clear: both;
-    padding: 10px;
+    padding: 5px;
     overflow: hidden;
-    margin: 10px;
+    margin: 0px;
 }
 
 .distquantdiv h3 {

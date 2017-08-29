@@ -5,6 +5,8 @@ var s_date = 440,
 
 function distQuant(data, id) {
 
+    d4.select("#" + id).selectAll("*").remove();
+
     function getPoints(_, i) {
         return _.map(function (d, j) {
             return {
@@ -27,7 +29,7 @@ function distQuant(data, id) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    var width = $(window).width() * 0.15,
+    var width = $(window).width() * 0.16,
         height = $(window).height() * 0.25,
         margin = 20;
     var colors = ["#7D74FE", "#7DFF26", "#F84F1B", "#28D8D5", "#FB95B6", "#9D9931", "#F12ABF", "#27EA88", "#549AD5", "#FEA526", "#7B8D8B", "#BB755F", "#432E16",
@@ -41,6 +43,7 @@ function distQuant(data, id) {
             ];
 
     function draw(type) {
+
         var maxT = d4.max(data[type].map(function (d) {
             return d4.sum(d);
         }));
@@ -59,7 +62,7 @@ function distQuant(data, id) {
         var x = d4.scale.linear().domain([0, data[type].length - 1]).range([0, width]);
         var y = d4.scale.linear().domain([0, maxT]).range([height, 0]);
 
-        //draw yellow background for graph.
+        //draw background for graph.
         svg.append("rect").attr("x", 0).attr("y", 0).attr("width", width).attr("height", height).style("fill", "rgba(56,56,56,0.96)");
 
         // draw vertical lines of the grid.
@@ -151,10 +154,10 @@ function distQuant(data, id) {
             });
 
         //draw a white rectangle to hide and to show some statistics.
-        var stat = svg.append("g").attr("class", "stat");
+        //var stat = svg.append("g").attr("class", "stat");
 
-        stat.append("rect").attr("x", -margin).attr("y", -margin)
-            .attr("width", width + 2 * margin).attr("height", margin).style("fill", "white");
+        //stat.append("rect").attr("x", -margin).attr("y", -margin)
+        //  .attr("width", width + 2 * margin).attr("height", margin).style("fill", "white");
 
         // show sum and mean in statistics
         if (type == "dist") {
@@ -417,12 +420,13 @@ function drawReason() {
         }
     }
 
-    var seg = d4.select("#reason").selectAll("div").data(d4.range(dqData.length)).enter()
-        .append("div").attr("id", function (d, i) {
-            return "segment" + i;
-        }).attr("class", "distquantdiv");
+    //var seg = d4.select("#reason").selectAll("div").data(d4.range(dqData.length)).enter()
+    //  .append("div").attr("id", function (d, i) {
+    //        return "segment" + i;
+    //    }).attr("class", "distquantdiv");
 
-    d4.range(dqData.length).forEach(function (d, i) {
-        distQuant(dqData[i], "segment" + i);
-    });
+
+
+    distQuant(dqData[0], "segment0");
+
 }

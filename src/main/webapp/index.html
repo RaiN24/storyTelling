@@ -34,6 +34,14 @@
 
     <script src="js/angular.min.js" charset="utf-8"></script>
     <script src="js/selection.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="js/relation.js"></script>
+    <script src="data/relation_data.js"></script>
+
+    <script src=js/d3.v3.min.reason.js></script>
+    <link href='css/reason_style.css' rel='stylesheet' type='text/css'>
+    <script src="data/T_reason_out.js"></script>
+    <script src=js/reason.js></script>
 
     <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -56,14 +64,13 @@
 
             <a class="button button-primary button-tiny" onclick="go_fun()">Go</a>
 
-
             <input type="text" id="rangechanging"></input>
             <button class="button button-box button-tiny" id="timeline_play" onclick="rangeChanged(0)"><i class="fa fa-play"></i>&nbsp;&nbsp;更改单位时间跨度</button>
 
         </div>
 
 
-        <div id="timeline_bottom" class="block-div">
+        <div id="timeline_bottom" class="block-div" selectD=0 selectI=0>
 
 
             <div id="timeline_line">
@@ -206,19 +213,20 @@
 
 
         var svg_4 = d3.select("#div_5").append("svg")
-            .attr("width", $(window).width() * 0.3)
+            .attr("width", $(window).width() * 0.27)
             .attr("height", $(window).height() * 0.385);
-
 
         var svg_5 = d3.select("#content").append("svg")
-            .attr("width", $(window).width() * 0.2)
+            .attr("width", $(window).width() * 0.17)
             .attr("height", $(window).height() * 0.385);
 
-        //var svg_6 = d3.select("#relation").append("svg")
-        //    .attr("width", $(window).width() * 0.3)
-        //    .attr("height", $(window).height() * 0.385);
+        var svg_6 = d3.select("#relation").append("svg")
+            .attr("width", $(window).width() * 0.17)
+            .attr("height", $(window).height() * 0.385);
 
-
+        d4.select("#reason").append("div")
+            .attr("id", "segment0")
+            .attr("class", "distquantdiv");
         //svg_5.append('rect');
 
 
@@ -302,24 +310,6 @@
 
     </script>
 
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
-    <script src="js/relation.js"></script>
-    <script src="data/relation_data.js"></script>
-    <script>
-        draw_relation(2, 30);
-
-    </script>
-
-    <script src=js/d3.v3.min.reason.js></script>
-    <script src="http://code.jquery.com/jquery-1.4.1.js"></script>
-    <link href='css/reason_style.css' rel='stylesheet' type='text/css'>
-    <script src="data/T_reason_out.js"></script>
-    <script src=js/reason.js></script>
-    <script>
-        drawReason();
-
-    </script>
 
 
 </body>

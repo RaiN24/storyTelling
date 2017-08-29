@@ -147,14 +147,14 @@ input.labelauty + label {
 
 #relation {
     float: left;
-    width: 14%;
+    width: 17%;
     height: 40%;
     padding: 0px;
 }
 
 #reason {
     float: left;
-    width: 35%;
+    width: 30%;
     height: 40%;
     padding: 0px;
 }

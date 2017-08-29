@@ -2,7 +2,13 @@ var word_number_max = 50;
 
 
 
-function draw_wordle(x, y, w, h, newsNumber, start, end, Xscale) {
+function draw_wordle() {
+    svg_4.selectAll("text").remove();
+    var x = $(window).width() * 0.13;
+    var y = $(window).height() * 0.1925;
+    var w = $(window).width() * 0.27;
+    var h = $(window).height() * 0.385;
+    var newsNumber = 'n' + document.getElementById("timeline_bottom").getAttribute("selectD");
     var news = json_by_news[newsNumber];
     var words = [];
     var maxTime = 0;
