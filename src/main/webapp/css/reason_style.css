@@ -26,10 +26,6 @@ path {
 }
 
 
-svg {
-    display: inline;
-    float: left;
-}
 
 .legend {
     display: inline-block;
@@ -70,7 +66,7 @@ svg {
 
 .distquantdiv {
     clear: both;
-    padding: 5px;
+    padding: 0px;
     overflow: hidden;
     margin: 0px;
 }
