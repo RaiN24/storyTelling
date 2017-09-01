@@ -16,9 +16,10 @@
     <link href="perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="css/buttons.css" rel="stylesheet">
 
-    <script src=".../js/jquery.js"></script>
+    
     <script src="perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
     <script src="perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    
 
 
 
@@ -98,7 +99,9 @@
 
             <div id="relation" class="block-div"></div>
 
-            <div id="reason" class="block-div"></div>
+            <div id="reason" class="block-div">
+            	
+            </div>
 
         </div>
 
@@ -191,26 +194,15 @@
 
         var container = document.querySelector('#content');
         Ps.initialize(container);
+ 
+		
+        
+        
 
         $("#s").val("2015-07-01");
         $("#e").val("2015-09-16");
 
-        /*var tooltip = d3.select("body")
-        		.append("div")
-            	.attr("class","tooltip") //ԃԚcssʨ׃`ҹʽ
-            	.attr("opacity",0.0);*/
-
-        /*var svg1=d3.select("#naive")     
-        		.append("svg")    
-        		.attr("width", $(window).width()*0.98)       
-        		.attr("height", $(window).height()*0.51);*/
-
-
-        /*var svg3=d3.select("#simple")     
-        			.append("svg")          
-        			.attr("width", $(window).width()*0.98)       
-        			.attr("height", $(window).height()*0.09);*/
-
+   
 
         var svg_4 = d3.select("#div_5").append("svg")
             .attr("width", $(window).width() * 0.27)
@@ -229,86 +221,7 @@
             .attr("class", "distquantdiv")
             .attr("width", $(window).width() * 0.30)
             .attr("height", $(window).height() * 0.385);
-        //svg_5.append('rect');
-
-
-
-
-        /*d3.csv("data/data2.csv",function(error,csvdata){
-        	if(error)
-        		console.log(error);
-        	csvData = csvdata;
-        	
-        	//console.log(csvData);
-        	
-        	
-        });*/
-
-        //var tmpjsonData = new Map();
-
-        //$.getJSON("/getAllData", function(data) {
-
-        // jsonData = data;
-        //jsonData = data;
-        //console.log(typeof data);
-        //for(var i in data)
-        //console.log(i);
-        //console.log(jsonData);
-        //timelinePict(svg3,0,12,1,jsonData,csvData,0);
-        //timeNode = [];
-        //timelinePict(0,12,7,jsonData,csvData,1);
-        //updateDots();
-
-        //timeNode = [];
-        //spanArrange(begin,end,1);
-        //pict_1(svg3,timeNode,values,0,values.length,150,0);
-        //updateDots();
-        //timeNode = [];
-        //spanArrange(begin,end,7);
-
-        // });
-
-
-
-
-        /*$(document).ready(function(){ 
-        	var x = $(window).width() * 0.015;
-        	var y = $("#simple").offset().top;
-        	var h = $("#simple").height();
-        	$(".show").animate({left:x+"px",top:y+"px",height:h},10); 
-        	$(".show").mousedown(function(e){ 
-        		$(this).css("cursor","move");
-        		var offset = $(this).offset();
-        		var x = $(window).width() * 0.015;
-        		var y = $("#simple").offset().top;
-        		var h = $("#simple").height();
-        		$(".show").animate({left:x+"px",top:y+"px",height:h},10); 
-        		
-        		$(document).bind("mousemove",function(ev){ 
-        			$(".show").stop();
-        			var _x = ev.pageX - x;
-        			if(_x < $(window).width()*0.015)_x = $(window).width()*0.015;
-        			if(_x > $(window).width()*0.9)_x = $(window).width()*0.9;
-        			var _y = $("#simple").offset().top;
-        			scaler = parseInt((_x-$(window).width()*0.015)/($(window).width())*timeNode.length*0.98);
-        			$(".show").animate({left:_x+"px",top:_y+"px"},10); 
-        			
-        			timelinePict(scaler,scaler+$(".show").width()/($(window).width())*timeNode.length,7,jsonData,csvData,1);
-        		}); 
-
-        	}); 
-
-        	$(document).mouseup(function(){ 
-        		$(".show").css("cursor","default"); 
-        		$(this).unbind("mousemove"); 
-        	}) 
-        }) */
-        d3.json("data/json_by_words.json", function(data) {
-            jsonWord = data;
-        });
-
-
-        //console.log(json_by_news);
+      
 
     </script>
 

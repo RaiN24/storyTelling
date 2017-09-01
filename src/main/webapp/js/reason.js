@@ -4,7 +4,7 @@ var s_date = 440,
 
 
 function distQuant(data, id) {
-
+	console.log("*");
     d4.select("#" + id).selectAll("*").remove();
 
     function getPoints(_, i) {
@@ -327,10 +327,13 @@ function distQuant(data, id) {
             return d[0];
         })
         .on("mouseover", mouseoverLegend).on("mouseout", mouseoutLegend).style("cursor", "pointer");
+    
+    
+    
 }
 
 function drawReason() {
-
+	//alert("*");
     var dqData = [];
     dqData.push({
         title: 'Reason',
@@ -426,7 +429,12 @@ function drawReason() {
     //    }).attr("class", "distquantdiv");
 
 
+    
+    
+    
 
     distQuant(dqData[0], "segment0");
+    
+    
 
 }

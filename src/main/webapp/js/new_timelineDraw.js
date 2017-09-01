@@ -137,18 +137,6 @@ var svg = d3.select("#naive").append("svg")
 //Container for all the rectangles
 var dotContainer = svg.append("g").attr("class", "dotContainer");
 
-//Create title to show chosen year
-/*var yearTitle = svg.append('text')                                     
-	  .attr('x', width/2) 
-	  .attr('y', -10)	  
-	  .attr("class", "yearTitle")
-	  .text(chosenYear);  
-*/
-
-////////////////////////////////////////////////////////////	
-///////////////////// Read in data /////////////////////////
-////////////////////////////////////////////////////////////
-
 var csvdata;
 
 updateDots = function (selected_start, selected_end) {
@@ -218,6 +206,8 @@ updateDots = function (selected_start, selected_end) {
                 draw_wordle();
                 draw_relation();
                 drawReason();
+                var legend = document.querySelector('.legend');
+                Ps.initialize(legend);
                 updateDots(selected_start, selected_end);
 
             })
@@ -315,12 +305,7 @@ d3.csv("data/xx1.2.csv", function (error, data) {
         if (i == 0) continue;
         var tmp = Data[i]["date"];
         if (tmp === undefined) continue;
-        //console.log(tmp);
-
-        //var reg = new RegExp('"',"g");  
-        //var this_tmp = tmp.replace(reg, "");
-        //tmp = this_tmp;
-        //console.log(tmp);
+      
 
         var tmp1 = tmp.split("/");
         dateOfEvents.push(tmp1);
@@ -382,13 +367,7 @@ d3.csv("data/xx1.2.csv", function (error, data) {
         .text("Number of songs")
 
 
-    //Create the legend
-    //createLegend();
-
-    //Change the year when moving the slider
-    //function updateDots
-
-    //Call first time
+ 
     updateDots(0, $(window).width());
 
 

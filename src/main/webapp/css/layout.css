@@ -131,12 +131,14 @@ input.labelauty + label {
 
 
 #content {
-    overflow-y: auto;
+    overflow-y: hidden;
     float: left;
     width: 17%;
     height: 40%;
     scrollbar-face-color: #99ccff;
 }
+
+
 
 #div_5 {
     float: left;
@@ -157,6 +159,7 @@ input.labelauty + label {
     width: 30%;
     height: 40%;
     padding: 0px;
+    
 }
 
 #top-div {

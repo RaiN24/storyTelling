@@ -28,6 +28,7 @@ path {
 
 
 .legend {
+	position: absolute;
     display: inline-block;
     margin: 0px;
     margin-top: 10px;
