@@ -137,6 +137,13 @@ function draw_relation() {
         })
         .attr("stroke", "#fff")
         .attr("stroke-width", "1.5px")
+        .on("click", function (d, i) {
+            //接口
+            //d.id即为事件编号，例如"n15"为15号事件。
+            //可使用parseInt(d.id.substring(1))转化为int变量
+            //编号与你在Data里的相同，可参考下面几行的node.append("title")添加标题的代码
+            //接口结束
+        })
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)

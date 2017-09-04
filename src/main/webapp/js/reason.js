@@ -1,10 +1,12 @@
 var reason_num = 20;
+//接口
+//对应开始和结束日期，以2015年6月1日为数字0，实际数字代表距离2015年6月1日的天数，例如2015年6月16日为date=15.
 var s_date = 440,
     e_date = 470;
-
+//接口结束
 
 function distQuant(data, id) {
-	console.log("*");
+    console.log("*");
     d4.select("#" + id).selectAll("*").remove();
 
     function getPoints(_, i) {
@@ -327,13 +329,13 @@ function distQuant(data, id) {
             return d[0];
         })
         .on("mouseover", mouseoverLegend).on("mouseout", mouseoutLegend).style("cursor", "pointer");
-    
-    
-    
+
+
+
 }
 
 function drawReason() {
-	//alert("*");
+    //alert("*");
     var dqData = [];
     dqData.push({
         title: 'Reason',
@@ -429,12 +431,12 @@ function drawReason() {
     //    }).attr("class", "distquantdiv");
 
 
-    
-    
-    
+
+
+
 
     distQuant(dqData[0], "segment0");
-    
-    
+
+
 
 }
