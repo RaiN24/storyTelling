@@ -6,7 +6,7 @@ var s_date = 440,
 //接口结束
 
 function distQuant(data, id) {
-    console.log("*");
+    //console.log("*");
     d4.select("#" + id).selectAll("*").remove();
 
     function getPoints(_, i) {

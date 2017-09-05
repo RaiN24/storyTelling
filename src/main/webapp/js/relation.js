@@ -1,4 +1,4 @@
-function draw_relation() {
+function draw_relation(selected_start, selected_end) {
     svg_6.selectAll("*").remove();
     var newsNumber = document.getElementById("timeline_bottom").getAttribute("selectD");
     var eventNumber = 30;
@@ -19,6 +19,12 @@ function draw_relation() {
             value: raw_list1[i]
         });
     }
+    
+    
+    var start, end;
+    start = 0;
+    end = labels2.length;
+    
 
     raw_list2.sort(by("value"));
     var raw_list3 = []; //raw_list3 ia the object list in eventNumber
@@ -143,6 +149,66 @@ function draw_relation() {
             //可使用parseInt(d.id.substring(1))转化为int变量
             //编号与你在Data里的相同，可参考下面几行的node.append("title")添加标题的代码
             //接口结束
+            
+            //console.log([start,end]);
+        	
+        	
+        	for (var h = start; h < end; h++)
+                for (var t = 0; t < labels2[h].length; t++)
+                    rectSelected[h][t] = 0;
+        	
+        	
+        	var j = parseInt(d.id.substring(1));
+        	var flag = 0;
+        	//console.log(j);
+        	for(var h=0;h<labels2.length;h++){
+        		for(var k=0;k<labels2[h].length;k++){
+        			if(labels2[h][k]===j){
+        				flag = 1;
+        				//console.log([h,k]);
+        				break;
+        			}
+        		}
+        		if(flag)
+    				break;
+        	}
+        	
+        	//console.log(j);
+        	//console.log([h,k]);
+        	
+        	document.getElementById("timeline_bottom").setAttribute("selectD", parseInt(d.id.substring(1)));
+            document.getElementById("timeline_bottom").setAttribute("selectI", k);
+            var newsContent = document.getElementById("content");
+
+
+
+            /*for (var h = start; h < end; h++)
+                if (labels2[h][k] == parseInt(d.id.substring(1)))
+                    break;*/
+            
+            
+            //console.log([h,k]);
+            rectSelected[h][k] = 1;
+            //console.log(rectSelected);
+
+            newsContent.innerHTML = Data[parseInt(d.id.substring(1))]["content"];
+            //globalContent = data[tmpStr[i]]["content"];
+            var h = $("#div_5").height();
+            $("#content").animate({
+                height: h
+            }, 10);
+            $("#content").css("font-size", 12);
+            $("#content").css("color", "rgb(20,68,106)");
+            
+            updateDots(0,$(window).width());
+            
+            draw_wordle();
+            draw_relation(selected_start, selected_end);
+            drawReason();
+            var legend = document.querySelector('.legend');
+            Ps.initialize(legend);
+            
+        		
         })
         .call(d3.drag()
             .on("start", dragstarted)

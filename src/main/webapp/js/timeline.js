@@ -1,66 +1,7 @@
 ﻿
 
-/*var globalSpan=[
-	{"id":"global_tl_real","text":"当日实时","minCnt":-1},
-	{"id":"global_tl_day","text":"最近一天","minCnt":24*60},
-	{"id":"global_tl_week","text":"最近一周","minCnt":7*24*60},
-	{"id":"global_tl_month","text":"最近一月","minCnt":30*7*24*60}
-];
-var timelineGranulariy=[
-	{"id":"granulariy_tl_5","text":"5分钟","minCnt":5},
-	{"id":"granulariy_tl_15","text":"15分钟","minCnt":15},
-	{"id":"granulariy_tl_30","text":"30分钟","minCnt":30},
-	{"id":"granulariy_tl_60","text":"1小时","minCnt":60},
-];
-
-function globalBtnFunc(mincnt){
-	//console.log("globalBtnFunc "+mincnt);
-	lower_timeminspan=mincnt;
-}
-function granulariyBtnFunc(mincnt){
-	upper_timemin_gran=mincnt;
-	focusToStart();
-}
-setTimelineBtn("#global_time_span_list li",globalSpan,"global_time_span_btn",'<i class="fa fa-caret-down"></i>',globalBtnFunc);
-setTimelineBtn("#time_granulariy_list li",timelineGranulariy,"time_granulariy_btn",'<i class="fa fa-caret-down"></i>',granulariyBtnFunc);
-*/
-/*function setTimelineBtn(listid,listobj,btnid,iHTML,func){
-	$(listid).on("click",function(d){
-		let tmpclickedid=(d.currentTarget.id);
-		for(let i=0;i<listobj.length;i++){
-			if(listobj[i].id==tmpclickedid){
-				document.getElementById(btnid).innerHTML=listobj[i].text+" "+iHTML;
-				func(listobj[i].minCnt);
-				break;
-			}
-		}
-	})
-}*/
 var autoplaytimer;
 
-/*$("#timeline_play").on("click",function(d){
-	let tmphtml=(document.getElementById("timeline_play").innerHTML);
-	let playbool=tmphtml.indexOf("play")>=0?true:false; 
-	if(playbool){
-		//开始
-		document.getElementById("timeline_play").innerHTML='<i class="fa fa-pause"></i>&nbsp;&nbsp;暂停动画';
-		autoplaytimer=window.setInterval(function(){
-			var newtime=uppertimewindow[1].valueOf()+upper_timemin_gran*60*1000;
-			var maxtime=focus_x.invert(focus_width).valueOf();
-			if(newtime>maxtime){
-				focusToEnd();
-				autoplaytimer=window.clearInterval(autoplaytimer);
-			}else{
-				focusToTime(newtime);
-			}
-		},1000);  
-	
-	}else{
-		//暂停
-		document.getElementById("timeline_play").innerHTML='<i class="fa fa-play"></i>&nbsp;&nbsp;开始动画';
-		autoplaytimer=window.clearInterval(autoplaytimer);
-	}
-})*/
 
 
 {
@@ -234,7 +175,7 @@ function drawLowerTimeLine(datap,thisColor){
 		.extent([[0, 0], [context_width, context_height*0.8]])
 		//.on("end", brushend)
 		.on("end", function(){
-			
+				
 				//rangeChanged(select_x,select_x1);
 				//console.log("*");
 				brushed();
@@ -273,6 +214,12 @@ function brushed(){
 	var s = d3.event.selection;
 	var select_x = s[0],
 		select_x1 = s[1];
+	
+	s_date = parseInt(select_x / $(window).width() * 470);
+	e_date = parseInt(select_x1 / $(window).width() * 470);
+	
+	console.log([s_date,e_date]);
+	
 	dx = select_x1 - select_x;
 	//console.log(s);
 	if(dx) {

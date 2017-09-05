@@ -204,7 +204,10 @@ updateDots = function (selected_start, selected_end) {
                 $("#content").css("font-size", 12);
                 $("#content").css("color", "rgb(20,68,106)");
                 draw_wordle();
-                draw_relation();
+                
+                
+                draw_relation(selected_start, selected_end);
+                
                 drawReason();
                 var legend = document.querySelector('.legend');
                 Ps.initialize(legend);
