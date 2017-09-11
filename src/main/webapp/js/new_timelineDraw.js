@@ -22,8 +22,10 @@ var wind = window,
     d = document,
     e = d.documentElement,
     g = d.getElementsByTagName('body')[0],
-    maxWidth = 1200, //Maximum width of the chart, regardless of screen size
-    maxHeight = 800, //Maximum height of the chart, regardless of screen size
+    //maxWidth = 1200, //Maximum width of the chart, regardless of screen size
+    //maxHeight = 800, //Maximum height of the chart, regardless of screen size
+    maxWidth = $(window).width();
+	maxHeight = $(window).height();
     w = Math.min(maxWidth, wind.innerWidth || e.clientWidth || g.clientWidth),
     h = Math.min(maxHeight, wind.innerHeight || e.clientHeight || g.clientHeight);
 
@@ -146,8 +148,8 @@ updateDots = function (selected_start, selected_end) {
     dots = dotContainer.selectAll(".dot");
 
     var start, end;
-    start = parseInt(selected_start / $(window).width() * labels2.length);
-    end = parseInt(selected_end / $(window).width() * labels2.length);
+    start = parseInt(selected_start / ($(window).width()*0.9) * labels2.length);
+    end = parseInt(selected_end / ($(window).width()*0.9) * labels2.length);
 
     //var tmpData = labels2.slice(start,end);
 
@@ -217,7 +219,7 @@ updateDots = function (selected_start, selected_end) {
             //.attr("y", function(d) { return y(0); })
             //.style("opacity",0)
             .attr("x", function () {
-                return (x(k) - rectWidth / 2);
+                return (x(k) - rectWidth / 2 + 3);
             })
             .attr("y", function (d, i) {
                 //console.log(y(i));
@@ -337,8 +339,10 @@ d3.csv("data/xx1.2.csv", function (error, data) {
     y.domain([0, 100]).nice();
 
     //Size of the "song" rectangles
-    rectWidth = Math.floor(x.range()[1] / 100);
+    //rectWidth = Math.floor(x.range()[1] / 100);
     rectHeight = Math.min(3, Math.floor(y.range()[0] / 100));
+    rectWidth = $(window).width() / timeNode.length;
+     
     rectCorner = rectHeight / 2;
 
 
@@ -371,7 +375,7 @@ d3.csv("data/xx1.2.csv", function (error, data) {
 
 
  
-    updateDots(0, $(window).width());
+    updateDots(0, $(window).width()*0.9);
 
 
 });
@@ -467,7 +471,8 @@ var rangeChanged = function (flag, selected_start, selected_end) {
     y.domain([0, 100]).nice();
 
     //Size of the "song" rectangles
-    rectWidth = Math.floor(x.range()[1] / 100);
+    //rectWidth = Math.floor(x.range()[1] / 100);
+    rectWidth = $(window).width() / timeNode.length;
     rectHeight = Math.min(3, Math.floor(y.range()[0] / 100));
     rectCorner = rectHeight / 2;
 
@@ -504,6 +509,6 @@ var rangeChanged = function (flag, selected_start, selected_end) {
         updateDots(selected_start, selected_end);
 
     else
-        updateDots(0, $(window).width());
+        updateDots(0, $(window).width()*0.9);
 
 }

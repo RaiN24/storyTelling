@@ -10,8 +10,8 @@ var upper_width=$("#"+upperLineId).css("width");
 upper_width=parseFloat(upper_width.split("p")[0]);
 var upper_height=$("#"+upperLineId).css("height");
 upper_height=parseFloat(upper_height.split("p")[0]);
-var upper_margin={"top":8,"left":25,"right":5,"bottom":20};
-var focus_width=upper_width-upper_margin.left-upper_margin.right
+var upper_margin={"top":8,"left":5,"right":5,"bottom":20};
+var focus_width=(upper_width-upper_margin.left-upper_margin.right)*0.9;
 var focus_height=upper_height-upper_margin.top-upper_margin.bottom;
 
 var upper_svg=d3.select("#"+upperLineId).append("svg")
@@ -31,9 +31,11 @@ var lower_width=$("#"+lowerLineId).css("width");
 lower_width=parseFloat(lower_width.split("p")[0]);
 var lower_height=$("#"+lowerLineId).css("height");
 lower_height=parseFloat(lower_height.split("p")[0]);
-var lower_margin={"top":5,"left":25,"right":5,"bottom":20};
-var context_width=lower_width;//-lower_margin.left-lower_margin.right
+var lower_margin={"top":5,"left":0,"right":5,"bottom":20};
+var context_width=lower_width*0.9;//-lower_margin.left-lower_margin.right
 var context_height=lower_height*0.85;//-lower_margin.top-lower_margin.bottom;
+
+
 
 
 
@@ -108,6 +110,9 @@ d3.csv("data/data2.csv", function(error, csvdata) {
 		lower_data.push(s);
 		lower_data1.push(s1);
 	}
+	
+	//console.log("*");
+	//console.log(lower_width);
 		
 	drawLowerTimeLine(lower_data,"#E87E51");
 	drawLowerTimeLine(lower_data1,"#D9B3E6");
@@ -115,7 +120,7 @@ d3.csv("data/data2.csv", function(error, csvdata) {
 	drawUpperTimeLine(lower_data,lower_data1,["#E87E51","#D9B3E6"]);
 	
 	
-})
+});
 
 
 	
@@ -215,10 +220,10 @@ function brushed(){
 	var select_x = s[0],
 		select_x1 = s[1];
 	
-	s_date = parseInt(select_x / $(window).width() * 470);
-	e_date = parseInt(select_x1 / $(window).width() * 470);
+	s_date = parseInt(select_x / ($(window).width()*0.9) * 527);
+	e_date = parseInt(select_x1 / ($(window).width()*0.9) * 527);
 	
-	console.log([s_date,e_date]);
+	//console.log([s_date,e_date]);
 	
 	dx = select_x1 - select_x;
 	//console.log(s);
