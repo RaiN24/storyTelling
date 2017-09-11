@@ -6,7 +6,6 @@ var s_date = 440,
 //接口结束
 
 function distQuant(data, id) {
-    //console.log("*");
     d4.select("#" + id).selectAll("*").remove();
 
     function getPoints(_, i) {
@@ -334,8 +333,26 @@ function distQuant(data, id) {
 
 }
 
+function by(name) {
+    return function (o, p) {
+        var a, b;
+        if (typeof o === "object" && typeof p === "object" && o && p) {
+            a = o[name];
+            b = p[name];
+            if (a === b) {
+                return 0;
+            }
+            if (typeof a === typeof b) {
+                return a < b ? 1 : -1;
+            }
+            return typeof a < typeof b ? 1 : -1;
+        } else {
+            throw ("error");
+        }
+    }
+}
+
 function drawReason() {
-    //alert("*");
     var dqData = [];
     dqData.push({
         title: 'Reason',
@@ -347,95 +364,203 @@ function drawReason() {
     var word_dic = {},
         word_list_tmp = [];
 
-    for (i = 0; i < mydata.length; i++) {
-        tmpsum1 = tmpsum2 = 0;
-        for (j in mydata[i]) {
-            if (mydata[i][j] > 0) tmpsum1 += mydata[i][j];
-            else tmpsum2 += mydata[i][j];
-        }
-        tmpsum2 = -tmpsum2;
-        for (j in mydata[i]) {
-            if (mydata[i][j] > 0) mydata[i][j] = mydata[i][j] * 100 / tmpsum1;
-            else mydata[i][j] = mydata[i][j] * 100 / tmpsum2;
-        }
-    }
+    var mychoice = document.getElementById("reason-select").getAttribute("value");
 
-    for (i = s_date; i < e_date; i++) {
-        for (j in mydata[i]) {
-            if (j in word_dic) word_dic[j] += mydata[i][j];
-            else word_dic[j] = mydata[i][j];
-        }
-    }
+    if (mychoice == "Trump-Up" | mychoice == "Trump-Down") {
 
-    var select_list = $("#delete-words").val().split(" ");
-    var select_set = {};
-    for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
-
-    for (j in word_dic) {
-        if (j in select_set) word_dic[j] = 0;
-        if (isNaN(word_dic[j])) word_dic[j] = 0;
-    }
-
-    for (i in word_dic) {
-        word_list_tmp.push({
-            name: i,
-            number: word_dic[i]
-        });
-    }
-    word_list_tmp.sort(by("number"));
-    var word_list = [];
-    for (i = 0; i < reason_num; i++) {
-        var tmp = $.extend(true, {}, word_list_tmp[i]);
-        word_list.push(tmp);
-    }
-    //console.log(word_list);
-    for (i = 0; i < reason_num; i++) {
-        dqData[0].dP.push([]);
-        dqData[0].dP[i].push(word_list[i].name);
-    }
-    word_list = [];
-    for (i = 0; i < reason_num; i++) {
-        word_list.push(dqData[0].dP[i][0]);
-    }
-
-    for (i = 0; i < e_date - s_date; i++) {
-        dqData[0].quant.push([]);
-        for (j = 0; j < reason_num; j++) {
-            if (word_list[j] in mydata[i + s_date]) dqData[0].quant[i].push(mydata[i + s_date][word_list[j]]);
-            else dqData[0].quant[i].push(0);
-        }
-    }
-
-    function by(name) {
-        return function (o, p) {
-            var a, b;
-            if (typeof o === "object" && typeof p === "object" && o && p) {
-                a = o[name];
-                b = p[name];
-                if (a === b) {
-                    return 0;
-                }
-                if (typeof a === typeof b) {
-                    return a < b ? 1 : -1;
-                }
-                return typeof a < typeof b ? 1 : -1;
-            } else {
-                throw ("error");
+        for (i = 0; i < T_reason.length; i++) {
+            tmpsum1 = tmpsum2 = 0;
+            for (j in T_reason[i]) {
+                if (T_reason[i][j] > 0) tmpsum1 += T_reason[i][j];
+                else tmpsum2 += T_reason[i][j];
+            }
+            tmpsum2 = -tmpsum2;
+            for (j in T_reason[i]) {
+                if (T_reason[i][j] > 0) T_reason[i][j] = T_reason[i][j] * 100 / tmpsum1;
+                else T_reason[i][j] = T_reason[i][j] * 100 / tmpsum2;
             }
         }
+
+        for (i = s_date; i < e_date; i++) {
+            for (j in T_reason[i]) {
+                if (j in word_dic) word_dic[j] += T_reason[i][j];
+                else word_dic[j] = T_reason[i][j];
+            }
+        }
+
+        var select_list = $("#delete-words").val().split(" ");
+        var select_set = {};
+        for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
+
+        for (j in word_dic) {
+            if (j in select_set) word_dic[j] = 0;
+            if (isNaN(word_dic[j])) word_dic[j] = 0;
+        }
+
+        if (mychoice == "Trump-Up") {
+            for (i in word_dic) {
+                word_list_tmp.push({
+                    name: i,
+                    number: word_dic[i]
+                });
+            }
+        } else {
+            for (i in word_dic) {
+                word_list_tmp.push({
+                    name: i,
+                    number: 0 - word_dic[i]
+                });
+            }
+        }
+
+        word_list_tmp.sort(by("number"));
+
+        var word_list = [];
+        for (i = 0; i < reason_num; i++) {
+            var tmp = $.extend(true, {}, word_list_tmp[i]);
+            word_list.push(tmp);
+        }
+
+        console.log(word_list);
+
+
+        for (i = 0; i < reason_num; i++) {
+            dqData[0].dP.push([]);
+            dqData[0].dP[i].push(word_list[i].name);
+        }
+        word_list = [];
+        for (i = 0; i < reason_num; i++) {
+            word_list.push(dqData[0].dP[i][0]);
+        }
+
+        // alert(word_list);
+
+        if (mychoice == "Trump-Up") {
+            for (i = 0; i < e_date - s_date; i++) {
+                dqData[0].quant.push([]);
+                for (j = 0; j < reason_num; j++) {
+                    if (word_list[j] in T_reason[i + s_date] && T_reason[i + s_date][word_list[j]] > 0) {
+                        dqData[0].quant[i].push(T_reason[i + s_date][word_list[j]]);
+                    } else dqData[0].quant[i].push(0);
+                }
+            }
+        } else {
+            for (i = 0; i < e_date - s_date; i++) {
+                dqData[0].quant.push([]);
+                for (j = 0; j < reason_num; j++) {
+                    if (word_list[j] in T_reason[i + s_date] && T_reason[i + s_date][word_list[j]] < 0) {
+                        dqData[0].quant[i].push(0 - T_reason[i + s_date][word_list[j]]);
+                    } else dqData[0].quant[i].push(0);
+                }
+            }
+        }
+
+
+        //var seg = d4.select("#reason").selectAll("div").data(d4.range(dqData.length)).enter()
+        //  .append("div").attr("id", function (d, i) {
+        //        return "segment" + i;
+        //    }).attr("class", "distquantdiv");
+
+        distQuant(dqData[0], "segment0");
     }
 
-    //var seg = d4.select("#reason").selectAll("div").data(d4.range(dqData.length)).enter()
-    //  .append("div").attr("id", function (d, i) {
-    //        return "segment" + i;
-    //    }).attr("class", "distquantdiv");
+    if (mychoice == "Clinton-Up" | mychoice == "Clinton-Down") {
+
+        for (i = 0; i < C_reason.length; i++) {
+            tmpsum1 = tmpsum2 = 0;
+            for (j in C_reason[i]) {
+                if (C_reason[i][j] > 0) tmpsum1 += C_reason[i][j];
+                else tmpsum2 += C_reason[i][j];
+            }
+            tmpsum2 = -tmpsum2;
+            for (j in C_reason[i]) {
+                if (C_reason[i][j] > 0) C_reason[i][j] = C_reason[i][j] * 100 / tmpsum1;
+                else C_reason[i][j] = C_reason[i][j] * 100 / tmpsum2;
+            }
+        }
+
+        for (i = s_date; i < e_date; i++) {
+            for (j in C_reason[i]) {
+                if (j in word_dic) word_dic[j] += C_reason[i][j];
+                else word_dic[j] = C_reason[i][j];
+            }
+        }
+
+        var select_list = $("#delete-words").val().split(" ");
+        var select_set = {};
+        for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
+
+        for (j in word_dic) {
+            if (j in select_set) word_dic[j] = 0;
+            if (isNaN(word_dic[j])) word_dic[j] = 0;
+        }
+
+        if (mychoice == "Clinton-Up") {
+            for (i in word_dic) {
+                word_list_tmp.push({
+                    name: i,
+                    number: word_dic[i]
+                });
+            }
+        } else {
+            for (i in word_dic) {
+                word_list_tmp.push({
+                    name: i,
+                    number: 0 - word_dic[i]
+                });
+            }
+        }
+
+        word_list_tmp.sort(by("number"));
+
+        var word_list = [];
+        for (i = 0; i < reason_num; i++) {
+            var tmp = $.extend(true, {}, word_list_tmp[i]);
+            word_list.push(tmp);
+        }
+
+        console.log(word_list);
 
 
+        for (i = 0; i < reason_num; i++) {
+            dqData[0].dP.push([]);
+            dqData[0].dP[i].push(word_list[i].name);
+        }
+        word_list = [];
+        for (i = 0; i < reason_num; i++) {
+            word_list.push(dqData[0].dP[i][0]);
+        }
+
+        // alert(word_list);
+
+        if (mychoice == "Clinton-Up") {
+            for (i = 0; i < e_date - s_date; i++) {
+                dqData[0].quant.push([]);
+                for (j = 0; j < reason_num; j++) {
+                    if (word_list[j] in C_reason[i + s_date] && C_reason[i + s_date][word_list[j]] > 0) {
+                        dqData[0].quant[i].push(C_reason[i + s_date][word_list[j]]);
+                    } else dqData[0].quant[i].push(0);
+                }
+            }
+        } else {
+            for (i = 0; i < e_date - s_date; i++) {
+                dqData[0].quant.push([]);
+                for (j = 0; j < reason_num; j++) {
+                    if (word_list[j] in C_reason[i + s_date] && C_reason[i + s_date][word_list[j]] < 0) {
+                        dqData[0].quant[i].push(0 - C_reason[i + s_date][word_list[j]]);
+                    } else dqData[0].quant[i].push(0);
+                }
+            }
+        }
 
 
+        //var seg = d4.select("#reason").selectAll("div").data(d4.range(dqData.length)).enter()
+        //  .append("div").attr("id", function (d, i) {
+        //        return "segment" + i;
+        //    }).attr("class", "distquantdiv");
 
-
-    distQuant(dqData[0], "segment0");
+        distQuant(dqData[0], "segment0");
+    }
 
 
 
