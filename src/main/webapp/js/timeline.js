@@ -179,7 +179,7 @@ function drawLowerTimeLine(datap,thisColor){
 	var brush = d3.brushX()
 		.extent([[0, 0], [context_width, context_height*0.8]])
 		//.on("end", brushend)
-		.on("end", function(){
+		.on("brush", function(){
 				
 				//rangeChanged(select_x,select_x1);
 				//console.log("*");

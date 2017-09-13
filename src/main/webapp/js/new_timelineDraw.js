@@ -65,6 +65,7 @@ var range = 7;
 //var timeNode = [];
 var tmpData = [];
 var Data;
+var csvdata;
 
 
 
@@ -219,7 +220,7 @@ updateDots = function (selected_start, selected_end) {
             //.attr("y", function(d) { return y(0); })
             //.style("opacity",0)
             .attr("x", function () {
-                return (x(k) - rectWidth / 2 + 3);
+                return (x(k) - rectWidth / 2 );
             })
             .attr("y", function (d, i) {
                 //console.log(y(i));
@@ -238,11 +239,11 @@ updateDots = function (selected_start, selected_end) {
 d3.csv("data/data2.csv", function (error, data) {
     csvdata = data;
     //console.log(csvdata);
+
 });
 
 
-
-d3.csv("data/xx1.2.csv", function (error, data) {
+d3.csv("data/final_data.csv", function (error, data) {
     Data = data;
     //console.log(csvdata);
     span = [];
@@ -340,8 +341,8 @@ d3.csv("data/xx1.2.csv", function (error, data) {
 
     //Size of the "song" rectangles
     //rectWidth = Math.floor(x.range()[1] / 100);
-    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100));
-    rectWidth = $(window).width() / timeNode.length;
+    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100))*0.9;
+    rectWidth = $(window).width()*0.9 / timeNode.length;
      
     rectCorner = rectHeight / 2;
 
@@ -379,6 +380,8 @@ d3.csv("data/xx1.2.csv", function (error, data) {
 
 
 });
+
+
 
 var rangeChanged = function (flag, selected_start, selected_end) {
     if (flag == 0)
@@ -472,8 +475,8 @@ var rangeChanged = function (flag, selected_start, selected_end) {
 
     //Size of the "song" rectangles
     //rectWidth = Math.floor(x.range()[1] / 100);
-    rectWidth = $(window).width() / timeNode.length;
-    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100));
+    rectWidth = $(window).width()*0.9 / timeNode.length;
+    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100))*0.9;
     rectCorner = rectHeight / 2;
 
     //console.log(rectSelected);

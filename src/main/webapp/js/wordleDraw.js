@@ -141,11 +141,12 @@ function draw_wordle() {
 
 
                 }
-                svg1.selectAll('rect').remove();
-                svg1.selectAll('text').remove();
-                svg1.selectAll('axis').remove();
-                svg1.selectAll('tick').remove();
-                pict_2(svg1, timeNode, labels2, jsonData, -1, scaler, scaler + parseInt(timeNode.length * $(window).width() * 0.08 / ($(window).width() * 0.72)));
+                updateDots(0, $(window).width()*0.9)
+                //svg.selectAll('rect').remove();
+                //svg.selectAll('text').remove();
+                //svg.selectAll('axis').remove();
+                //svg.selectAll('tick').remove();
+                //pict_2(svg1, timeNode, labels2, jsonData, -1, scaler, scaler + parseInt(timeNode.length * $(window).width() * 0.08 / ($(window).width() * 0.72)));
 
             });
 
