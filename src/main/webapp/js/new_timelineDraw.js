@@ -25,8 +25,8 @@ var wind = window,
     //maxWidth = 1200, //Maximum width of the chart, regardless of screen size
     //maxHeight = 800, //Maximum height of the chart, regardless of screen size
     maxWidth = $(window).width();
-	maxHeight = $(window).height();
-    w = Math.min(maxWidth, wind.innerWidth || e.clientWidth || g.clientWidth),
+maxHeight = $(window).height();
+w = Math.min(maxWidth, wind.innerWidth || e.clientWidth || g.clientWidth),
     h = Math.min(maxHeight, wind.innerHeight || e.clientHeight || g.clientHeight);
 
 //Offsets needed to properly position elements
@@ -149,8 +149,8 @@ updateDots = function (selected_start, selected_end) {
     dots = dotContainer.selectAll(".dot");
 
     var start, end;
-    start = parseInt(selected_start / ($(window).width()*0.9) * labels2.length);
-    end = parseInt(selected_end / ($(window).width()*0.9) * labels2.length);
+    start = parseInt(selected_start / ($(window).width() * 0.9) * labels2.length);
+    end = parseInt(selected_end / ($(window).width() * 0.9) * labels2.length);
 
     //var tmpData = labels2.slice(start,end);
 
@@ -183,6 +183,7 @@ updateDots = function (selected_start, selected_end) {
             .on("mouseover", showTooltip)
             .on("mouseout", hideTooltip)
             .on("click", function (d, i) {
+                //alert(d);
                 document.getElementById("timeline_bottom").setAttribute("selectD", d);
                 document.getElementById("timeline_bottom").setAttribute("selectI", i);
                 var newsContent = document.getElementById("content");
@@ -207,10 +208,10 @@ updateDots = function (selected_start, selected_end) {
                 $("#content").css("font-size", 12);
                 $("#content").css("color", "rgb(20,68,106)");
                 draw_wordle();
-                
-                
-                draw_relation(selected_start, selected_end);
-                
+
+
+                draw_relation();
+
                 drawReason();
                 var legend = document.querySelector('.legend');
                 Ps.initialize(legend);
@@ -220,7 +221,7 @@ updateDots = function (selected_start, selected_end) {
             //.attr("y", function(d) { return y(0); })
             //.style("opacity",0)
             .attr("x", function () {
-                return (x(k) - rectWidth / 2 );
+                return (x(k) - rectWidth / 2);
             })
             .attr("y", function (d, i) {
                 //console.log(y(i));
@@ -311,7 +312,7 @@ d3.csv("data/final_data.csv", function (error, data) {
         if (i == 0) continue;
         var tmp = Data[i]["date"];
         if (tmp === undefined) continue;
-      
+
 
         var tmp1 = tmp.split("/");
         dateOfEvents.push(tmp1);
@@ -341,9 +342,9 @@ d3.csv("data/final_data.csv", function (error, data) {
 
     //Size of the "song" rectangles
     //rectWidth = Math.floor(x.range()[1] / 100);
-    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100))*0.9;
-    rectWidth = $(window).width()*0.9 / timeNode.length;
-     
+    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100)) * 0.9;
+    rectWidth = $(window).width() * 0.9 / timeNode.length;
+
     rectCorner = rectHeight / 2;
 
 
@@ -375,8 +376,8 @@ d3.csv("data/final_data.csv", function (error, data) {
         .text("Number of songs")
 
 
- 
-    updateDots(0, $(window).width()*0.9);
+
+    updateDots(0, $(window).width() * 0.9);
 
 
 });
@@ -475,8 +476,8 @@ var rangeChanged = function (flag, selected_start, selected_end) {
 
     //Size of the "song" rectangles
     //rectWidth = Math.floor(x.range()[1] / 100);
-    rectWidth = $(window).width()*0.9 / timeNode.length;
-    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100))*0.9;
+    rectWidth = $(window).width() * 0.9 / timeNode.length;
+    rectHeight = Math.min(3, Math.floor(y.range()[0] / 100)) * 0.9;
     rectCorner = rectHeight / 2;
 
     //console.log(rectSelected);
@@ -512,6 +513,6 @@ var rangeChanged = function (flag, selected_start, selected_end) {
         updateDots(selected_start, selected_end);
 
     else
-        updateDots(0, $(window).width()*0.9);
+        updateDots(0, $(window).width() * 0.9);
 
 }

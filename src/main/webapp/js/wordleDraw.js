@@ -11,7 +11,12 @@ function draw_wordle() {
     var mychoice = document.getElementById("noun-select").getAttribute("value");
     if (mychoice == "all") var json_by_news = json_by_news_all;
     else if (mychoice == "noun") var json_by_news = json_by_news_noun;
-    var newsNumber = 'n' + document.getElementById("timeline_bottom").getAttribute("selectD");
+    var old_number = parseInt(document.getElementById("timeline_bottom").getAttribute("selectD"));
+    old_number = old_number + 1;
+    var tmp_string = old_number.toString();
+    var newsNumber = "n" + tmp_string;
+    //alert(tmp_string);
+    //alert(typeof newsNumber);
     var news = json_by_news[newsNumber];
     var words = [];
     var maxTime = 0;
