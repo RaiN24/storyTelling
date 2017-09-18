@@ -3,12 +3,14 @@ var word_number_max = 70;
 
 
 function draw_wordle() {
-    console.log(document.getElementById("delete-words"));
     svg_4.selectAll("text").remove();
     var x = $(window).width() * 0.13;
     var y = $(window).height() * 0.1925;
     var w = $(window).width() * 0.27;
     var h = $(window).height() * 0.385;
+    var mychoice = document.getElementById("noun-select").getAttribute("value");
+    if (mychoice == "all") var json_by_news = json_by_news_all;
+    else if (mychoice == "noun") var json_by_news = json_by_news_noun;
     var newsNumber = 'n' + document.getElementById("timeline_bottom").getAttribute("selectD");
     var news = json_by_news[newsNumber];
     var words = [];

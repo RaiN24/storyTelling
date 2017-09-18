@@ -19,6 +19,17 @@ function reason_select_fun(i) {
     }
 }
 
+function is_noun_fun(i) {
+    if (i == 0) {
+        document.getElementById("noun-select").innerHTML = "All words <i class='fa fa-caret-down'></i>";
+        document.getElementById("noun-select").setAttribute("value", "all");
+    } else if (i == 1) {
+        document.getElementById("noun-select").innerHTML = "Noun words <i class='fa fa-caret-down'></i>";
+        document.getElementById("noun-select").setAttribute("value", "noun");
+    }
+    draw_wordle();
+}
+
 function go_fun() {
     draw_wordle();
     draw_relation();

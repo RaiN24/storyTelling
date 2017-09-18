@@ -63,6 +63,15 @@
             </span>
 
             <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
+            <a href="#" class="button button-primary button-tiny" id = "noun-select" value = "noun">Noun words<i class="fa fa-caret-down"></i></a>
+ 
+                <ul class="button-dropdown-list is-below">
+                    <li><a href="#" onclick="is_noun_fun(0)">All words</a></li>
+                    <li><a href="#" onclick="is_noun_fun(1)">Noun words</a></li>
+                </ul>
+            </span>
+
+            <span class="button-dropdown button-dropdown-primary" data-buttons="dropdown">
             <a href="#" class="button button-primary button-tiny">Delete Words <i class="fa fa-caret-down"></i></a>
  
                 <ul class="button-dropdown-list is-below" id = "delete-words" value = "希拉里 克林顿 唐纳德 特朗普">
@@ -135,8 +144,9 @@
     <script src="search_div/js/jquery-labelauty.js"></script>
 
     <script src="d3.layout.cloud.js"></script>
-    <script src="json_by_news.js"></script>
-    <script src="json_by_words.js"></script>
+    <script src="data/json_by_news_all.js"></script>
+    <script src="data/json_by_news_noun.js"></script>
+    <script src="data/json_by_words.js"></script>
 
     <!-- Google fonts -->
     <link href='https://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
