@@ -322,10 +322,34 @@ function distQuant(data, id) {
     legRow.append("div").style("background", function (d, i) {
             return colors[i];
         })
+        .on("dblclick", function (d, i) {
+            var ul = document.getElementById("delete-words");
+            var li = document.createElement("li");
+            li.innerHTML = '<a href="#" id = ' + d + '>' + d + '</a>';
+            ul.appendChild(li);
+            var deleteText = "";
+            for (i = 0; i < ul.children.length; i++) {
+                deleteText = deleteText + ul.children[i].innerText + " ";
+            }
+            document.getElementById("delete-words").setAttribute("value", deleteText);
+            go_fun();
+        })
         .on("mouseover", mouseoverLegend).on("mouseout", mouseoutLegend).style("cursor", "pointer");
 
     legRow.append("span").text(function (d) {
             return d[0];
+        })
+        .on("dblclick", function (d, i) {
+            var ul = document.getElementById("delete-words");
+            var li = document.createElement("li");
+            li.innerHTML = '<a href="#" id = ' + d + '>' + d + '</a>';
+            ul.appendChild(li);
+            var deleteText = "";
+            for (i = 0; i < ul.children.length; i++) {
+                deleteText = deleteText + ul.children[i].innerText + " ";
+            }
+            document.getElementById("delete-words").setAttribute("value", deleteText);
+            go_fun();
         })
         .on("mouseover", mouseoverLegend).on("mouseout", mouseoutLegend).style("cursor", "pointer");
 
@@ -388,7 +412,7 @@ function drawReason() {
             }
         }
 
-        var select_list = $("#delete-words").val().split(" ");
+        var select_list = document.getElementById("delete-words").getAttribute("value").split(" ");
         var select_set = {};
         for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
 
@@ -420,8 +444,6 @@ function drawReason() {
             var tmp = $.extend(true, {}, word_list_tmp[i]);
             word_list.push(tmp);
         }
-
-        console.log(word_list);
 
 
         for (i = 0; i < reason_num; i++) {
@@ -486,7 +508,7 @@ function drawReason() {
             }
         }
 
-        var select_list = $("#delete-words").val().split(" ");
+        var select_list = document.getElementById("delete-words").getAttribute("value").split(" ");
         var select_set = {};
         for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
 

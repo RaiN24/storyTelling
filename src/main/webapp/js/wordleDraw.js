@@ -1,8 +1,9 @@
-var word_number_max = 50;
+var word_number_max = 70;
 
 
 
 function draw_wordle() {
+    console.log(document.getElementById("delete-words"));
     svg_4.selectAll("text").remove();
     var x = $(window).width() * 0.13;
     var y = $(window).height() * 0.1925;
@@ -12,7 +13,8 @@ function draw_wordle() {
     var news = json_by_news[newsNumber];
     var words = [];
     var maxTime = 0;
-    var select_list = $("#delete-words").val().split(" ");
+    //var select_list = $("#delete-words").val().split(" ");
+    var select_list = document.getElementById("delete-words").getAttribute("value").split(" ");
     var select_set = {};
     for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
     for (var i in news) {
@@ -103,6 +105,8 @@ function draw_wordle() {
             })
             .on("click", function (d, i) {
 
+
+
                 // $(this).mouseup(function(){
                 // $(this).css("fill","yellow");
                 //});
@@ -141,12 +145,30 @@ function draw_wordle() {
 
 
                 }
-                updateDots(0, $(window).width()*0.9)
+                updateDots(0, $(window).width() * 0.9)
                 //svg.selectAll('rect').remove();
                 //svg.selectAll('text').remove();
                 //svg.selectAll('axis').remove();
                 //svg.selectAll('tick').remove();
                 //pict_2(svg1, timeNode, labels2, jsonData, -1, scaler, scaler + parseInt(timeNode.length * $(window).width() * 0.08 / ($(window).width() * 0.72)));
+
+            })
+            .on("dblclick", function (d, i) {
+                var ul = document.getElementById("delete-words");
+                var li = document.createElement("li");
+                li.innerHTML = '<a href="#" id = ' + d.text + '>' + d.text + '</a>';
+                ul.appendChild(li);
+                //console.log(ul.children);
+                //var aaa = "";
+                //console.log(ul.children.length);
+                //console.log(ul.children);
+                //console.log(ul.children[0].innerText);
+                var deleteText = "";
+                for (i = 0; i < ul.children.length; i++) {
+                    deleteText = deleteText + ul.children[i].innerText + " ";
+                }
+                document.getElementById("delete-words").setAttribute("value", deleteText);
+                go_fun();
 
             });
 
