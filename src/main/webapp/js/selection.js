@@ -30,6 +30,28 @@ function is_noun_fun(i) {
     draw_wordle();
 }
 
+function delete_click() {
+    $("#" + this.innerText).remove();
+    //alert(this.innerText);
+    var ul = document.getElementById("delete-words");
+    var deleteText = "";
+    var tmpText = "";
+    for (var i = 0; i < ul.children.length; i++) {
+        //console.log(ul.children[i].innerText);
+        //tmpText = String(ul.children[i].innerText);
+        //deleteText.concat(ul.children[i].innerText);
+        deleteText = deleteText + ul.children[i].innerText;
+        deleteText = deleteText.substring(0, deleteText.length - 1);
+        deleteText = deleteText + " ";
+        //alert(deleteText);
+    }
+    //deleteText.replace(" ", "");
+    //alert(deleteText);
+    document.getElementById("delete-words").setAttribute("value", deleteText);
+    go_fun();
+}
+
+
 function go_fun() {
     draw_wordle();
     draw_relation();

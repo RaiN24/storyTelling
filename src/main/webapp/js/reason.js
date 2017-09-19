@@ -325,7 +325,8 @@ function distQuant(data, id) {
         .on("dblclick", function (d, i) {
             var ul = document.getElementById("delete-words");
             var li = document.createElement("li");
-            li.innerHTML = '<a href="#" id = ' + d + '>' + d + '</a>';
+            li.id = d;
+            li.innerHTML = '<a href="#" onclick="delete_click.call(this)">' + d + '</a>';
             ul.appendChild(li);
             var deleteText = "";
             for (i = 0; i < ul.children.length; i++) {
@@ -342,7 +343,8 @@ function distQuant(data, id) {
         .on("dblclick", function (d, i) {
             var ul = document.getElementById("delete-words");
             var li = document.createElement("li");
-            li.innerHTML = '<a href="#" id = ' + d + '>' + d + '</a>';
+            li.id = d;
+            li.innerHTML = '<a href="#" onclick="delete_click.call(this)">' + d + '</a>';
             ul.appendChild(li);
             var deleteText = "";
             for (i = 0; i < ul.children.length; i++) {

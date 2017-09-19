@@ -75,11 +75,27 @@ function draw_relation(selected_start, selected_end) {
         id: "n" + newsNumber,
         group: Find(parent, newsNumber)
     });
+
+    var group_list = new Array(2000);
+    for (var i = 0; i < group_list.length; i++) group_list[i] = Find(parent, newsNumber);
+    var son_num_list = new Array(2000);
+    for (var i = 0; i < son_num_list.length; i++) son_num_list[i] = 0;
+    for (var i = 0; i < eventNumber; i++) {
+        var parent_num = Find(parent, raw_list3[i].target);
+        son_num_list[parent_num] += 1;
+    }
+    //console.log(son_num_list);
+    for (var i = 0; i < eventNumber; i++) {
+        var old_group = Find(parent, raw_list3[i].target);
+        if (old_group != raw_list3[i].target | son_num_list[raw_list3[i].target] > 1)
+            group_list[raw_list3[i].target] = Find(parent, raw_list3[i].target);
+    }
     for (var i = 0; i < eventNumber; i++) {
         nodes.push({
             id: "n" + raw_list3[i].target,
             //group: 1
-            group: Find(parent, raw_list3[i].target)
+            //group: Find(parent, raw_list3[i].target)
+            group: group_list[raw_list3[i].target]
         });
     }
     for (var i = 0; i < eventNumber; i++) {
@@ -204,7 +220,7 @@ function draw_relation(selected_start, selected_end) {
             updateDots(0, $(window).width() * 0.9);
 
             draw_wordle();
-            draw_relation(selected_start, selected_end);
+            draw_relation();
             drawReason();
             var legend = document.querySelector('.legend');
             Ps.initialize(legend);

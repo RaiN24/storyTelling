@@ -21,6 +21,8 @@ function draw_wordle() {
     var words = [];
     var maxTime = 0;
     //var select_list = $("#delete-words").val().split(" ");
+    //console.log(document.getElementById("delete-words"));
+    //console.log(document.getElementById("delete-words").getAttribute("value"));
     var select_list = document.getElementById("delete-words").getAttribute("value").split(" ");
     var select_set = {};
     for (var i = 0; i < select_list.length; i++) select_set[select_list[i]] = 0;
@@ -163,7 +165,8 @@ function draw_wordle() {
             .on("dblclick", function (d, i) {
                 var ul = document.getElementById("delete-words");
                 var li = document.createElement("li");
-                li.innerHTML = '<a href="#" id = ' + d.text + '>' + d.text + '</a>';
+                li.id = d.text;
+                li.innerHTML = '<a href="#" onclick="delete_click.call(this)">' + d.text + '</a>';
                 ul.appendChild(li);
                 //console.log(ul.children);
                 //var aaa = "";

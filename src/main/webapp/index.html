@@ -76,16 +76,16 @@
             <a href="#" class="button button-primary button-tiny">Delete Words <i class="fa fa-caret-down"></i></a>
  
                 <ul class="button-dropdown-list is-below" id = "delete-words" value = "希拉里 克林顿 唐纳德 特朗普">
-                    <li><a href="#" id = "希拉里">希拉里</a></li>
-                    <li><a href="#" id = "克林顿">克林顿</a></li>
-                    <li><a href="#" id = "唐纳德">唐纳德</a></li>
-                    <li><a href="#" id = "特朗普" onclick = "tempfun()">特朗普</a></li>
+                    <li id = "希拉里"><a href="#" onclick="delete_click.call(this)">希拉里</a></li>
+                    <li id = "克林顿"><a href="#" onclick="delete_click.call(this)">克林顿</a></li>
+                    <li id = "唐纳德"><a href="#" onclick="delete_click.call(this)">唐纳德</a></li>
+                    <li id = "特朗普"><a href="#" onclick="delete_click.call(this)">特朗普</a></li>
                 </ul>
             </span>
-
+            <!--
             <input type="text" id="rangechanging"></input>
             <button class="button button-box button-tiny" id="timeline_play" onclick="rangeChanged(0)"><i class="fa fa-play"></i>&nbsp;&nbsp;更改单位时间跨度</button>
-
+            -->
         </div>
 
 
@@ -183,33 +183,6 @@
 
 
     <script>
-        var ul = document.getElementById("delete-words");
-        var li = ul.getElementsByTagName("li");
-        for (var i = 0; i < li.length; i++) {
-            li[i].onclick = function() {
-                var ul = document.getElementById("delete-words");
-                var li = document.createElement("li");
-                $("#" + this.innerText).remove();
-                var deleteText = "";
-                for (i = 0; i < ul.children.length; i++) {
-                    deleteText = deleteText + ul.children[i].innerText + " ";
-                }
-                document.getElementById("delete-words").setAttribute("value", deleteText);
-                go_fun();
-            }
-        }
-
-        function tempfun() {
-            $("#" + this.innerText).remove();
-            var ul = document.getElementById("delete-words");
-            var deleteText = "";
-            for (i = 0; i < ul.children.length; i++) {
-                deleteText = deleteText + ul.children[i].innerText + " ";
-            }
-            document.getElementById("delete-words").setAttribute("value", deleteText);
-            go_fun();
-        }
-
         var rects = [];
         var texts = [];
         var candidate = [];
