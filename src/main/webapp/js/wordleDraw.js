@@ -1,4 +1,4 @@
-var word_number_max = 70;
+var word_number_max = 80;
 
 
 
@@ -142,7 +142,7 @@ function draw_wordle() {
                     var tmpIndex = index;
                     //console.log(index);
                     var j = 0;
-                    for (j = 0; j < timeNode.length; j++) {
+                    for (j = timeNode.length - 1; j >= 0; j--) {
                         if (tmpIndex >= labels2[j].length)
                             tmpIndex -= labels2[j].length;
                         else
