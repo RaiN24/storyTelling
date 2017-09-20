@@ -138,7 +138,7 @@ function draw_wordle() {
                 //pict_2(svg1,timeNode,labels2,jsonData,-1,start,end,0);
                 //console.log(rects);
                 for (var i = 0; i < newsList.length; i++) {
-                    var index = parseInt(newsList[i].substring(1, 4)) - 101;
+                    var index = parseInt(newsList[i].substring(1));
                     var tmpIndex = index;
                     //console.log(index);
                     var j = 0;
@@ -148,7 +148,11 @@ function draw_wordle() {
                         else
                             break;
                     }
-
+                    
+                    if(j<=0&&tmpIndex>=labels2[0].length)
+                    	continue;
+                    if(drawColor[j] === undefined)continue;
+                    
                     drawColor[j][tmpIndex] = 1;
 
 

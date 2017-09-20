@@ -187,6 +187,8 @@ updateDots = function (selected_start, selected_end) {
                 document.getElementById("timeline_bottom").setAttribute("selectD", d);
                 document.getElementById("timeline_bottom").setAttribute("selectI", i);
                 var newsContent = document.getElementById("content");
+                
+                //alert(d);
 
                 for (var h = start; h < end; h++)
                     for (var t = 0; t < labels2[h].length; t++)
@@ -306,13 +308,12 @@ d3.csv("data/final_data.csv", function (error, data) {
     dateOfEvents = [];
 
 
-
+    
     for (var i in Data) {
         //console.log(data[i]);if(i==0||data[i]==="undefined")continue;
         if (i == 0) continue;
         var tmp = Data[i]["date"];
-        if (tmp === undefined) continue;
-
+        if(tmp === undefined)continue;
 
         var tmp1 = tmp.split("/");
         dateOfEvents.push(tmp1);
@@ -330,9 +331,10 @@ d3.csv("data/final_data.csv", function (error, data) {
 
     labelArrange2();
     for (var i = 0; i < labels2.length; i++) {
-        for (var j = 0; j < labels2[i].length; j++)
+        for (var j = 0; j < labels2[i].length; j++){
             rectSelected[i].push(0);
-        drawColor[i].push(0);
+            drawColor[i].push(0);
+        }
     }
 
     //console.log(rectSelected);
