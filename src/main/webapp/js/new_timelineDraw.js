@@ -173,12 +173,13 @@ updateDots = function (selected_start, selected_end) {
                         break;
                 if (rectSelected[h][i] == 1) {
                     //console.log('*');
-                    return "#E9F01D";
+                    return "#FDFFDF";
                     //return color(3);
                 } else if (drawColor[h][i] == 1) {
                     return "#495A80";
                 } else
-                    return color(0);
+                	return "#7CFC00";
+                    //return color(0);
             })
             .on("mouseover", showTooltip)
             .on("mouseout", hideTooltip)
@@ -227,7 +228,7 @@ updateDots = function (selected_start, selected_end) {
             })
             .attr("y", function (d, i) {
                 //console.log(y(i));
-                return y(i);
+                return y(i) - 20;
 
             })
             .style("opacity", 1);

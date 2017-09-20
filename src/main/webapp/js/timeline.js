@@ -240,6 +240,9 @@ function brushed(){
 		
 		//rangeChanged(0,300);
 		rangeChanged(1,select_x,select_x1);
+		drawReason();
+		var legend = document.querySelector('.legend');
+        Ps.initialize(legend);
 		
 	} else {
 		lowertimebrushed=context_x.domain();

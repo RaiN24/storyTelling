@@ -10,7 +10,7 @@ function showTooltip(d) {
         //Reduce opacity of all other elements
         svg.selectAll(".dot")
             .style("opacity", function (d) {
-                return d === chosen ? 1 : 0.2;
+                return d === chosen ? 1 : 0.6;
             });
     } // else
 

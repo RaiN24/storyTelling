@@ -133,32 +133,33 @@ input.labelauty + label {
 #content {
     overflow-y: hidden;
     float: left;
-    width: 17%;
+    width: 34%;
     height: 40%;
+    padding: 2px;
     scrollbar-face-color: #99ccff;
 }
 
 
 
 #div_5 {
-    float: left;
-    width: 27%;
+    float: right;
+    width: 65%;
     height: 40%;
     padding: 0px;
 }
 
 #relation {
     float: left;
-    width: 26%;
+    width: 40%;
     height: 40%;
-    padding: 0px;
+    padding: 2px;
 }
 
 #reason {
     float: right;
-    width: 30%;
+    width: 58%;
     height: 40%;
-    padding: 0px;
+    padding: 2px;
     
 }
 
@@ -178,17 +179,17 @@ input.labelauty + label {
 
 #bottom-left-div {
     float: left;
-    width: 100%;
+    width: 44%;
     height: 40%;
-    padding: 0px;
+    padding: 2px;
 }
 
 #bottom-right-div {
-    position: absolute;
-    left: 51%;
+    float:right;
+    left: 55%;
     top: 67.5%;
-    width: 50%;
-    height: 99%;
+    width: 55%;
+    height: 40%;
     padding: 2px;
 }
 
