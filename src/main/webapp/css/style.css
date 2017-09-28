@@ -73,7 +73,7 @@ a {
 .axis path,
 .axis line {
   fill: none;
-  stroke: white;
+  stroke: #DDF0ED;
   shape-rendering: crispEdges;
 }
 

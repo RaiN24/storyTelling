@@ -7,11 +7,11 @@ var autoplaytimer;
 {
 var upperLineId="upper_line";
 var upper_width=$("#"+upperLineId).css("width");
-upper_width=parseFloat(upper_width.split("p")[0]);
+upper_width=parseInt(upper_width.split("p")[0]);
 var upper_height=$("#"+upperLineId).css("height");
 upper_height=parseFloat(upper_height.split("p")[0]);
 var upper_margin={"top":8,"left":5,"right":5,"bottom":20};
-var focus_width=(upper_width-upper_margin.left-upper_margin.right)*0.9;
+var focus_width=parseInt((upper_width-upper_margin.left-upper_margin.right)*0.9);
 var focus_height=upper_height-upper_margin.top-upper_margin.bottom;
 
 var upper_svg=d3.select("#"+upperLineId).append("svg")
@@ -28,11 +28,11 @@ var focus_timerect;
 {
 var lowerLineId="lower_line";
 var lower_width=$("#"+lowerLineId).css("width");
-lower_width=parseFloat(lower_width.split("p")[0]);
+lower_width=parseInt(lower_width.split("p")[0]);
 var lower_height=$("#"+lowerLineId).css("height");
 lower_height=parseFloat(lower_height.split("p")[0]);
 var lower_margin={"top":5,"left":0,"right":5,"bottom":20};
-var context_width=lower_width*0.9;//-lower_margin.left-lower_margin.right
+var context_width=parseInt(lower_width*0.9);//-lower_margin.left-lower_margin.right
 var context_height=lower_height*0.85;//-lower_margin.top-lower_margin.bottom;
 
 
@@ -129,8 +129,8 @@ d3.csv("data/data2.csv", function(error, csvdata) {
 
 function drawLowerTimeLine(datap,thisColor){	
 	context_x.domain(d3.extent(datap.map(function(d) {return lowerparseTime(d3.keys(d)[0]);})));
-	
-	//console.log(datap);
+	var tmp = d3.extent(datap.map(function(d) {return lowerparseTime(d3.keys(d)[0]);}));
+	//console.log(tmp);
 	
 	//context_x.domain([0,labels2.length]);
 	context_y.domain([0, d3.max(datap.map(function(d) {return d3.values(d)[0];}))]);
@@ -163,13 +163,7 @@ function drawLowerTimeLine(datap,thisColor){
 			drawLowerTimeLine(lower_data,"#F17C67");
 			drawLowerTimeLine(lower_data1,"#8192D6");	
 		});
-	var xaxis=context.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate(0," + (context_height*0.8) + ")")
-		.call(context_xAxis);
 	
-	
-	xaxis.selectAll(".tick text").attr("transform", "translate(0," + 5 + ")");
 	context.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(0," + (context_height*0.8) + ")")
@@ -209,6 +203,13 @@ function drawLowerTimeLine(datap,thisColor){
         	+ "V" + (2 * y - 1.5)
         	+ "A1.5,1.5 0 0 " + e + " " + (.5 * x) + "," + (2 * y);
 	}
+	var xaxis=context.append("g")
+	.attr("class", "axis")
+	.attr("transform", "translate(0," + (context_height*0.8) + ")")
+	.call(context_xAxis);
+
+
+xaxis.selectAll(".tick text").attr("transform", "translate(0," + 5 + ")");
 
 }
 
@@ -228,16 +229,20 @@ function brushed(){
 	dx = select_x1 - select_x;
 	//console.log(s);
 	if(dx) {
-		lowertimebrushed=[context_x.invert(select_x), context_x.invert(select_x1)];
+		lowertimebrushed=[context_x.invert(parseInt(select_x)), context_x.invert(parseInt(select_x1))];
 		context_brushhandle.attr("display", null).attr("transform", function(d, i) { return "translate(" + s[i] + "," + (context_height-context_height / 5-lower_margin.bottom) / 2 + ")"; });
 		//timedata = [context_x.invert(select_x), context_x.invert(select_x1)];
-		focus_x.domain([context_x.invert(select_x), context_x.invert(select_x1)]);
+		focus_x.domain([context_x.invert(parseInt(select_x)), context_x.invert(parseInt(select_x1))]);
 		lowertimebrushed=focus_x.domain();
 		focusline.select(".timeline_path").attr("d", function(){/*console.log("*");*/return focus_area;});
 		focusline.select(".timeline_path_stroke").attr("d", focus_area_stroke);
 		focusline.select(".axis").call(focus_xAxis);
 		focusline.selectAll(".axis .tick text").attr("transform", "translate(0," + 5 + ")");
 		
+		$("line").each(function(){
+			var tmp = $(this).scrollLeft();
+			$(this).scrollLeft() = parseInt(tmp);
+		})
 		//rangeChanged(0,300);
 		rangeChanged(1,select_x,select_x1);
 		drawReason();
@@ -268,8 +273,8 @@ function drawUpperTimeLine(datap,datap1,thisColor){
 	
 	focus_x.domain(context_x.domain());
 	focus_y.domain(context_y.domain());
-	focus_xAxis = d3.axisBottom(focus_x).tickSize(-focus_height)
-				.ticks(d3.timeMinute.every(upper_timeminsplite));
+	focus_xAxis = d3.axisBottom(focus_x).tickSize(-focus_height);
+				//.ticks(d3.timeMinute.every(upper_timeminsplite));
 	focus_yAxis = d3.axisLeft(focus_y).ticks(5);
 	focus_area = d3.area().curve(d3.curveBasis)
 				.x(function(d) {return focus_x(lowerparseTime(d3.keys(d)[0]));})

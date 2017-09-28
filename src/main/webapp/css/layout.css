@@ -15,9 +15,9 @@ body {
 
 .axis path,
 .axis line {
-    fill: none;
-    stroke: white;
-    shape-rendering: crispEdges;
+    
+    stroke: #DDF0ED;
+    
 }
 
 
@@ -66,11 +66,6 @@ input.labelauty + label {
 
 
 
-.axisX text {
-    font-family: sans-serif;
-    font-size: 8px;
-    fill: white;
-}
 
 .axisY text {
     font-family: sans-serif;
@@ -238,11 +233,7 @@ text:hover {
     stroke-width: 2px;
 }
 
-#timeline_line .axis path,
-.axis line {
-    fill: none;
-    stroke: none;
-}
+
 
 #timeline_line .axis text {
     fill: #2b516c;
