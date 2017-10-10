@@ -4,9 +4,10 @@ function draw_relation(selected_start, selected_end) {
     newsNumber = parseInt(newsNumber) + 1;
     var eventNumber = 30;
     var other_event_scale = 0.4;
-    var base_length = 20;
-    var extra_length = 40;
-    var other_length = 20;
+    var relavent_num = 0.75;
+    var base_length = 30;
+    var extra_length = 60;
+    var other_length = 40;
     var parent = new Array(1500);
     for (var i = 0; i < parent.length; i++) parent[i] = -1;
     var raw_list1 = relation_data[newsNumber]; //raw_list1 is the list list of newsNumber
@@ -40,11 +41,13 @@ function draw_relation(selected_start, selected_end) {
         for (var j = i + 1; j < eventNumber; j++) {
             var index_i = raw_list3[i].target;
             var index_j = raw_list3[j].target;
-            raw_list4.push({
-                source: raw_list3[i].target,
-                target: raw_list3[j].target,
-                value: relation_data[index_i][index_j]
-            })
+            if (relation_data[index_i][index_j] > relavent_num) {
+                raw_list4.push({
+                    source: raw_list3[i].target,
+                    target: raw_list3[j].target,
+                    value: relation_data[index_i][index_j]
+                })
+            }
         }
     }
 
@@ -60,7 +63,7 @@ function draw_relation(selected_start, selected_end) {
     }
 
     var raw_list5 = []; //for extra events
-    for (var i = 0; i < eventNumber * other_event_scale; i++) {
+    for (var i = 0; i < raw_list4.length; i++) {
         var tmp_line = raw_list4[i];
         tmp_line.value = other_length;
         raw_list5.push(tmp_line);
@@ -154,7 +157,7 @@ function draw_relation(selected_start, selected_end) {
         .selectAll("circle")
         .data(nodes)
         .enter().append("circle")
-        .attr("r", 5)
+        .attr("r", 6)
         .attr("fill", function (d) {
             return color(d.group);
         })

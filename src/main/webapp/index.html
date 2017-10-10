@@ -115,15 +115,15 @@
 
             <div id="div_5" class="block-div"></div>
 
-            
+
 
         </div>
-        
+
         <div id="bottom-right-div">
-        	<div id="relation" class="block-div"></div>
+            <div id="relation" class="block-div"></div>
 
             <div id="reason" class="block-div"></div>
-        
+
         </div>
 
 
@@ -241,8 +241,14 @@
         d4.select("#reason").append("div")
             .attr("id", "segment0")
             .attr("class", "distquantdiv")
-            .attr("width", $(window).width() * 0.30)
+            .attr("width", $(window).width() * 0.25)
             .attr("height", $(window).height() * 0.385);
+
+        d4.select("#segment0").append("svg")
+            .attr("width", $(window).width() * 0.13)
+            .attr("height", $(window).height() * 0.38);
+
+        //drawReason();
 
     </script>
 

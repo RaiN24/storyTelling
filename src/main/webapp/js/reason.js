@@ -30,8 +30,8 @@ function distQuant(data, id) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    var width = $(window).width() * 0.16,
-        height = $(window).height() * 0.25,
+    var width = $(window).width() * 0.20,
+        height = $(window).height() * 0.32,
         margin = 20;
     var colors = ["#7D74FE", "#7DFF26", "#F84F1B", "#28D8D5", "#FB95B6", "#9D9931", "#F12ABF", "#27EA88", "#549AD5", "#FEA526", "#7B8D8B", "#BB755F", "#432E16",
                 "#D75CFB", "#44E337", "#51EBE3", "#ED3D24", "#4069AE", "#E1CC72", "#E33E88", "#D8A3B3", "#428B50", "#66F3A3", "#E28A2A", "#B2594D", "#609297", "#E8F03F", "#3D2241",
