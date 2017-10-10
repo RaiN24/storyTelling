@@ -241,7 +241,7 @@ function brushed(){
 		
 		$("line").each(function(){
 			var tmp = $(this).scrollLeft();
-			$(this).scrollLeft() = parseInt(tmp);
+			$(this).scrollLeft(parseInt(tmp));
 		})
 		//rangeChanged(0,300);
 		rangeChanged(1,select_x,select_x1);
