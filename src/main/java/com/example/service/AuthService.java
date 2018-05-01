@@ -2,6 +2,7 @@ package com.example.service;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -107,6 +108,7 @@ public class AuthService {
 
             // 设置请求的header
             httpPost.addHeader("Content-Type", "application/json");
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, "utf-8"));
             HttpResponse response = httpClient.execute(httpPost);
             com.alibaba.fastjson.JSONObject json=com.alibaba.fastjson.JSONObject.parseObject(EntityUtils.toString(response.getEntity(), "utf-8"));
             return json.getFloat("score");
@@ -117,6 +119,7 @@ public class AuthService {
     }
 
     public static void main(String[] args) {
+//        System.out.println(getAuth());
         System.out.println(getSim("上海","北京"));
     }
 }
