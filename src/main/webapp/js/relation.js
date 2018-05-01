@@ -220,7 +220,7 @@ function draw_relation(selected_start, selected_end) {
             $("#content").css("font-size", 12);
             $("#content").css("color", "rgb(20,68,106)");
 
-            updateDots(0, $(window).width() * 0.9);
+            updateDots(0, $(window).width() * 0.99);
 
             draw_wordle();
             draw_relation();

@@ -152,7 +152,7 @@ input.labelauty + label {
 #reason {
     float: right;
     width: 58%;
-    height: 40%;
+    height: 60%;
     padding: 2px;
 }
 
@@ -165,7 +165,7 @@ input.labelauty + label {
 
 #bottom-div {
     float: bottom;
-    width: 100%;
+    width: 99%;
     height: 40%;
     padding: 2px;
 }
@@ -173,7 +173,7 @@ input.labelauty + label {
 #bottom-left-div {
     float: left;
     width: 44%;
-    height: 40%;
+    height: 55%;
     padding: 2px;
 }
 

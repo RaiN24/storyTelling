@@ -75,49 +75,32 @@ public class DemoApplication {
 	private MessageDao messageDao;
 	@Autowired
 	private TextDao textDao;
+
+    /**
+     * @Description: 首页方法
+     * @author tangxiang
+     * @date 2018/5/1 13:46
+     */
 	@RequestMapping("/")
 	public ModelAndView map(){
 		ModelAndView mv=new ModelAndView("index");
 		return mv;
 	}
+	/**
+	 * @Description: search_div模块
+	 * @author tangxiang
+	 * @date 2018/5/1 13:47
+	 */
 	@RequestMapping("/search")
 	public ModelAndView search(){
 		ModelAndView mv=new ModelAndView("search_div");
 		return mv;
 	}
-	@RequestMapping("/china")
-	public void china() throws FileNotFoundException{
-		File root = new File("C:/Users/rain/Desktop/data"); //创建文件对象
-		File files[]=root.listFiles();
-		Map<String, String> map=new HashMap<>();
-		for(File file:files){
-			Scanner x=new Scanner(file);
-			x.nextLine();
-			while(x.hasNextLine()){
-				String m=x.nextLine();
-				m+=x.nextLine();
-				int first=m.indexOf("\"");
-				int last=m.lastIndexOf("\"");
-				if(first<=0||first>=last){
-					System.out.println(m);
-					continue;
-				}
-				String md5=m.substring(0, first-1);
-				String content=m.substring(first+1,last);
-				String left=m.substring(last+2);
-				String s[]=left.split(",");
-				messageDao.insertMessage(new Message(md5, s[0], new Timestamp(Long.parseLong(s[1])), new Timestamp(Long.parseLong(s[2])), Double.parseDouble(s[3]), Double.parseDouble(s[4])));
-				if(!map.containsKey(md5)){
-					map.put(md5, content);
-					Text text=new Text();
-					text.setMd5(md5);
-					text.setContent(content);
-					textDao.insertText(text);
-				}
-			}
-			System.out.println(map.size());
-		}
-	}
+	/**
+	 * @Description: 获取大选数据的json格式
+	 * @author tangxiang
+	 * @date 2018/5/1 13:48
+	 */
 	@RequestMapping("/csv_data")
 	public List<Map<MyDate, Double>> getCSV() throws FileNotFoundException{
 		List<Map<MyDate, Double>> result=new ArrayList<>();
@@ -139,6 +122,11 @@ public class DemoApplication {
 		result.add(mapT);
 		return result;
 	}
+    /**
+     * @Description: 获取wordle的json格式数据
+     * @author tangxiang
+     * @date 2018/5/1 13:49
+     */
 	@RequestMapping("/json_wordle")
 	public List<Map<String, Double>> getWordle() throws FileNotFoundException{
 		com.google.gson.JsonParser parser=new com.google.gson.JsonParser();
@@ -159,7 +147,7 @@ public class DemoApplication {
 			if(row.getCell(0)==null||row.getCell(1)==null||row.getCell(2)==null||row.getCell(3)==null||row.getCell(4)==null||row.getCell(5)==null||row.getCell(6)==null)
         		continue;
 			row.getCell(6).setCellType(Cell.CELL_TYPE_NUMERIC);
-	    	double value = row.getCell(6).getNumericCellValue();  
+	    	double value = row.getCell(6).getNumericCellValue();
 	        Date date =org.apache.poi.ss.usermodel.DateUtil.getJavaDate(value);
 	        MyDate myDate=new MyDate();//当前时间
 	        myDate.setYear(date.getYear());
